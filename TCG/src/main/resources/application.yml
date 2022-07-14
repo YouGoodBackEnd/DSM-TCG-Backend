@@ -1,0 +1,38 @@
+spring:
+
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: ${URL}
+    username: ${LOCAL-DB-USERNAME}
+    password: ${LOCAL-DB-PASSWORD}
+
+  jpa:
+    hibernate:
+      ddl-auto: create
+    show-sql: false
+    properties:
+      format_sql: true
+      generate-ddl: true
+
+  redis:
+    port: ${REDIS-PORT}
+    host: ${REDIS-HOST}
+
+  cloud:
+    aws:
+      credentials:
+        accessKey: ${S3_ACCESS_KEY}
+        secretKey: ${S3_SECRET_KEY}
+      s3:
+        bucket: ${S3_BUCKET}
+      region:
+        static: ${S3_REGION}
+      stack:
+        auto: false
+
+jwt:
+  header: ${HEADER}
+  prefix : ${PREFIX}
+  secret-key: ${JWT-SECRET}
+  access-exp: ${ACCESS-EXP}
+  refresh-exp: ${REFRESH-EXP}
