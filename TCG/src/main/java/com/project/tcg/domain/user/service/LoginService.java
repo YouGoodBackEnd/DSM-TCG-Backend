@@ -2,7 +2,7 @@ package com.project.tcg.domain.user.service;
 
 import com.project.tcg.domain.user.domain.User;
 import com.project.tcg.domain.user.domain.repository.UserRepository;
-import com.project.tcg.domain.user.exception.PasswordNotValidException;
+import com.project.tcg.domain.user.exception.PasswordMismatchException;
 import com.project.tcg.domain.user.exception.UserNotFoundException;
 import com.project.tcg.domain.user.presentation.dto.request.LoginRequest;
 import com.project.tcg.global.security.jwt.JwtTokenProvider;
@@ -30,7 +30,7 @@ public class LoginService {
                 .orElseThrow(() -> UserNotFoundException.EXCEPTION);
 
         if(!passwordEncoder.matches(password, user.getPassword()))
-            throw PasswordNotValidException.EXCEPTION;
+            throw PasswordMismatchException.EXCEPTION;
 
         return jwtTokenProvider.createTokens(accountId);
     }
