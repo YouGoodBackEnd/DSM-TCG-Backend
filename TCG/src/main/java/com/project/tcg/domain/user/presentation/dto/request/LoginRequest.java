@@ -1,11 +1,10 @@
 package com.project.tcg.domain.user.presentation.dto.request;
 
-import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 @Getter
-@NoArgsConstructor(access = AccessLevel.PROTECTED)
+@NoArgsConstructor
 public class LoginRequest {
 
     private String accountId;
