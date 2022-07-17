@@ -30,6 +30,9 @@ spring:
       stack:
         auto: false
 
+  jackson:
+    property-naming-strategy: SNAKE_CASE
+
 jwt:
   header: ${HEADER}
   prefix : ${PREFIX}
