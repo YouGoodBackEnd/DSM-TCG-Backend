@@ -1,6 +1,7 @@
 package com.project.tcg.domain.user.domain;
 
 import com.project.tcg.domain.card.domain.Card;
+import com.project.tcg.domain.user.presentation.dto.request.UpdateUserInfoRequest;
 import com.project.tcg.infrastructure.image.DefaultImage;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -63,6 +64,15 @@ public class User {
     private int gold;
 
     private int diamond;
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public void updateInfo(UpdateUserInfoRequest request) {
+        this.profileImageUrl = request.getProfileUrl() == null ? DefaultImage.USER_PROFILE_IMAGE : getProfileImageUrl();
+        this.name = request.getName();
+    }
 
     public void setGold(int gold) {
         this.gold = gold;
