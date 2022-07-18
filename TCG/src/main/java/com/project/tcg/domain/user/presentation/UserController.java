@@ -75,7 +75,7 @@ public class UserController {
         return queryMyInfoService.execute();
     }
 
-    @GetMapping("{user-id}")
+    @GetMapping("/{user-id}")
     public QueryUserInfoResponse  queryUserInfo(@PathVariable("user-id") Long userId) {
         return queryUserInfoService.execute(userId);
     }
