@@ -3,8 +3,6 @@ package com.project.tcg.domain.card.presentation;
 import com.project.tcg.domain.card.presentation.dto.request.CreateCardRequest;
 import com.project.tcg.domain.card.presentation.dto.response.CardListResponse;
 import com.project.tcg.domain.card.presentation.dto.response.CardResponse;
-import com.project.tcg.domain.card.service.CreateCardService;
-import com.project.tcg.domain.card.service.FindAllCardService;
 import com.project.tcg.domain.card.service.FindMyCardService;
 import com.project.tcg.domain.card.service.FindUserCardService;
 import lombok.RequiredArgsConstructor;
