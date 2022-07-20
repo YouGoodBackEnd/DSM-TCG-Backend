@@ -8,7 +8,9 @@ import com.project.tcg.domain.user.presentation.dto.request.SignupRequest;
 import com.project.tcg.global.security.jwt.JwtProperties;
 import com.project.tcg.global.security.jwt.JwtTokenProvider;
 import com.project.tcg.global.utils.token.dto.TokenResponse;
+import com.project.tcg.infrastructure.image.DefaultImage;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -24,6 +26,8 @@ public class SignupService {
 
     private final JwtProperties jwtProperties;
 
+    private final PasswordEncoder passwordEncoder;
+
     @Transactional
     public TokenResponse execute(SignupRequest request) {
 
@@ -31,14 +35,19 @@ public class SignupService {
         String name = request.getName();
         String password = request.getPassword();
 
-        if (userRepository.findByAccountId(accountId).isPresent())
+        System.out.println("SignupService.execute");
+        if (userRepository.findByAccountId(accountId).isPresent()){
+            System.out.println(userRepository.findByAccountId(accountId).get().getAccountId());
             throw UserAlreadyExistException.EXCEPTION;
+        }
 
+        System.out.println("SignupService.execute");
         User user = userRepository.save(User.builder()
                 .accountId(accountId)
                 .name(name)
-                .password(password)
+                .password(passwordEncoder.encode(password))
                 .authority(Authority.USER)
+                .profileImageUrl(DefaultImage.USER_PROFILE_IMAGE)
                 .gold(5000)
                 .diamond(0)
                 .build());
