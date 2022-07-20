@@ -1,6 +1,6 @@
 package com.project.tcg.domain.user.domain;
 
-import com.project.tcg.domain.card.domain.Card;
+import com.project.tcg.domain.card.domain.CardCollection;
 import com.project.tcg.domain.user.presentation.dto.request.UpdateUserInfoRequest;
 import com.project.tcg.infrastructure.image.DefaultImage;
 import lombok.AllArgsConstructor;
@@ -9,6 +9,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.ColumnDefault;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
@@ -16,11 +17,9 @@ import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
-import java.util.ArrayList;
 import java.util.List;
 
 @Getter
@@ -45,11 +44,10 @@ public class User {
     private String name;
 
     @NotNull
-    @Size(max = 30)
+    @Size(max = 60)
     private String password;
 
     @ColumnDefault(DefaultImage.USER_PROFILE_IMAGE)
-    @Column(nullable = false)
     private String profileImageUrl;
 
     @NotNull
@@ -57,20 +55,19 @@ public class User {
     @Column(length = 7)
     private Authority authority;
 
-    @OneToMany
-    @JoinColumn(name = "card_id")
-    private List<Card> cards = new ArrayList<>();
-
     private int gold;
 
     private int diamond;
+
+    @OneToMany(mappedBy = "user", cascade = CascadeType.REMOVE)
+    private List<CardCollection> badgeCollections;
 
     public void setPassword(String password) {
         this.password = password;
     }
 
     public void updateInfo(UpdateUserInfoRequest request) {
-        this.profileImageUrl = request.getProfileUrl() == null ? DefaultImage.USER_PROFILE_IMAGE : getProfileImageUrl();
+        this.profileImageUrl = request.getProfileImageUrl() == null ? DefaultImage.USER_PROFILE_IMAGE : getProfileImageUrl();
         this.name = request.getName();
     }
 
