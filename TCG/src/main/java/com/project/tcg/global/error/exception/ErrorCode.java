@@ -16,13 +16,17 @@ public enum ErrorCode {
 
     IMAGE_VALUE_NOT_FOUND(400, "COMMON-404-1", "Image Value Not Found"),
 
-
     PASSWORD_NOT_VALID(401, "USER-401-1", "Password Not Valid"),
-
+    USER_NOT_FOUND(404, "USER-404-2", "User Not Found" ),
     USER_ALREADY_EXIST(409, "USER-409-1", "User Already Exist"),
 
+    CARD_NOT_FOUND(404, "CARD-404-1", "Card Not Found"),
 
-    REFRESH_TOKEN_NOT_FOUND(404, "AUTH-404-1", "Refresh Token Not Found");
+
+    REFRESH_TOKEN_NOT_FOUND(404, "AUTH-404-1", "Refresh Token Not Found"),
+
+    SOCKET_CLIENT_NOT_FOUND(404 , "SOCKET-404-1", "Socket Client Not Found"),
+    INTERNAL_SERVER_ERROR(500, "SERVER-500-1", "Internal Server Error");
 
     private final Integer status;
     private final String code;

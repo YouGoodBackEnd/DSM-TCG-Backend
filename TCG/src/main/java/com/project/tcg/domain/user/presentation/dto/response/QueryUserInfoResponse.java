@@ -8,6 +8,6 @@ import lombok.Getter;
 public class QueryUserInfoResponse {
     private final Long userId;
     private final String name;
-    private final String profileUrl;
+    private final String profileImageUrl;
     private final Long rank;
 }
