@@ -9,10 +9,12 @@ spring:
   jpa:
     hibernate:
       ddl-auto: create
-    show-sql: false
+    show-sql: true
     properties:
       format_sql: true
       generate-ddl: true
+    generate-ddl: true
+    defer-datasource-initialization: true
 
   redis:
     port: ${REDIS-PORT}
@@ -32,6 +34,11 @@ spring:
 
   jackson:
     property-naming-strategy: SNAKE_CASE
+
+
+
+socket:
+  port: ${SOCKET_PORT:8081}
 
 jwt:
   header: ${HEADER}
