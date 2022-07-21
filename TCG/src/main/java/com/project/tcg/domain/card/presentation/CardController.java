@@ -1,53 +1,31 @@
 package com.project.tcg.domain.card.presentation;
 
-import com.project.tcg.domain.card.presentation.dto.request.CreateCardRequest;
 import com.project.tcg.domain.card.presentation.dto.response.CardListResponse;
-import com.project.tcg.domain.card.presentation.dto.response.CardResponse;
-import com.project.tcg.domain.card.service.FindMyCardService;
-import com.project.tcg.domain.card.service.FindUserCardService;
+import com.project.tcg.domain.card.service.QueryMyCardListService;
+import com.project.tcg.domain.card.service.QueryUserCardListService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RequiredArgsConstructor
+@RequestMapping("/cards")
 @RestController
 public class CardController {
 
-    private final CreateCardService createCardService;
+    private final QueryMyCardListService queryMyCardListService;
 
-    private final FindMyCardService findMyCardService;
+    private final QueryUserCardListService queryUserCardListService;
 
-    private final FindUserCardService findUserCardService;
-
-    private final FindAllCardService findAllCardService;
-
-
-    @PostMapping("/card")
-    public CardResponse createCard(@RequestBody CreateCardRequest request){
-        return createCardService.execute(request);
-    }
-
-    @GetMapping("/card/all")
-    public CardResponse findAllCard(@RequestBody CreateCardRequest request){
-        return createCardService.execute(request);
-    }
-
-    @GetMapping("/card")
+    @GetMapping
     public CardListResponse findMyCard(){
-        return findMyCardService.execute();
+        return queryMyCardListService.execute();
     }
 
-    @GetMapping("/card/{user-id}")
+    @GetMapping("/{user-id}")
     public CardListResponse findUserCard(@PathVariable("user-id") Long userId){
-        return findUserCardService.execute(userId);
-    }
-
-    @GetMapping("/card/all")
-    public CardListResponse findAllCard(){
-        return findAllCardService.execute();
+        return queryUserCardListService.execute(userId);
     }
 
 }
