@@ -8,7 +8,6 @@ import org.springframework.stereotype.Component;
 @RequiredArgsConstructor
 @Component
 public class SocketRunner implements CommandLineRunner {
-    //스프링 부트 구동 시점에 실행
 
     private final SocketIOServer socketIOServer;
 

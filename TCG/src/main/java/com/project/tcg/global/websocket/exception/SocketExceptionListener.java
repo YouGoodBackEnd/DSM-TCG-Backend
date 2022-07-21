@@ -5,7 +5,7 @@ import com.corundumstudio.socketio.listener.ExceptionListener;
 import com.project.tcg.global.error.ErrorResponse;
 import com.project.tcg.global.error.exception.BusinessException;
 import com.project.tcg.global.error.exception.ErrorCode;
-import com.project.tcg.global.websocket.property.SocketProperty;
+import com.project.tcg.global.websocket.SocketProperty;
 import io.netty.channel.ChannelHandlerContext;
 
 import java.util.List;
@@ -38,6 +38,7 @@ public class SocketExceptionListener implements ExceptionListener {
     }
 
     private void runExceptionHandling(Exception e, SocketIOClient client) {
+
         final ErrorCode errorCode;
 
         if (e.getCause() instanceof BusinessException) {
@@ -45,6 +46,7 @@ public class SocketExceptionListener implements ExceptionListener {
         } else {
             errorCode = ErrorCode.INTERNAL_SERVER_ERROR;
         }
+
         ErrorResponse message = ErrorResponse.builder()
                 .status(errorCode.getStatus())
                 .code(errorCode.getCode())
