@@ -10,7 +10,9 @@ import java.io.Serializable;
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @EqualsAndHashCode
-class CardCollectionId implements Serializable {
+public class CardCollectionId implements Serializable {
+
     private Long card;
+
     private Long user;
 }
