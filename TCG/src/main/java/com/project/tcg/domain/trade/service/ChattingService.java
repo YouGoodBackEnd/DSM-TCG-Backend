@@ -7,9 +7,9 @@ import com.project.tcg.domain.trade.controller.dto.response.ChatResponse;
 import com.project.tcg.domain.trade.exception.SocketClientNotFoundException;
 import com.project.tcg.domain.user.domain.User;
 import com.project.tcg.domain.user.facade.UserFacade;
-import com.project.tcg.global.websocket.connect.WebSocketJwtHandler;
-import com.project.tcg.global.websocket.property.ClientProperty;
-import com.project.tcg.global.websocket.property.SocketProperty;
+import com.project.tcg.global.websocket.SocketProperty;
+import com.project.tcg.global.websocket.WebSocketJwtHandler;
+import com.project.tcg.global.websocket.sercurity.SocketAuthProperty;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -25,19 +25,17 @@ public class ChattingService {
     @Transactional
     public void execute(SocketIOClient socketIOClient, SocketIOServer server, ChatRequest request){
 
-        User user = userFacade.getUserByAccountId(socketIOClient.get(ClientProperty.USER_KEY));
+        User user = userFacade.getUserByAccountId(socketIOClient.get(SocketAuthProperty.USER_KEY));
 
         User targetUser = userFacade.getUserById(request.getUserId());
 
-        SocketIOClient clientToSend = Optional.of(WebSocketJwtHandler.socketIOClientMap
-                .get(targetUser.getAccountId()))
+        SocketIOClient clientToSend = Optional.ofNullable(WebSocketJwtHandler.socketIOClientMap
+                        .get(targetUser.getAccountId()))
                 .orElseThrow(() -> SocketClientNotFoundException.EXCEPTION);
 
-        ChatResponse response = ChatResponse
-                .builder()
-                .chat(request.getChat())
+        ChatResponse response = ChatResponse.builder()
                 .username(user.getName())
-                .build();
+                .chat(request.getChat()).build();
 
         clientToSend.sendEvent(SocketProperty.CHAT, response);
 
