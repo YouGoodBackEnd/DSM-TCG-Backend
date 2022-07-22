@@ -68,7 +68,7 @@ public class User {
 
     public void updateInfo(UpdateUserInfoRequest request) {
         this.profileImageUrl = request.getProfileImageUrl() == null ? DefaultImage.USER_PROFILE_IMAGE : getProfileImageUrl();
-        this.name = request.getName();
+        this.name = request.getUsername();
     }
 
     public void setGold(int gold) {
