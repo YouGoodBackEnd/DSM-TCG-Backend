@@ -9,8 +9,8 @@ import javax.validation.constraints.NotBlank;
 @NoArgsConstructor
 public class UpdateUserInfoRequest {
 
-    @NotBlank(message = "이름은 Null 또는 공백 또는 띄어쓰기를 허용하지 않습니다.")
-    private String name;
+    @NotBlank(message = "username은 Null 또는 공백 또는 띄어쓰기를 허용하지 않습니다.")
+    private String username;
 
     private String profileImageUrl;
 }
