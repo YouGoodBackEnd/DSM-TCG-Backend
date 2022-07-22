@@ -14,4 +14,5 @@ public class SocketProperty {
 
     public static final String ERROR = "error";
 
+    public static final String ROOM = "room";
 }
