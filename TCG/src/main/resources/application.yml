@@ -1,3 +1,6 @@
+server:
+  port: 9090
+
 spring:
 
   datasource:
@@ -8,7 +11,7 @@ spring:
 
   jpa:
     hibernate:
-      ddl-auto: create
+      ddl-auto: none
     show-sql: true
     properties:
       format_sql: true
@@ -35,14 +38,12 @@ spring:
   jackson:
     property-naming-strategy: SNAKE_CASE
 
-
-
-socket:
-  port: ${SOCKET_PORT:8081}
+socket :
+  port :  8082
 
 jwt:
   header: ${HEADER}
   prefix : ${PREFIX}
   secret-key: ${JWT-SECRET}
-  access-exp: ${ACCESS-EXP}
+  access-exp: 999999999 # ${ACCESS-EXP}
   refresh-exp: ${REFRESH-EXP}
