@@ -1,4 +1,4 @@
-package com.project.tcg.global.websocket.property;
+package com.project.tcg.global.websocket.sercurity;
 
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
