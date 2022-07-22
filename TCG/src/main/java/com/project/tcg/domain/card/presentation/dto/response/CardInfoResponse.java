@@ -12,7 +12,7 @@ public class CardInfoResponse {
 
     private Long id;
 
-    private String name;
+    private String cardName;
 
     private String cardImageUrl;
 
@@ -24,7 +24,7 @@ public class CardInfoResponse {
         return CardInfoResponse
                 .builder()
                 .id(card.getId())
-                .name(card.getName())
+                .cardName(card.getName())
                 .cardImageUrl(card.getCardImageUrl())
                 .grade(card.getGrade())
                 .description(card.getDescription())

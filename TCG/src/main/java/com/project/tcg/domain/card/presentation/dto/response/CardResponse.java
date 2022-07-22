@@ -7,5 +7,5 @@ import lombok.Getter;
 @AllArgsConstructor
 public class CardResponse {
 
-    private Long id;
+    private Long cardId;
 }
