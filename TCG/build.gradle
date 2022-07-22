@@ -21,21 +21,17 @@ repositories {
 dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
     implementation 'org.springframework.boot:spring-boot-starter-data-redis'
-
     implementation 'org.springframework.boot:spring-boot-starter-web'
-
     implementation 'org.springframework.boot:spring-boot-starter-security'
-
     implementation 'org.springframework.boot:spring-boot-starter-validation'
     implementation 'org.springframework.boot:spring-boot-starter-mail'
 
     implementation 'org.springframework.security:spring-security-test'
 
+    /*
     implementation 'org.springframework.cloud:spring-cloud-starter-aws:2.2.6.RELEASE'
     implementation 'org.springframework.cloud:spring-cloud-aws-autoconfigure:2.2.6.RELEASE'
-
-    implementation 'org.apache.kafka:kafka-streams'
-    implementation 'org.springframeword.kafka:spring-kafka'
+    */
 
     implementation 'io.jsonwebtoken:jjwt-api:0.10.7'
     runtimeOnly 'io.jsonwebtoken:jjwt-impl:0.10.7'
@@ -45,7 +41,9 @@ dependencies {
     compileOnly 'org.projectlombok:lombok'
     annotationProcessor 'org.projectlombok:lombok'
 
-    testImplementation 'org.mockito:mockito-inline:3.6.0'
+    implementation 'net.nurigo:javaSDK:2.2'
+
+    implementation 'com.corundumstudio.socketio:netty-socketio:1.7.19'
 
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
     testCompileOnly 'org.projectlombok:lombok'
