@@ -18,7 +18,6 @@ public class WebSocketConfig {
     private Integer port;
 
     private final WebSocketAddMappingSupporter mappingSupporter;
-    private final SocketExceptionListener exceptionListener;
 
     @Bean
     public SocketIOServer socketIOServer() {
@@ -28,18 +27,18 @@ public class WebSocketConfig {
 
         com.corundumstudio.socketio.Configuration config = new com.corundumstudio.socketio.Configuration();
         config.setPort(port);
-        config.setSocketConfig(socketConfig);
         config.setOrigin("*");
-        config.setExceptionListener(exceptionListener);
+        config.setSocketConfig(socketConfig);
+        config.setExceptionListener(new SocketExceptionListener());
 
-        //SocketIOServer server = new SocketIOServer(config);
-        //mappingSupporter.addListeners(server);
-        return new SocketIOServer(config);
+        SocketIOServer server = new SocketIOServer(config);
+        mappingSupporter.addListeners(server);
+        return server;
     }
 
     @Bean
-    public SpringAnnotationScanner springAnnotationScanner(SocketIOServer socketIOServer) {
-        return new SpringAnnotationScanner(socketIOServer);
+    public SpringAnnotationScanner springAnnotationScanner(SocketIOServer server) {
+        return new SpringAnnotationScanner(server);
     }
 
 }
