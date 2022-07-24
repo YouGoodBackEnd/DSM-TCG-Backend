@@ -1,11 +1,11 @@
-package com.project.tcg.global.websocket;
+package com.project.tcg.global.socket;
 
 import com.corundumstudio.socketio.SocketIOClient;
 import com.corundumstudio.socketio.annotation.OnConnect;
 import com.corundumstudio.socketio.annotation.OnDisconnect;
 import com.project.tcg.domain.user.facade.UserFacade;
 import com.project.tcg.global.security.jwt.JwtTokenProvider;
-import com.project.tcg.global.websocket.sercurity.ClientProperty;
+import com.project.tcg.global.socket.sercurity.ClientProperty;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.Authentication;
@@ -27,10 +27,13 @@ public class WebSocketJwtHandler {
     @OnConnect
     public void onConnect(SocketIOClient client) {
 
+        System.out.println("WebSocketJwtHandler.onConnect");
         String token = client.getHandshakeData().getHttpHeaders().get("Authorization");
+        System.out.println("token = " + token);
         Authentication authentication = jwtTokenProvider.getAuthentication(token);
 
         String accountId = authentication.getName();
+        System.out.println("accountId = " + accountId);
         socketIOClientMap.put(accountId, client);
         client.set(ClientProperty.USER_KEY, accountId);
     }
@@ -39,7 +42,6 @@ public class WebSocketJwtHandler {
     public void onDisConnect(SocketIOClient client) {
 
         socketIOClientMap.remove(client.get(ClientProperty.USER_KEY).toString());
-
     }
 
 }

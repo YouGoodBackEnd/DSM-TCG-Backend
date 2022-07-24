@@ -1,9 +1,9 @@
-package com.project.tcg.global.websocket;
+package com.project.tcg.global.socket;
 
 import com.corundumstudio.socketio.SocketIOClient;
 import com.corundumstudio.socketio.SocketIOServer;
-import com.project.tcg.global.websocket.annotation.SocketController;
-import com.project.tcg.global.websocket.annotation.SocketMapping;
+import com.project.tcg.global.socket.annotation.SocketController;
+import com.project.tcg.global.socket.annotation.SocketMapping;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.config.ConfigurableListableBeanFactory;
 import org.springframework.stereotype.Component;
@@ -40,7 +40,7 @@ public class WebSocketAddMappingSupporter {
             SocketMapping socketMapping = method.getAnnotation(SocketMapping.class);
             String endpoint = socketMapping.endpoint();
             Class<?> dtoClass = socketMapping.requestCls();
-
+            System.out.println("endpoint = " + endpoint);
             socketIOServer.addEventListener(endpoint, dtoClass, ((client, data, ackSender) -> {
                 List<Object> args = new ArrayList<>();
                 for (Class<?> params : method.getParameterTypes()) {

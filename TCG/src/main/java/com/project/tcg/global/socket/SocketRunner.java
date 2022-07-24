@@ -1,4 +1,4 @@
-package com.project.tcg.global.websocket;
+package com.project.tcg.global.socket;
 
 import com.corundumstudio.socketio.SocketIOServer;
 import lombok.RequiredArgsConstructor;

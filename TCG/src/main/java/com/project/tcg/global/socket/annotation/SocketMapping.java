@@ -1,4 +1,4 @@
-package com.project.tcg.global.websocket.annotation;
+package com.project.tcg.global.socket.annotation;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;

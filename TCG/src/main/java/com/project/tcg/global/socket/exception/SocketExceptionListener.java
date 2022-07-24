@@ -1,11 +1,11 @@
-package com.project.tcg.global.websocket.exception;
+package com.project.tcg.global.socket.exception;
 
 import com.corundumstudio.socketio.SocketIOClient;
 import com.corundumstudio.socketio.listener.ExceptionListener;
 import com.project.tcg.global.error.ErrorResponse;
 import com.project.tcg.global.error.exception.BusinessException;
 import com.project.tcg.global.error.exception.ErrorCode;
-import com.project.tcg.global.websocket.SocketProperty;
+import com.project.tcg.global.socket.SocketProperty;
 import io.netty.channel.ChannelHandlerContext;
 
 import java.util.List;

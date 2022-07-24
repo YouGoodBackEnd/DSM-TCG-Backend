@@ -1,4 +1,4 @@
-package com.project.tcg.global.websocket;
+package com.project.tcg.global.socket;
 
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;

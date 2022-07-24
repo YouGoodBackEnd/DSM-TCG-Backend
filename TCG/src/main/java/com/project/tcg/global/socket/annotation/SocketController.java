@@ -1,4 +1,4 @@
-package com.project.tcg.global.websocket.annotation;
+package com.project.tcg.global.socket.annotation;
 
 import org.springframework.web.bind.annotation.RestController;
 
