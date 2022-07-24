@@ -1,9 +1,10 @@
-package com.project.tcg.domain.trade.controller.dto.response;
+package com.project.tcg.domain.chat.controller.dto.response;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
-import org.springframework.lang.Nullable;
+
+import java.time.LocalDateTime;
 
 @Getter
 @AllArgsConstructor
@@ -12,8 +13,9 @@ public class ChatResponse {
 
     private String username;
 
-    @Nullable
     private String EmojiImageUrl;
 
     private String chat;
+
+    private LocalDateTime sentAt;
 }

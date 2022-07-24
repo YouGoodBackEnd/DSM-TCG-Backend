@@ -1,4 +1,4 @@
-package com.project.tcg.domain.trade.controller.dto.request;
+package com.project.tcg.domain.chat.controller.dto.request;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;

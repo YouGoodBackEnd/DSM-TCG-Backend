@@ -1,8 +1,8 @@
-package com.project.tcg.domain.trade.service;
+package com.project.tcg.domain.chat.service;
 
-import com.project.tcg.domain.trade.controller.dto.response.QueryRoomResponse;
 import com.project.tcg.domain.trade.domain.repository.RoomRepository;
 import com.project.tcg.domain.trade.facade.RoomFacade;
+import com.project.tcg.domain.chat.controller.dto.response.QueryRoomResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
