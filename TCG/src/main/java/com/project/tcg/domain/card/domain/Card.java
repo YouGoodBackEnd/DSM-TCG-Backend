@@ -52,6 +52,6 @@ public class Card {
     private CardType code;
 
     @OneToMany(mappedBy = "card", cascade = CascadeType.REMOVE)
-    private List<CardCollection> badgeCollections;
+    private List<UserCard> badgeCollections;
 
 }

@@ -1,6 +1,6 @@
 package com.project.tcg.domain.card.service;
 
-import com.project.tcg.domain.card.facade.CardCollectionFacade;
+import com.project.tcg.domain.card.facade.UserCardFacade;
 import com.project.tcg.domain.card.presentation.dto.response.CardInfoResponse;
 import com.project.tcg.domain.card.presentation.dto.response.CardListResponse;
 import com.project.tcg.domain.user.domain.User;
@@ -15,7 +15,7 @@ import java.util.stream.Collectors;
 @Service
 public class QueryMyCardListService {
 
-    private final CardCollectionFacade cardCollectionFacade;
+    private final UserCardFacade userCardFacade;
 
     private final UserFacade userFacade;
 
@@ -23,7 +23,7 @@ public class QueryMyCardListService {
 
         User user = userFacade.getCurrentUser();
 
-        List<CardInfoResponse> cardList = cardCollectionFacade.getUserCardList(user.getId())
+        List<CardInfoResponse> cardList = userCardFacade.getUserCardList(user.getId())
                 .stream()
                 .map(CardInfoResponse::of)
                 .collect(Collectors.toList());
