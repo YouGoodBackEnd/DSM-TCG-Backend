@@ -1,6 +1,6 @@
 package com.project.tcg.domain.user.domain;
 
-import com.project.tcg.domain.card.domain.CardCollection;
+import com.project.tcg.domain.card.domain.UserCard;
 import com.project.tcg.domain.user.presentation.dto.request.UpdateUserInfoRequest;
 import com.project.tcg.infrastructure.image.DefaultImage;
 import lombok.AllArgsConstructor;
@@ -39,7 +39,6 @@ public class User {
     private String accountId;
 
     @NotNull
-    @Column(unique = true)
     @Size(max = 30)
     private String name;
 
@@ -55,12 +54,12 @@ public class User {
     @Column(length = 7)
     private Authority authority;
 
-    private int gold;
+    private int coin;
 
     private int diamond;
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.REMOVE)
-    private List<CardCollection> badgeCollections;
+    private List<UserCard> badgeCollections;
 
     public void setPassword(String password) {
         this.password = password;
@@ -71,8 +70,8 @@ public class User {
         this.name = request.getUsername();
     }
 
-    public void setGold(int gold) {
-        this.gold = gold;
+    public void setGold(int coin) {
+        this.coin = coin;
     }
 
     public void setDiamond(int diamond) {
