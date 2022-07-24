@@ -48,7 +48,7 @@ public class SignupService {
                 .password(passwordEncoder.encode(password))
                 .authority(Authority.USER)
                 .profileImageUrl(DefaultImage.USER_PROFILE_IMAGE)
-                .gold(5000)
+                .coin(5000)
                 .diamond(0)
                 .build());
 
