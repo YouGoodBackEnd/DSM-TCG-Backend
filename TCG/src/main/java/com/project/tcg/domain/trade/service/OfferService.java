@@ -4,10 +4,11 @@ import com.corundumstudio.socketio.SocketIOClient;
 import com.corundumstudio.socketio.SocketIOServer;
 import com.project.tcg.domain.card.exception.CardNotFoundException;
 import com.project.tcg.domain.card.facade.UserCardFacade;
-import com.project.tcg.domain.trade.controller.dto.request.SuggestRequest;
-import com.project.tcg.domain.trade.controller.dto.response.SuggestDto;
+import com.project.tcg.domain.trade.controller.dto.request.OfferRequest;
+import com.project.tcg.domain.trade.controller.dto.response.OfferResponse;
 import com.project.tcg.domain.trade.domain.Room;
 import com.project.tcg.domain.trade.domain.RoomUser;
+import com.project.tcg.domain.trade.domain.Offer;
 import com.project.tcg.domain.trade.exception.CoinLackException;
 import com.project.tcg.domain.trade.facade.RoomFacade;
 import com.project.tcg.domain.trade.facade.RoomUserFacade;
@@ -19,7 +20,7 @@ import org.springframework.stereotype.Service;
 
 @RequiredArgsConstructor
 @Service
-public class DoSuggestService {
+public class OfferService {
 
     private final RoomFacade roomFacade;
 
@@ -29,7 +30,7 @@ public class DoSuggestService {
 
     private final UserCardFacade userCardFacade;
 
-    public void execute(SocketIOClient socketIOClient, SocketIOServer server, SuggestRequest request) {
+    public void execute(SocketIOClient socketIOClient, SocketIOServer server, OfferRequest request) {
 
         Room room = roomFacade.getRoomById(request.getRoomId());
         User user = userFacade.getUserByClient(socketIOClient);
@@ -42,10 +43,16 @@ public class DoSuggestService {
         Integer suggestCoin = request.getCoin();
         validateCoin(suggestCoin, user);
 
-        roomUser.setSuggest(suggestCardId, suggestCoin);
+        Offer offer = Offer.builder()
+                .cardId(suggestCardId)
+                .coin(suggestCoin)
+                .build();
 
-        SuggestDto response = SuggestDto
+        roomUser.setOffer(offer);
+
+        OfferResponse response = OfferResponse
                 .builder()
+                .isOffered(roomUser.getIsOffered())
                 .cardId(suggestCardId)
                 .coin(suggestCoin)
                 .build();
@@ -68,7 +75,6 @@ public class DoSuggestService {
                 throw CoinLackException.EXCEPTION;
             }
         }
-
     }
 
 }

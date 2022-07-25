@@ -5,7 +5,9 @@ import lombok.Getter;
 
 @Getter
 @Builder
-public class SuggestResponse {
+public class OfferResponse {
+
+    private Boolean isOffered;
 
     private Long cardId;
 

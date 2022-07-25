@@ -5,7 +5,7 @@ import lombok.NoArgsConstructor;
 
 @Getter
 @NoArgsConstructor
-public class SuggestRequest {
+public class OfferRequest {
 
     private Long roomId;
 
