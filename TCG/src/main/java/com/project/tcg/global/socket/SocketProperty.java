@@ -8,11 +8,11 @@ public class SocketProperty {
 
     public static final String SUGGEST = "suggest";
 
-    public static final String EMOJI = "emoji";
-
     public static final String CHAT = "chat";
 
-    public static final String ERROR = "error";
-
     public static final String ROOM = "room";
+
+    public static final String TRADE = "Trade";
+
+    public static final String ERROR = "error";
 }
