@@ -1,5 +1,6 @@
 package com.project.tcg.domain.chat.controller.dto.request;
 
+import com.project.tcg.domain.chat.domain.enums.EmojiType;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -7,7 +8,9 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class ChatRequest {
 
-    private String roomId;
+    private Long roomId;
+
+    private EmojiType emojiType;
 
     private String chat;
 }
