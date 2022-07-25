@@ -3,7 +3,7 @@ package com.project.tcg.domain.chat.service;
 import com.corundumstudio.socketio.SocketIOClient;
 import com.corundumstudio.socketio.SocketIOServer;
 import com.project.tcg.domain.chat.controller.dto.request.CreateRoomRequest;
-import com.project.tcg.domain.chat.controller.dto.response.ParticipateRoomResponse;
+import com.project.tcg.domain.chat.controller.dto.response.RoomNotificationResponse;
 import com.project.tcg.domain.trade.domain.Room;
 import com.project.tcg.domain.trade.domain.RoomUser;
 import com.project.tcg.domain.trade.domain.repository.RoomRepository;
@@ -27,34 +27,31 @@ public class CreateRoomService {
 
     private final RoomUserRepository roomUserRepository;
 
-    public void execute(SocketIOClient socketIOClient, SocketIOServer server, CreateRoomRequest request) {
-        System.out.println("CreateRoomService.execute");
+    public void execute(SocketIOClient socketIOClient, SocketIOServer socketIOServer, CreateRoomRequest request) {
+
         User user = userFacade.getUserByClient(socketIOClient);
 
-        System.out.println("user.getAccountId() = " + user.getAccountId());
-        roomUserFacade.removeParticipatingRooms(user, socketIOClient);
+        roomUserFacade.removeParticipatingRooms(user);
+        socketIOClient
+                .getAllRooms()
+                .forEach(socketIOClient::leaveRoom);
 
         Room room = roomRepository.save(Room.builder()
                 .name(request.getRoomName())
                 .build());
 
-        System.out.println("room.getName() = " + room.getName());
-
-        RoomUser roomUser = roomUserRepository.save(RoomUser.builder()
+        roomUserRepository.save(RoomUser.builder()
                 .room(room)
                 .user(user)
-                .isAccept(false)
+                .isOffered(false)
                 .build()
         );
 
-        ParticipateRoomResponse response =  ParticipateRoomResponse
-                .builder()
-                .profileImage(user.getProfileImageUrl())
-                .username(user.getName())
-                .build();
+        RoomNotificationResponse response =
+                new RoomNotificationResponse(room.getId(), user.getName() + "님이 입장하셨습니다");
 
         socketIOClient.joinRoom(room.getId().toString());
-        server.getRoomOperations(room.getId().toString())
+        socketIOServer.getRoomOperations(room.getId().toString())
                 .sendEvent(SocketProperty.ROOM, response);
     }
 }
