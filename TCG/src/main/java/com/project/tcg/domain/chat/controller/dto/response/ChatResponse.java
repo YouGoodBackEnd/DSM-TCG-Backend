@@ -4,18 +4,20 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 
-import java.time.LocalDateTime;
-
 @Getter
 @AllArgsConstructor
 @Builder
 public class ChatResponse {
 
+    private Long userId;
+
     private String username;
 
-    private String EmojiImageUrl;
+    private String profileImageUrl;
+
+    private String emojiImageUrl;
 
     private String chat;
 
-    private LocalDateTime sentAt;
+    private String sentAt;
 }

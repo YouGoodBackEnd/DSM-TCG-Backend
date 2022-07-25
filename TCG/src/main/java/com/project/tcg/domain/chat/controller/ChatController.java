@@ -32,21 +32,21 @@ public class ChatController {
     private final QueryRoomService queryRoomService;
 
     @SocketMapping(endpoint = "chat", requestCls = ChatRequest.class)
-    public void chatting(SocketIOClient socketIOClient, SocketIOServer server, ChatRequest request) {
+    public void chatting(SocketIOClient socketIOClient, SocketIOServer socketIOServer, ChatRequest request) {
         System.out.println("ChatController.chatting");
-        chattingService.execute(socketIOClient, server, request);
+        chattingService.execute(socketIOClient, socketIOServer, request);
     }
 
     @SocketMapping(endpoint = "participate", requestCls = ParticipateRoomRequest.class)
-    public void participateRoom(SocketIOClient socketIOClient, SocketIOServer server, ParticipateRoomRequest request) {
+    public void participateRoom(SocketIOClient socketIOClient, SocketIOServer socketIOServer, ParticipateRoomRequest request) {
         System.out.println("ChatController.participateRoom");
-        participateRoomService.execute(socketIOClient, server, request);
+        participateRoomService.execute(socketIOClient, socketIOServer, request);
     }
 
     @SocketMapping(endpoint = "create", requestCls = CreateRoomRequest.class)
-    public void createRoom(SocketIOClient socketIOClient, SocketIOServer server, CreateRoomRequest request){
+    public void createRoom(SocketIOClient socketIOClient, SocketIOServer socketIOServer, CreateRoomRequest request){
         System.out.println("ChatController.createRoom");
-        createRoomService.execute(socketIOClient, server, request);
+        createRoomService.execute(socketIOClient, socketIOServer, request);
     }
 
     @GetMapping("/rooms")

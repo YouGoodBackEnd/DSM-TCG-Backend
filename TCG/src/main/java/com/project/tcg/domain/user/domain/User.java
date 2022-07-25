@@ -1,5 +1,6 @@
 package com.project.tcg.domain.user.domain;
 
+import com.project.tcg.domain.card.domain.Card;
 import com.project.tcg.domain.card.domain.UserCard;
 import com.project.tcg.domain.user.presentation.dto.request.UpdateUserInfoRequest;
 import com.project.tcg.infrastructure.image.DefaultImage;
@@ -59,7 +60,7 @@ public class User {
     private int diamond;
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.REMOVE)
-    private List<UserCard> badgeCollections;
+    private List<UserCard> userCards;
 
     public void setPassword(String password) {
         this.password = password;
@@ -70,8 +71,12 @@ public class User {
         this.name = request.getUsername();
     }
 
-    public void setGold(int coin) {
-        this.coin = coin;
+    public void addCoin(int coin) {
+        this.coin += coin;
+    }
+
+    public void useCoin(int coin) {
+        this.coin += coin;
     }
 
     public void setDiamond(int diamond) {
@@ -82,4 +87,13 @@ public class User {
         this.profileImageUrl = profileImageUrl;
     }
 
+    public void giveResourcesToUser(Card card, Integer coin, User user1) {
+
+        this.useCoin(coin);
+
+        this.userCards.add(UserCard.builder()
+                .card(card)
+                .user(this)
+                .build());
+    }
 }
