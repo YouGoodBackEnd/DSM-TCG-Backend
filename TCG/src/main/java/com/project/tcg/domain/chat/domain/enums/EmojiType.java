@@ -1,4 +1,4 @@
-package com.project.tcg.domain.trade.domain.enums;
+package com.project.tcg.domain.chat.domain.enums;
 
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
