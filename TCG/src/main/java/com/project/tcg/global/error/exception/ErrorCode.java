@@ -22,9 +22,12 @@ public enum ErrorCode {
 
     CARD_NOT_FOUND(404, "CARD-404-1", "Card Not Found"),
 
+    DID_NOT_OFFERED(400, "TRADE-400-1", "Did Not Offered"),
     ROOM_NOT_FOUND(403, "TRADE-404-1", "Room Not Found"),
     OVERSTAFFED_ROOM(409, "TRADE-409-1", "Overstaffed Room"),
+    COIN_LACK(409, "TRADE-409-2", "Coin Lack"),
 
+    EMOJI_NOT_FOUND(404, "CHAT-404-1", "Emoji Not Found"),
 
     REFRESH_TOKEN_NOT_FOUND(404, "AUTH-404-1", "Refresh Token Not Found"),
 
