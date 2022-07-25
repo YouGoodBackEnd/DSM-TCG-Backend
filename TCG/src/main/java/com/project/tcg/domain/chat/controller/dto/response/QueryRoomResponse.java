@@ -10,9 +10,14 @@ import lombok.Getter;
 public class QueryRoomResponse {
 
     private Long roomId;
+
     private String roomName;
-    private final String profileImage;
-    private final String username;
+
+    private String profileImage;
+
+    private String username;
+
+    private int roomUserCount;
 
     public static QueryRoomResponse of(Room room) {
 
@@ -24,6 +29,7 @@ public class QueryRoomResponse {
                 .roomName(room.getName())
                 .profileImage(roomMaster.getProfileImageUrl())
                 .username(roomMaster.getName())
+                .roomUserCount(room.getRoomUsers().size())
                 .build();
     }
 }
