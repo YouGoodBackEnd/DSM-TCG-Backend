@@ -34,4 +34,21 @@ public class Room {
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "room")
     private List<RoomUser> RoomUsers = new ArrayList<>();
 
+    public boolean checkBothOffered() {
+
+        int offeredUserCount = (int) RoomUsers.stream()
+                .filter(RoomUser::getIsOffered)
+                .count();
+
+        return offeredUserCount == RoomUsers.size();
+    }
+
+    public boolean checkBothAccepted() {
+
+        int acceptedUserCount = (int) RoomUsers.stream()
+                .filter(RoomUser::getIsAccepted)
+                .count();
+
+        return acceptedUserCount == RoomUsers.size();
+    }
 }
