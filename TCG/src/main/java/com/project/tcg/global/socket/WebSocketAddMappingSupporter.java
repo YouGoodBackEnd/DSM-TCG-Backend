@@ -40,7 +40,7 @@ public class WebSocketAddMappingSupporter {
             SocketMapping socketMapping = method.getAnnotation(SocketMapping.class);
             String endpoint = socketMapping.endpoint();
             Class<?> dtoClass = socketMapping.requestCls();
-            System.out.println("endpoint = " + endpoint);
+
             socketIOServer.addEventListener(endpoint, dtoClass, ((client, data, ackSender) -> {
                 List<Object> args = new ArrayList<>();
                 for (Class<?> params : method.getParameterTypes()) {
