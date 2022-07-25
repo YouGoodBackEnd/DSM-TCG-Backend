@@ -1,6 +1,6 @@
-package com.project.tcg.domain.trade.domain;
+package com.project.tcg.domain.chat.domain;
 
-import com.project.tcg.domain.trade.domain.enums.EmojiType;
+import com.project.tcg.domain.chat.domain.enums.EmojiType;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -24,6 +24,7 @@ public class Emoji {
 
     @NotNull
     @Size(max = 30)
+    @Column(unique = true)
     private EmojiType emojiType;
 
     @NotNull
