@@ -1,6 +1,3 @@
-server:
-  port: 9090
-
 spring:
 
   datasource:
@@ -12,7 +9,7 @@ spring:
   jpa:
     hibernate:
       ddl-auto: none
-    show-sql: true
+    show-sql: false
     properties:
       format_sql: true
       generate-ddl: true
@@ -38,8 +35,13 @@ spring:
   jackson:
     property-naming-strategy: SNAKE_CASE
 
+org:
+  springframework:
+    security:
+      level: INFO
+
 socket :
-  port :  8082
+  port : 8081
 
 jwt:
   header: ${HEADER}
