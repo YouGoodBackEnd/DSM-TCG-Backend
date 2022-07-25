@@ -36,24 +36,37 @@ public class RoomUser {
     private User user;
 
     @Column
-    private Boolean isAccept;
+    private Boolean isAccepted;
+
+    @Column
+    private Boolean isOffered;
 
     @Embedded
-    private Suggest suggest;
+    private Offer offer;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "room_id")
     private Room room;
 
     public void acceptFalse() {
-        this.isAccept = false;
+        this.isAccepted = false;
     }
 
-    public void cancelSuggest() {
-        this.suggest = new Suggest();
+    public void setOffer(Offer offer) {
+        if (offer.getCardId() == null && offer.getCoin() == null) {
+            this.isOffered = false;
+            this.offer = null;
+        } else {
+            this.isOffered = true;
+            this.offer = offer;
+        }
     }
 
-    public void setSuggest(Long suggestCardId, Integer suggestCoin) {
-        
+    public void doAccept() {
+        this.isAccepted = true;
+    }
+
+    public void cancelAccept() {
+        this.isAccepted = false;
     }
 }
