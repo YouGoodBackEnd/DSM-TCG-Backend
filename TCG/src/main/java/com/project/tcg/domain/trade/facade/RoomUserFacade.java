@@ -1,6 +1,5 @@
 package com.project.tcg.domain.trade.facade;
 
-import com.corundumstudio.socketio.SocketIOClient;
 import com.project.tcg.domain.trade.domain.Room;
 import com.project.tcg.domain.trade.domain.RoomUser;
 import com.project.tcg.domain.trade.domain.repository.RoomUserRepository;
@@ -16,12 +15,20 @@ public class RoomUserFacade {
     private final RoomUserRepository roomUserRepository;
 
     public RoomUser getRoomUserByRoomAndUser(Room room, User user) {
+
         return roomUserRepository.findByRoomAndUser(room, user)
                 .orElseThrow(() -> RoomNotFoundException.EXCEPTION);
     }
 
-    public void removeParticipatingRooms(User user, SocketIOClient socketIOClient) {
-        roomUserRepository.findByUser(user).ifPresent(roomUserRepository::delete);
-        socketIOClient.getAllRooms().forEach(socketIOClient::leaveRoom);
+    public void removeParticipatingRooms(User user) {
+
+        roomUserRepository
+                .deleteAll(roomUserRepository.findByUser(user));
+    }
+
+    public void CheckRoomUserIsExist(Room room, User user) {
+
+        roomUserRepository.findByRoomAndUser(room, user)
+                .orElseThrow(() -> RoomNotFoundException.EXCEPTION);
     }
 }
