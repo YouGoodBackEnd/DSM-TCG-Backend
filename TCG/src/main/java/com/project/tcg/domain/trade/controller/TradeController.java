@@ -20,7 +20,7 @@ public class TradeController {
 
     private final AcceptService acceptService;
 
-    @SocketMapping(endpoint = "suggest", requestCls = OfferRequest.class)
+    @SocketMapping(endpoint = "offer", requestCls = OfferRequest.class)
     public void suggest(SocketIOClient socketIOClient, SocketIOServer server, OfferRequest request) {
         offerService.execute(socketIOClient, server, request);
     }
