@@ -2,6 +2,7 @@ package com.project.tcg.domain.user.domain;
 
 import com.project.tcg.domain.card.domain.Card;
 import com.project.tcg.domain.card.domain.UserCard;
+import com.project.tcg.domain.card.exception.CardNotFoundException;
 import com.project.tcg.domain.user.presentation.dto.request.UpdateUserInfoRequest;
 import com.project.tcg.infrastructure.image.DefaultImage;
 import lombok.AllArgsConstructor;
@@ -75,12 +76,26 @@ public class User {
         this.coin += coin;
     }
 
-    public void useCoin(int coin) {
-        this.coin += coin;
+    public void removeCoin(int coin) {
+        this.coin -= coin;
     }
 
-    public void setDiamond(int diamond) {
-        this.diamond = diamond;
+    public void addCard(Card card) {
+        this.userCards.add(UserCard.builder()
+                .card(card)
+                .user(this)
+                .build());
+    }
+
+    public void removeCard(Card card) {
+
+        UserCard userCard = this.userCards
+                .stream()
+                .filter(o -> o.getCard() == card)
+                .findFirst()
+                .orElseThrow(() -> CardNotFoundException.EXCEPTION);
+
+        this.userCards.remove(userCard);
     }
 
     public void setProfileImageUrl(String profileImageUrl) {
@@ -89,11 +104,16 @@ public class User {
 
     public void giveResourcesToUser(Card card, Integer coin, User user1) {
 
-        this.useCoin(coin);
-
-        this.userCards.add(UserCard.builder()
-                .card(card)
-                .user(this)
-                .build());
+        if (card != null) {
+            this.removeCard(card);
+            user1.userCards.add(UserCard.builder()
+                    .card(card)
+                    .user(this)
+                    .build());
+        }
+        if (coin != null){
+            this.removeCoin(coin);
+            user1.addCoin(coin);
+        }
     }
 }
