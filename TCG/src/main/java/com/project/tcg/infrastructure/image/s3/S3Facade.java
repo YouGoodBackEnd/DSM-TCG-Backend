@@ -1,6 +1,7 @@
 package com.project.tcg.infrastructure.image.s3;
 
 import com.amazonaws.services.s3.AmazonS3Client;
+import com.amazonaws.services.s3.model.CannedAccessControlList;
 import com.amazonaws.services.s3.model.ObjectMetadata;
 import com.amazonaws.services.s3.model.PutObjectRequest;
 import com.project.tcg.global.exception.ImageValueNotFoundException;
@@ -21,7 +22,6 @@ public class S3Facade implements ImageUtil {
 
     @Override
     public String uploadImage(MultipartFile image){
-
         if(image.isEmpty()){
             throw ImageValueNotFoundException.EXCEPTION;
         }
@@ -35,6 +35,7 @@ public class S3Facade implements ImageUtil {
                     image.getInputStream(),
                     getObjectMetadata(image)
             );
+            amazonS3Client.putObject(putObjectRequest.withCannedAcl(CannedAccessControlList.PublicRead));
         } catch (Exception e) {
             throw SaveImageFailedException.EXCEPTION;
         }
@@ -53,4 +54,5 @@ public class S3Facade implements ImageUtil {
     public String getFileUrl(String fileName) {
         return amazonS3Client.getUrl(s3Properties.getBucket(), fileName).toString();
     }
+
 }
