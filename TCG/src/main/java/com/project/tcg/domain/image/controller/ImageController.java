@@ -19,8 +19,9 @@ public class ImageController {
     private final ImageUploadService imageUploadService;
 
     @ResponseStatus(HttpStatus.CREATED)
-    @PostMapping("/image")
-    public ImageUrlResponse saveImage(@RequestPart List<MultipartFile> images) {
+    @PostMapping("/images")
+    public ImageUrlResponse saveImage(@RequestPart(value="file")  List<MultipartFile> images) {
+        System.out.println("ImageController.saveImage");
         return imageUploadService.execute(images);
     }
 }
