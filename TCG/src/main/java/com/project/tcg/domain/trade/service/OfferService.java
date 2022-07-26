@@ -9,6 +9,7 @@ import com.project.tcg.domain.trade.controller.dto.response.OfferResponse;
 import com.project.tcg.domain.trade.domain.Room;
 import com.project.tcg.domain.trade.domain.RoomUser;
 import com.project.tcg.domain.trade.domain.Offer;
+import com.project.tcg.domain.trade.domain.repository.RoomUserRepository;
 import com.project.tcg.domain.trade.exception.CoinLackException;
 import com.project.tcg.domain.trade.facade.RoomFacade;
 import com.project.tcg.domain.trade.facade.RoomUserFacade;
@@ -30,6 +31,8 @@ public class OfferService {
 
     private final UserCardFacade userCardFacade;
 
+    private final RoomUserRepository roomUserRepository;
+
     public void execute(SocketIOClient socketIOClient, SocketIOServer server, OfferRequest request) {
 
         Room room = roomFacade.getRoomById(request.getRoomId());
@@ -49,6 +52,7 @@ public class OfferService {
                 .build();
 
         roomUser.setOffer(offer);
+        roomUserRepository.save(roomUser);
 
         OfferResponse response = OfferResponse
                 .builder()
@@ -58,7 +62,7 @@ public class OfferService {
                 .build();
 
         server.getRoomOperations(room.getId().toString())
-                .sendEvent(SocketProperty.SUGGEST, response);
+                .sendEvent(SocketProperty.OFFER, response);
     }
 
     private void validateCard(Long cardId, User user) {
