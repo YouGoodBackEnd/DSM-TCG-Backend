@@ -1,6 +1,6 @@
 package com.project.tcg.domain.card.domain;
 
-import com.project.tcg.domain.card.domain.enums.CardType;
+import com.project.tcg.domain.card.domain.enums.CardCode;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -49,7 +49,7 @@ public class Card {
     @NotNull
     @Enumerated(EnumType.STRING)
     @Column(unique = true)
-    private CardType code;
+    private CardCode code;
 
     @OneToMany(mappedBy = "card", cascade = CascadeType.REMOVE)
     private List<UserCard> badgeCollections;
