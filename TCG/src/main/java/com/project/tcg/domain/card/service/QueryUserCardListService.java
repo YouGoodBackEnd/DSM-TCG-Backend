@@ -1,11 +1,12 @@
 package com.project.tcg.domain.card.service;
 
-import com.project.tcg.domain.card.facade.UserCardFacade;
-import com.project.tcg.domain.card.presentation.dto.response.CardInfoResponse;
-import com.project.tcg.domain.card.presentation.dto.response.CardListResponse;
+import com.project.tcg.domain.card.domain.enums.CardCode;
+import com.project.tcg.domain.card.domain.repository.UserCardRepository;
+import com.project.tcg.domain.card.presentation.dto.response.UserCardResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -13,15 +14,14 @@ import java.util.stream.Collectors;
 @Service
 public class QueryUserCardListService {
 
-    private final UserCardFacade userCardFacade;
+    private final UserCardRepository userCardRepository;
 
-    public CardListResponse execute(Long userId) {
+    public List<UserCardResponse> execute(Long userId) {
 
-        List<CardInfoResponse> cardList = userCardFacade.getUserCardList(userId)
-                .stream()
-                .map(CardInfoResponse::of)
+        return Arrays.stream(CardCode.values())
+                .map(cardCode -> userCardRepository.findByCard_CodeAndUser_Id(cardCode, userId))
+                .filter(cards -> (0 < cards.size()))
+                .map(UserCardResponse::of)
                 .collect(Collectors.toList());
-
-        return new CardListResponse(cardList);
     }
 }
