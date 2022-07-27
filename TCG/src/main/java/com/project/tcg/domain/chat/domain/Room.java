@@ -1,4 +1,4 @@
-package com.project.tcg.domain.trade.domain;
+package com.project.tcg.domain.chat.domain;
 
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
@@ -50,5 +50,14 @@ public class Room {
                 .count();
 
         return acceptedUserCount == RoomUsers.size();
+    }
+
+    public boolean isAcceptedAnyone() {
+
+        int acceptedUserCount = (int) RoomUsers.stream()
+                .filter(RoomUser::getIsAccepted)
+                .count();
+
+        return acceptedUserCount != 0;
     }
 }

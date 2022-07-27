@@ -5,7 +5,7 @@ import lombok.RequiredArgsConstructor;
 
 @Getter
 @RequiredArgsConstructor
-public enum CardType {
+public enum CardCode {
     A("a");
 
     private final String code;

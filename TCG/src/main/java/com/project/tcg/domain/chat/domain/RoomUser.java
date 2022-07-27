@@ -1,5 +1,6 @@
-package com.project.tcg.domain.trade.domain;
+package com.project.tcg.domain.chat.domain;
 
+import com.project.tcg.domain.trade.domain.Offer;
 import com.project.tcg.domain.user.domain.User;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
