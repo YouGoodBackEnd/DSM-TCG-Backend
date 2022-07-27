@@ -26,6 +26,8 @@ public enum ErrorCode {
     ROOM_NOT_FOUND(403, "TRADE-404-1", "Room Not Found"),
     OVERSTAFFED_ROOM(409, "TRADE-409-1", "Overstaffed Room"),
     COIN_LACK(409, "TRADE-409-2", "Coin Lack"),
+    CARD_LACK(409, "TRADE-409-3", "Card Lack"),
+    ALREADY_ACCEPTED(409, "TRADE-409-4", "Already Accepted"),
 
     EMOJI_NOT_FOUND(404, "CHAT-404-1", "Emoji Not Found"),
 
