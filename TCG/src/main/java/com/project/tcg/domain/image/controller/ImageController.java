@@ -20,8 +20,7 @@ public class ImageController {
 
     @ResponseStatus(HttpStatus.CREATED)
     @PostMapping("/images")
-    public ImageUrlResponse saveImage(@RequestPart(value="file")  List<MultipartFile> images) {
-        System.out.println("ImageController.saveImage");
+    public ImageUrlResponse saveImage(@RequestPart(value="images")  List<MultipartFile> images) {
         return imageUploadService.execute(images);
     }
 }
