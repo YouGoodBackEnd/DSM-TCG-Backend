@@ -8,8 +8,8 @@ import com.project.tcg.domain.trade.controller.dto.request.AcceptRequest;
 import com.project.tcg.domain.trade.controller.dto.response.AcceptResponse;
 import com.project.tcg.domain.trade.controller.dto.response.TradeResponse;
 import com.project.tcg.domain.trade.domain.Offer;
-import com.project.tcg.domain.trade.domain.Room;
-import com.project.tcg.domain.trade.domain.RoomUser;
+import com.project.tcg.domain.chat.domain.Room;
+import com.project.tcg.domain.chat.domain.RoomUser;
 import com.project.tcg.domain.trade.domain.repository.RoomUserRepository;
 import com.project.tcg.domain.trade.exception.DidNotOfferedException;
 import com.project.tcg.domain.trade.facade.RoomFacade;
@@ -51,7 +51,7 @@ public class AcceptService {
         else roomUser.doAccept();
         roomUserRepository.save(roomUser);
 
-        AcceptResponse response = new AcceptResponse(roomUser.getIsAccepted());
+        AcceptResponse response = new AcceptResponse(user.getId(), roomUser.getIsAccepted());
 
         server.getRoomOperations(room.getId().toString())
                 .sendEvent(SocketProperty.ACCEPT, response);

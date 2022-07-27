@@ -7,6 +7,8 @@ import lombok.Getter;
 @AllArgsConstructor
 public class AcceptResponse {
 
+    private Long userId;
+
     private Boolean isAccepted;
 
 }
