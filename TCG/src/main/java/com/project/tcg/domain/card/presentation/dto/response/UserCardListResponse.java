@@ -7,7 +7,7 @@ import java.util.List;
 
 @Getter
 @AllArgsConstructor
-public class CardListResponse {
+public class UserCardListResponse {
 
     private  List<CardInfoResponse> cardList;
 }
