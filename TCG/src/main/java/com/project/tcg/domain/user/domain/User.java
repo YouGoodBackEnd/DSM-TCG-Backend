@@ -98,6 +98,10 @@ public class User {
         this.userCards.remove(userCard);
     }
 
+    public void addDiamond(int diamond) {
+        this.diamond += diamond;
+    }
+
     public void setProfileImageUrl(String profileImageUrl) {
         this.profileImageUrl = profileImageUrl;
     }
