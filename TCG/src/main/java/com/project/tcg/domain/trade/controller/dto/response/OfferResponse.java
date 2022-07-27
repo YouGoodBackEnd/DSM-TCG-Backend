@@ -7,9 +7,13 @@ import lombok.Getter;
 @Builder
 public class OfferResponse {
 
+    private Long userId;
+
     private Boolean isOffered;
 
     private Long cardId;
+
+    private Integer cardCount;
 
     private Integer coin;
 
