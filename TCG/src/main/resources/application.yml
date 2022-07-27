@@ -20,20 +20,27 @@ spring:
     port: ${REDIS-PORT}
     host: ${REDIS-HOST}
 
-  cloud:
-    aws:
-      credentials:
-        accessKey: ${S3_ACCESS_KEY}
-        secretKey: ${S3_SECRET_KEY}
-      s3:
-        bucket: ${S3_BUCKET}
-      region:
-        static: ${S3_REGION}
-      stack:
-        auto: false
-
   jackson:
     property-naming-strategy: SNAKE_CASE
+
+cloud:
+  aws:
+    s3:
+      bucket: ${S3_BUCKET}
+    region:
+      static: ${S3_REGION}
+    stack:
+      auto: false
+    credentials:
+      access-key: ${S3_ACCESS_KEY}
+      secret-key: ${S3_SECRET_KEY}
+
+logging:
+  level:
+    com:
+      amazonaws:
+        util:
+          EC2MetadataUtils: ERROR
 
 org:
   springframework:
