@@ -1,7 +1,7 @@
 package com.project.tcg.domain.trade.facade;
 
-import com.project.tcg.domain.trade.domain.Room;
-import com.project.tcg.domain.trade.domain.RoomUser;
+import com.project.tcg.domain.chat.domain.Room;
+import com.project.tcg.domain.chat.domain.RoomUser;
 import com.project.tcg.domain.trade.domain.repository.RoomUserRepository;
 import com.project.tcg.domain.trade.exception.RoomNotFoundException;
 import com.project.tcg.domain.user.domain.User;

@@ -1,6 +1,6 @@
 package com.project.tcg.domain.chat.controller.dto.response;
 
-import com.project.tcg.domain.trade.domain.Room;
+import com.project.tcg.domain.chat.domain.Room;
 import com.project.tcg.domain.user.domain.User;
 import lombok.Builder;
 import lombok.Getter;

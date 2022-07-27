@@ -2,8 +2,8 @@ package com.project.tcg.domain.chat.service;
 
 import com.corundumstudio.socketio.SocketIOClient;
 import com.corundumstudio.socketio.SocketIOServer;
-import com.project.tcg.domain.trade.domain.Room;
-import com.project.tcg.domain.trade.domain.RoomUser;
+import com.project.tcg.domain.chat.domain.Room;
+import com.project.tcg.domain.chat.domain.RoomUser;
 import com.project.tcg.domain.trade.domain.repository.RoomUserRepository;
 import com.project.tcg.domain.trade.exception.OverstaffedRoomException;
 import com.project.tcg.domain.trade.facade.RoomFacade;

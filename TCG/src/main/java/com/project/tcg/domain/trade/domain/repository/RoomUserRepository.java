@@ -1,7 +1,7 @@
 package com.project.tcg.domain.trade.domain.repository;
 
-import com.project.tcg.domain.trade.domain.Room;
-import com.project.tcg.domain.trade.domain.RoomUser;
+import com.project.tcg.domain.chat.domain.Room;
+import com.project.tcg.domain.chat.domain.RoomUser;
 import com.project.tcg.domain.user.domain.User;
 import org.springframework.data.repository.CrudRepository;
 

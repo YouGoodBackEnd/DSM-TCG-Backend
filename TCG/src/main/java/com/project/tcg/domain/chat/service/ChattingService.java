@@ -7,7 +7,7 @@ import com.project.tcg.domain.chat.controller.dto.response.ChatResponse;
 import com.project.tcg.domain.chat.domain.enums.EmojiType;
 import com.project.tcg.domain.chat.domain.repository.EmojiRepository;
 import com.project.tcg.domain.chat.exception.EmojiNotFoundException;
-import com.project.tcg.domain.trade.domain.Room;
+import com.project.tcg.domain.chat.domain.Room;
 import com.project.tcg.domain.trade.facade.RoomFacade;
 import com.project.tcg.domain.trade.facade.RoomUserFacade;
 import com.project.tcg.domain.user.domain.User;
