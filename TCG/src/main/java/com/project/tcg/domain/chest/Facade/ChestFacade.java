@@ -2,11 +2,14 @@ package com.project.tcg.domain.chest.Facade;
 
 import com.project.tcg.domain.card.domain.Card;
 import com.project.tcg.domain.card.domain.Grade;
+import com.project.tcg.domain.card.domain.UserCard;
 import com.project.tcg.domain.card.domain.repository.CardRepository;
+import com.project.tcg.domain.card.domain.repository.UserCardRepository;
 import com.project.tcg.domain.card.presentation.dto.response.CardInfoResponse;
 import com.project.tcg.domain.chest.domain.DrawProbability;
 import com.project.tcg.domain.chest.presentation.dto.response.DrawChestResponse;
 import com.project.tcg.domain.user.domain.User;
+import com.project.tcg.domain.user.domain.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
@@ -23,11 +26,15 @@ public class ChestFacade {
 
     private final CardRepository cardRepository;
 
+    private final UserRepository userRepository;
+
+    private final UserCardRepository userCardRepository;
+
     public DrawChestResponse getDrawChestResponse(User user, int drawCount, DrawProbability drawProbability) {
 
         List<CardInfoResponse> drawnCardList = drawCardList(drawCount, drawProbability)
                 .stream()
-                .peek(user::addCard)
+                .peek(card -> userCardRepository.save(new UserCard(card, user)))
                 .map(CardInfoResponse::of)
                 .collect(Collectors.toList());
 
@@ -36,6 +43,8 @@ public class ChestFacade {
 
         int drawnDiamond = drawDiamond(drawProbability);
         user.addDiamond(drawnDiamond);
+
+        userRepository.save(user);
 
         return DrawChestResponse
                 .builder()
@@ -66,10 +75,8 @@ public class ChestFacade {
             return getRandomCardByGrade(Grade.A);
         } else if (result < drawProbability.getGradeBTotalProbability()) {
             return getRandomCardByGrade(Grade.B);
-        } else if (result < drawProbability.getGradeCTotalProbability()) {
-            return getRandomCardByGrade(Grade.C);
         } else {
-            return null;
+            return getRandomCardByGrade(Grade.C);
         }
     }
 
