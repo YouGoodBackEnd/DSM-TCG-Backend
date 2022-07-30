@@ -8,6 +8,7 @@ import lombok.Getter;
 public class RoomNotificationResponse {
 
     private Long roomId;
+
     private String notification;
 
 }

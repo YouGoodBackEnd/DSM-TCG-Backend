@@ -21,6 +21,7 @@ public class CardInfoResponse {
     private String description;
 
     public static CardInfoResponse of(Card card) {
+
         return CardInfoResponse
                 .builder()
                 .id(card.getId())
