@@ -33,6 +33,9 @@ public enum ErrorCode {
 
     REFRESH_TOKEN_NOT_FOUND(404, "AUTH-404-1", "Refresh Token Not Found"),
 
+    USER_CHEST_NOT_FOUND(404, "CHEST-404-1", "User Chest Not Found"),
+    UNOPENED_CHEST_EXCEPTION(409, "CHEST-409-1", "Unopened Chest"),
+
     SOCKET_CLIENT_NOT_FOUND(404 , "SOCKET-404-1", "Socket Client Not Found"),
     INTERNAL_SERVER_ERROR(500, "SERVER-500-1", "Internal Server Error");
 
