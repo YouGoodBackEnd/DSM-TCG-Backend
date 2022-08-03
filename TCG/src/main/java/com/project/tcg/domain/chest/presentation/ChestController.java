@@ -7,7 +7,7 @@ import com.project.tcg.domain.chest.service.DrawLegendChestService;
 import com.project.tcg.domain.chest.service.DrawSilverChestService;
 import com.project.tcg.domain.chest.service.DrawSpecialChestService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.PatchMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -22,27 +22,27 @@ public class ChestController {
     private final DrawGoldChestService drawGoldChestService;
     private final DrawLegendChestService drawLegendChestService;
 
-    @PatchMapping("/draw/free")
+    @PostMapping("/draw/free")
     public DrawChestResponse drawFreeChest(){
         return drawFreeChestService.execute();
     }
 
-    @PatchMapping("/draw/special")
+    @PostMapping("/draw/special")
     public DrawChestResponse drawSpecialChest(){
         return drawSpecialChestService.execute();
     }
 
-    @PatchMapping("/draw/silver")
+    @PostMapping("/draw/silver")
     public DrawChestResponse drawSilverChest(){
         return drawSilverChestService.execute();
     }
 
-    @PatchMapping("/draw/gold")
+    @PostMapping("/draw/gold")
     public DrawChestResponse drawGoldChest(){
         return drawGoldChestService.execute();
     }
 
-    @PatchMapping("/draw/legend")
+    @PostMapping("/draw/legend")
     public DrawChestResponse drawLegendChest(){
         return drawLegendChestService.execute();
     }
