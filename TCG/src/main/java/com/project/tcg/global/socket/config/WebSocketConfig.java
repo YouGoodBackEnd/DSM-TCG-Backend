@@ -7,9 +7,6 @@ import com.corundumstudio.socketio.annotation.SpringAnnotationScanner;
 import com.project.tcg.domain.trade.facade.RoomUserFacade;
 import com.project.tcg.domain.user.facade.UserFacade;
 import com.project.tcg.global.security.jwt.JwtTokenProvider;
-import com.project.tcg.global.socket.WebSocketAddMappingSupporter;
-import com.project.tcg.global.socket.WebSocketDisConnectListener;
-import com.project.tcg.global.socket.WebSocketOnConnectListener;
 import com.project.tcg.global.socket.exception.SocketExceptionListener;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -31,8 +28,6 @@ public class WebSocketConfig {
 
     private final RoomUserFacade roomUserFacade;
 
-    private final WebSocketAddMappingSupporter webSocketAddMappingSupporter;
-
     @Bean
     public SocketIOServer socketIOServer() {
         SocketConfig socketConfig = new SocketConfig();
@@ -44,11 +39,7 @@ public class WebSocketConfig {
         configuration.setSocketConfig(socketConfig);
         configuration.setExceptionListener(new SocketExceptionListener());
 
-        SocketIOServer socketIOServer = new SocketIOServer(configuration);
-        socketIOServer.addConnectListener(new WebSocketOnConnectListener(jwtTokenProvider));
-        socketIOServer.addDisconnectListener(new WebSocketDisConnectListener(userFacade, roomUserFacade, socketIOServer));
-        webSocketAddMappingSupporter.addListeners(socketIOServer);
-        return socketIOServer;
+        return new SocketIOServer(configuration);
     }
 
     @Bean
