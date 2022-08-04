@@ -27,7 +27,7 @@ public class TokenRefreshService {
         String accountId = redisRefreshToken.getAccountId();
         String newRefreshToken = jwtTokenProvider.createRefreshToken(accountId);
 
-        redisRefreshToken.updateToken(refreshToken, jwtProperties.getRefreshExp());
+        redisRefreshToken.updateToken(newRefreshToken, jwtProperties.getRefreshExp());
 
         String newAccessToken = jwtTokenProvider.createAccessToken(accountId);
 
