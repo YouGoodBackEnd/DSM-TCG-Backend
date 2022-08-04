@@ -8,16 +8,16 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import java.io.Serializable;
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 @Getter
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @EqualsAndHashCode
-public class UserRankId implements Serializable {
+public class RankId implements Serializable {
 
     private Long userId;
 
-    private LocalDate createdAt;
+    private LocalDateTime createdAt;
 }
