@@ -1,4 +1,4 @@
-package com.project.tcg.domain.chat.controller.dto.response;
+package com.project.tcg.domain.chat.presentation.dto.response;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

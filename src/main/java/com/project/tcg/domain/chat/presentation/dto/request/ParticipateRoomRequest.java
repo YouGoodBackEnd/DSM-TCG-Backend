@@ -1,4 +1,4 @@
-package com.project.tcg.domain.chat.controller.dto.request;
+package com.project.tcg.domain.chat.presentation.dto.request;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Getter;

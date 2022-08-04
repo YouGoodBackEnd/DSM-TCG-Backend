@@ -1,4 +1,4 @@
-package com.project.tcg.domain.chat.controller.dto.response;
+package com.project.tcg.domain.chat.presentation.dto.response;
 
 import com.project.tcg.domain.chat.domain.Room;
 import com.project.tcg.domain.user.domain.User;
@@ -7,7 +7,7 @@ import lombok.Getter;
 
 @Getter
 @Builder
-public class QueryRoomResponse {
+public class RoomResponse {
 
     private Long roomId;
 
@@ -19,11 +19,11 @@ public class QueryRoomResponse {
 
     private int roomUserCount;
 
-    public static QueryRoomResponse of(Room room) {
+    public static RoomResponse of(Room room) {
 
         User roomMaster = room.getRoomUsers().get(0).getUser();
 
-        return QueryRoomResponse
+        return RoomResponse
                 .builder()
                 .roomId(room.getId())
                 .roomName(room.getName())
