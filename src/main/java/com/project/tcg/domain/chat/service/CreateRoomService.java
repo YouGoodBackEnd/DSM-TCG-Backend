@@ -2,8 +2,8 @@ package com.project.tcg.domain.chat.service;
 
 import com.corundumstudio.socketio.SocketIOClient;
 import com.corundumstudio.socketio.SocketIOServer;
-import com.project.tcg.domain.chat.controller.dto.request.CreateRoomRequest;
-import com.project.tcg.domain.chat.controller.dto.response.RoomNotificationResponse;
+import com.project.tcg.domain.chat.presentation.dto.request.CreateRoomRequest;
+import com.project.tcg.domain.chat.presentation.dto.response.RoomNotificationResponse;
 import com.project.tcg.domain.chat.domain.Room;
 import com.project.tcg.domain.chat.domain.RoomUser;
 import com.project.tcg.domain.trade.domain.repository.RoomRepository;

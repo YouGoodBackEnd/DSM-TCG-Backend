@@ -2,8 +2,8 @@ package com.project.tcg.domain.chat.service;
 
 import com.corundumstudio.socketio.SocketIOClient;
 import com.corundumstudio.socketio.SocketIOServer;
-import com.project.tcg.domain.chat.controller.dto.request.ChatRequest;
-import com.project.tcg.domain.chat.controller.dto.response.ChatResponse;
+import com.project.tcg.domain.chat.presentation.dto.request.ChatRequest;
+import com.project.tcg.domain.chat.presentation.dto.response.ChatResponse;
 import com.project.tcg.domain.chat.domain.enums.EmojiType;
 import com.project.tcg.domain.chat.domain.repository.EmojiRepository;
 import com.project.tcg.domain.chat.exception.EmojiNotFoundException;
