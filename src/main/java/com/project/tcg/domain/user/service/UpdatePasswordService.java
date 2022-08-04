@@ -26,6 +26,6 @@ public class UpdatePasswordService {
         if(!passwordEncoder.matches(request.getOldPassword(),user.getPassword()))
             throw PasswordMismatchException.EXCEPTION;
 
-        user.setPassword(passwordEncoder.encode(request.getOldPassword()));
+        user.setPassword(passwordEncoder.encode(request.getNewPassword()));
     }
 }
