@@ -1,7 +1,7 @@
 package com.project.tcg.domain.card.presentation.dto.response;
 
 import com.project.tcg.domain.card.domain.Card;
-import com.project.tcg.domain.card.domain.Grade;
+import com.project.tcg.domain.card.domain.enums.Grade;
 import com.project.tcg.domain.card.domain.UserCard;
 import lombok.Builder;
 import lombok.Getter;

@@ -1,6 +1,6 @@
 package com.project.tcg.domain.card.presentation.dto.request;
 
-import com.project.tcg.domain.card.domain.Grade;
+import com.project.tcg.domain.card.domain.enums.Grade;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;

@@ -1,6 +1,7 @@
 package com.project.tcg.domain.card.domain;
 
 import com.project.tcg.domain.card.domain.enums.CardCode;
+import com.project.tcg.domain.card.domain.enums.Grade;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;

@@ -1,7 +1,7 @@
 package com.project.tcg.domain.card.domain.repository;
 
 import com.project.tcg.domain.card.domain.Card;
-import com.project.tcg.domain.card.domain.Grade;
+import com.project.tcg.domain.card.domain.enums.Grade;
 import org.springframework.data.repository.CrudRepository;
 
 import java.util.List;
