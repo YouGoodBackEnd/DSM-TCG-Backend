@@ -4,6 +4,7 @@ import com.project.tcg.domain.chest.domain.UserChest;
 import com.project.tcg.domain.chest.domain.repository.UserChestRepository;
 import com.project.tcg.domain.user.domain.Authority;
 import com.project.tcg.domain.user.domain.User;
+import com.project.tcg.domain.user.domain.CardCount;
 import com.project.tcg.domain.user.domain.repository.UserRepository;
 import com.project.tcg.domain.user.exception.UserAlreadyExistException;
 import com.project.tcg.domain.user.presentation.dto.request.SignupRequest;
@@ -53,6 +54,7 @@ public class SignupService {
                 .profileImageUrl(DefaultImage.USER_PROFILE_IMAGE)
                 .coin(5000)
                 .diamond(0)
+                .cardCount(CardCount.init())
                 .build());
 
         userChestRepository.save(UserChest.builder()
