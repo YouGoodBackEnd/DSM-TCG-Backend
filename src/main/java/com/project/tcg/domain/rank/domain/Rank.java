@@ -1,30 +1,35 @@
 package com.project.tcg.domain.rank.domain;
 
+import com.project.tcg.domain.user.domain.CardCount;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+import javax.persistence.Embedded;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.IdClass;
+import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 @Getter
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-@IdClass(UserRankId.class)
+@IdClass(RankId.class)
+@Table(name = "ranks")
 @Entity
-public class UserRank {
+public class Rank {
+
     @Id
     private Long userId;
 
     @Id
-    private LocalDate createdAt;
+    private LocalDateTime createdAt;
 
     @NotNull
     @Size(max = 30)
@@ -36,6 +41,10 @@ public class UserRank {
 
     @NotNull
     private String profileImageUrl;
+
+    @NotNull
+    @Embedded
+    private CardCount cardCount;
 
     @NotNull
     private Long ranking;
