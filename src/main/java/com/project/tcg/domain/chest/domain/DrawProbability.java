@@ -13,29 +13,29 @@ public enum DrawProbability {
     GOLD_CHEST    (0.15, 0.10, 0.20, 0.25, 0.30, 750, 2000, 7, 15),
     LEGEND_CHEST  (0.30, 0.25, 0.20, 0.15, 0.10, 1000, 3000, 10, 20);
 
-    private final Double gradeSSProbability;
-    private final Double gradeSProbability;
-    private final Double gradeAProbability;
-    private final Double gradeBProbability;
-    private final Double gradeCProbability;
+    private final Double SSGradeProbability;
+    private final Double SGradeProbability;
+    private final Double AGradeProbability;
+    private final Double BGradeProbability;
+    private final Double CGradeProbability;
     private final int minCoin;
     private final int maxCoin;
     private final int minDiamond;
     private final int mazDiamond;
 
-    public double getGradeSSTotalProbability(){
-        return gradeSSProbability;
+    public double getSSGradeTotalProbability(){
+        return SSGradeProbability;
     }
-    public double getGradeSTotalProbability(){
-        return gradeSProbability + getGradeSSTotalProbability();
+    public double getSGradeTotalProbability(){
+        return SGradeProbability + getSSGradeTotalProbability();
     }
-    public double getGradeATotalProbability(){
-        return gradeAProbability + getGradeSTotalProbability();
+    public double getAGradeTotalProbability(){
+        return AGradeProbability + getSGradeTotalProbability();
     }
-    public double getGradeBTotalProbability(){
-        return gradeBProbability + getGradeATotalProbability();
+    public double getBGradeTotalProbability(){
+        return BGradeProbability + getAGradeTotalProbability();
     }
-    public double getGradeCTotalProbability(){
-        return gradeCProbability + getGradeBTotalProbability();
+    public double getCGradeTotalProbability(){
+        return CGradeProbability + getBGradeTotalProbability();
     }
 }
