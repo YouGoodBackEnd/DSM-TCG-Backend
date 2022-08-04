@@ -1,5 +1,6 @@
 package com.project.tcg.domain.user.service;
 
+import com.project.tcg.domain.rank.facade.UserRankFacade;
 import com.project.tcg.domain.user.domain.User;
 import com.project.tcg.domain.user.facade.UserFacade;
 import com.project.tcg.domain.user.presentation.dto.response.QueryUserInfoResponse;
@@ -12,6 +13,8 @@ public class QueryMyInfoService {
 
     private final UserFacade userFacade;
 
+    private final UserRankFacade userRankFacade;
+
     public QueryUserInfoResponse execute(){
 
         User user = userFacade.getCurrentUser();
@@ -20,7 +23,8 @@ public class QueryMyInfoService {
                 .userId(user.getId())
                 .name(user.getName())
                 .profileImageUrl(user.getProfileImageUrl())
-                .rank(1L)
+                .cardCount(user.getCardCount())
+                .rank(userRankFacade.getUserRanking(user))
                 .build();
     }
 }
