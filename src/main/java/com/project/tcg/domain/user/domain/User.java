@@ -5,6 +5,7 @@ import com.project.tcg.domain.card.domain.UserCard;
 import com.project.tcg.domain.card.exception.CardNotFoundException;
 import com.project.tcg.domain.user.presentation.dto.request.UpdateUserInfoRequest;
 import com.project.tcg.infrastructure.image.DefaultImage;
+import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -13,6 +14,7 @@ import org.hibernate.annotations.ColumnDefault;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
+import javax.persistence.Embedded;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
@@ -27,10 +29,11 @@ import java.util.List;
 
 @Getter
 @Builder
-@NoArgsConstructor
 @AllArgsConstructor
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Entity
 public class User implements Serializable {
+
     @Id
     @Column(name = "user_id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -49,7 +52,7 @@ public class User implements Serializable {
     @Size(max = 60)
     private String password;
 
-    @ColumnDefault(DefaultImage.USER_PROFILE_IMAGE)
+    @ColumnDefault("'"+DefaultImage.USER_PROFILE_IMAGE+"'")
     private String profileImageUrl;
 
     @NotNull
@@ -61,7 +64,10 @@ public class User implements Serializable {
 
     private int diamond;
 
-    @OneToMany(mappedBy = "user", cascade = CascadeType.REMOVE)
+    @Embedded
+    private CardCount cardCount;
+
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
     private List<UserCard> userCards;
 
     public void setPassword(String password) {
@@ -82,6 +88,7 @@ public class User implements Serializable {
     }
 
     public void addCard(Card card) {
+        this.cardCount.addCount(card.getGrade());
         this.userCards.add(UserCard.builder()
                 .card(card)
                 .user(this)
@@ -121,4 +128,6 @@ public class User implements Serializable {
             user1.addCoin(coin);
         }
     }
+
+
 }
