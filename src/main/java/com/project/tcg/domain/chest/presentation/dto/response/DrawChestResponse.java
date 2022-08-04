@@ -1,6 +1,6 @@
 package com.project.tcg.domain.chest.presentation.dto.response;
 
-import com.project.tcg.domain.card.presentation.dto.response.CardInfoResponse;
+import com.project.tcg.domain.card.presentation.dto.response.CardResponse;
 import lombok.Builder;
 import lombok.Getter;
 
@@ -10,7 +10,7 @@ import java.util.List;
 @Builder
 public class DrawChestResponse {
 
-    private List<CardInfoResponse> cardList;
+    private List<CardResponse> cardList;
     private int coin;
     private int diamond;
 
