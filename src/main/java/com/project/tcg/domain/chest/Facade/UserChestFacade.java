@@ -16,8 +16,8 @@ public class UserChestFacade {
     private final UserChestRepository userChestRepository;
 
     public UserChest getUserChestById(User user) {
-        return userChestRepository.findById(user)
-                .orElse(createUserChest(user));
+        return userChestRepository.findById(user.getId())
+                .orElseGet(() -> createUserChest(user));
     }
 
     private UserChest createUserChest(User user) {
@@ -33,7 +33,7 @@ public class UserChestFacade {
 
         UserChest userChest = getUserChestById(user);
 
-        if(userChest.getFreeChestOpenDateTime().isAfter(LocalDateTime.now())){
+        if (userChest.getFreeChestOpenDateTime().isAfter(LocalDateTime.now())) {
             throw UnopenedChestException.EXCEPTION;
         }
 
@@ -44,7 +44,7 @@ public class UserChestFacade {
 
         UserChest userChest = getUserChestById(user);
 
-        if(userChest.getSpecialChestOpenDateTime().isAfter(LocalDateTime.now())){
+        if (userChest.getSpecialChestOpenDateTime().isAfter(LocalDateTime.now())) {
             throw UnopenedChestException.EXCEPTION;
         }
 
