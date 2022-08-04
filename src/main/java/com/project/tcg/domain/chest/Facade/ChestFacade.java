@@ -1,11 +1,10 @@
 package com.project.tcg.domain.chest.Facade;
 
 import com.project.tcg.domain.card.domain.Card;
-import com.project.tcg.domain.card.domain.Grade;
-import com.project.tcg.domain.card.domain.UserCard;
+import com.project.tcg.domain.card.domain.enums.Grade;
 import com.project.tcg.domain.card.domain.repository.CardRepository;
 import com.project.tcg.domain.card.domain.repository.UserCardRepository;
-import com.project.tcg.domain.card.presentation.dto.response.CardInfoResponse;
+import com.project.tcg.domain.card.presentation.dto.response.CardResponse;
 import com.project.tcg.domain.chest.domain.DrawProbability;
 import com.project.tcg.domain.chest.presentation.dto.response.DrawChestResponse;
 import com.project.tcg.domain.user.domain.User;
@@ -32,10 +31,10 @@ public class ChestFacade {
 
     public DrawChestResponse getDrawChestResponse(User user, int drawCount, DrawProbability drawProbability) {
 
-        List<CardInfoResponse> drawnCardList = drawCardList(drawCount, drawProbability)
+        List<CardResponse> drawnCardList = drawCardList(drawCount, drawProbability)
                 .stream()
-                .peek(card -> userCardRepository.save(new UserCard(card, user))) //
-                .map(CardInfoResponse::of)
+                .peek(card ->  user.addCard(card))
+                .map(CardResponse::of)
                 .collect(Collectors.toList());
 
         int drawnCoin = drawCoin(drawProbability);
@@ -67,13 +66,13 @@ public class ChestFacade {
 
         double result = RANDOM.nextDouble();
 
-        if (result < drawProbability.getGradeSSTotalProbability()) {
+        if (result < drawProbability.getSSGradeTotalProbability()) {
             return getRandomCardByGrade(Grade.SS);
-        } else if (result < drawProbability.getGradeSTotalProbability()) {
+        } else if (result < drawProbability.getSGradeTotalProbability()) {
             return getRandomCardByGrade(Grade.S);
-        } else if (result < drawProbability.getGradeATotalProbability()) {
+        } else if (result < drawProbability.getAGradeTotalProbability()) {
             return getRandomCardByGrade(Grade.A);
-        } else if (result < drawProbability.getGradeBTotalProbability()) {
+        } else if (result < drawProbability.getBGradeTotalProbability()) {
             return getRandomCardByGrade(Grade.B);
         } else {
             return getRandomCardByGrade(Grade.C);
