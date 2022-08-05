@@ -2,10 +2,10 @@ package com.project.tcg.domain.chat.service;
 
 import com.corundumstudio.socketio.SocketIOClient;
 import com.corundumstudio.socketio.SocketIOServer;
-import com.project.tcg.domain.chat.presentation.dto.request.CreateRoomRequest;
-import com.project.tcg.domain.chat.presentation.dto.response.RoomNotificationResponse;
 import com.project.tcg.domain.chat.domain.Room;
 import com.project.tcg.domain.chat.domain.RoomUser;
+import com.project.tcg.domain.chat.presentation.dto.request.CreateRoomRequest;
+import com.project.tcg.domain.chat.presentation.dto.response.RoomNotificationResponse;
 import com.project.tcg.domain.trade.domain.repository.RoomRepository;
 import com.project.tcg.domain.trade.domain.repository.RoomUserRepository;
 import com.project.tcg.domain.trade.facade.RoomUserFacade;
@@ -20,14 +20,12 @@ import org.springframework.stereotype.Service;
 public class CreateRoomService {
 
     private final UserFacade userFacade;
-
     private final RoomUserFacade roomUserFacade;
-
     private final RoomRepository roomRepository;
-
     private final RoomUserRepository roomUserRepository;
+    private final SocketIOServer socketIOServer;
 
-    public void execute(SocketIOClient socketIOClient, SocketIOServer socketIOServer, CreateRoomRequest request) {
+    public void execute(SocketIOClient socketIOClient, CreateRoomRequest request) {
 
         User user = userFacade.getUserByClient(socketIOClient);
 
@@ -36,13 +34,16 @@ public class CreateRoomService {
                 .getAllRooms()
                 .forEach(socketIOClient::leaveRoom);
 
-        Room room = roomRepository.save(Room.builder()
+        Room room = roomRepository.save(Room
+                .builder()
                 .name(request.getRoomName())
                 .build());
 
-        roomUserRepository.save(RoomUser.builder()
-                .room(room)
+        roomUserRepository.save(RoomUser
+                .builder()
                 .user(user)
+                .room(room)
+                .isAccepted(false)
                 .isOffered(false)
                 .build()
         );
