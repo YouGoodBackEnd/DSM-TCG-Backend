@@ -2,7 +2,6 @@ package com.project.tcg.domain.user.domain;
 
 import com.project.tcg.domain.card.domain.Card;
 import com.project.tcg.domain.card.domain.UserCard;
-import com.project.tcg.domain.card.exception.CardNotFoundException;
 import com.project.tcg.domain.user.presentation.dto.request.UpdateUserInfoRequest;
 import com.project.tcg.infrastructure.image.DefaultImage;
 import lombok.AccessLevel;
@@ -26,6 +25,7 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.io.Serializable;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Getter
 @Builder
@@ -52,7 +52,7 @@ public class User implements Serializable {
     @Size(max = 60)
     private String password;
 
-    @ColumnDefault("'"+DefaultImage.USER_PROFILE_IMAGE+"'")
+    @ColumnDefault("'" + DefaultImage.USER_PROFILE_IMAGE + "'")
     private String profileImageUrl;
 
     @NotNull
@@ -69,8 +69,8 @@ public class User implements Serializable {
     @Embedded
     private CardCount cardCount;
 
-    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
-    private List<UserCard> userCards;
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<UserCard> userCardList;
 
     public void setPassword(String password) {
         this.password = password;
@@ -89,41 +89,44 @@ public class User implements Serializable {
         this.coin -= coin;
     }
 
-    public void addCard(Card card) {
-        this.cardCount.addCount(card.getGrade());
-        this.userCards.add(UserCard.builder()
-                .card(card)
-                .user(this)
-                .build());
+    public void addCard(Card card, int cardCount) {
+        this.cardCount.addCount(card.getGrade(), cardCount);
+        for (int i = 0; i < cardCount; i++) {
+            this.userCardList.add(UserCard.builder()
+                    .card(card)
+                    .user(this)
+                    .build());
+        }
     }
 
-    public void removeCard(Card card) {
+    public void removeCard(Card card, int cardCount) {
 
-        UserCard userCard = this.userCards
+        this.cardCount.removeCount(card.getGrade(), cardCount);
+
+        List<UserCard> userCardListToDelete = this.userCardList
                 .stream()
                 .filter(o -> o.getCard() == card)
-                .findFirst()
-                .orElseThrow(() -> CardNotFoundException.EXCEPTION);
+                .limit(cardCount)
+                .collect(Collectors.toList());
 
-        this.userCards.remove(userCard);
+        for (UserCard userCard : userCardListToDelete) {
+            this.userCardList.remove(userCard);
+        }
     }
 
     public void addDiamond(int diamond) {
         this.diamond += diamond;
     }
 
-    public void giveResourcesToUser(Card card, Integer coin, User user1) {
+    public void giveResourcesToUser(Card card, Integer cardCount, Integer coin, User user) {
 
         if (card != null) {
-            this.removeCard(card);
-            user1.userCards.add(UserCard.builder()
-                    .card(card)
-                    .user(this)
-                    .build());
+            this.removeCard(card, cardCount);
+            user.addCard(card, cardCount);
         }
-        if (coin != null){
+        if (coin != null) {
             this.removeCoin(coin);
-            user1.addCoin(coin);
+            user.addCoin(coin);
         }
     }
 
