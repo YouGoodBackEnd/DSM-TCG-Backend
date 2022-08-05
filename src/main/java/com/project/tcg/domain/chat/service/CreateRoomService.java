@@ -14,6 +14,7 @@ import com.project.tcg.domain.user.facade.UserFacade;
 import com.project.tcg.global.socket.SocketProperty;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @RequiredArgsConstructor
 @Service
@@ -25,6 +26,7 @@ public class CreateRoomService {
     private final RoomUserRepository roomUserRepository;
     private final SocketIOServer socketIOServer;
 
+    @Transactional
     public void execute(SocketIOClient socketIOClient, CreateRoomRequest request) {
 
         User user = userFacade.getUserByClient(socketIOClient);
