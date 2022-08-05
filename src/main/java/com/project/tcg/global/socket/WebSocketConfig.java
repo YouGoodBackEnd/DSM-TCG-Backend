@@ -1,4 +1,4 @@
-package com.project.tcg.global.config;
+package com.project.tcg.global.socket;
 
 import com.corundumstudio.socketio.SocketConfig;
 import com.corundumstudio.socketio.SocketIOServer;
@@ -18,7 +18,7 @@ public class WebSocketConfig {
 
     @Bean
     public SocketIOServer socketIOServer() {
-        System.out.println("WebSocketConfig.socketIOServer");
+
         SocketConfig socketConfig = new SocketConfig();
         socketConfig.setReuseAddress(true);
 

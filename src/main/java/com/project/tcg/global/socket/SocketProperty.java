@@ -17,6 +17,4 @@ public class SocketProperty {
     public static final String OFFER = "offer";
 
     public static final String ERROR = "error";
-
-
 }

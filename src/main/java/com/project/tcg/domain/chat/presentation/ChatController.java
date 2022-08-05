@@ -29,7 +29,7 @@ public class ChatController {
 
     @OnEvent("create")
     public void createRoom(SocketIOClient socketIOClient, @RequestBody CreateRoomRequest request){
-        System.out.println("ChatController.createRoom");
+
         createRoomService.execute(socketIOClient, request);
     }
 
