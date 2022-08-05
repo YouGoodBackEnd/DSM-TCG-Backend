@@ -15,5 +15,6 @@ public class ChatRequest {
     @JsonProperty("emoji_type")
     private EmojiType emojiType;
 
+    @JsonProperty("chat")
     private String chat;
 }

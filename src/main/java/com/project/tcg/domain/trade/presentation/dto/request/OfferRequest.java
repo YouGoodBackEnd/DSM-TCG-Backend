@@ -17,5 +17,6 @@ public class OfferRequest {
     @JsonProperty("card_count")
     private Integer cardCount;
 
+    @JsonProperty("coin")
     private Integer coin;
 }
