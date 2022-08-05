@@ -2,6 +2,7 @@ package com.project.tcg.domain.chat.facade;
 
 import com.project.tcg.domain.chat.domain.Room;
 import com.project.tcg.domain.chat.domain.RoomUser;
+import com.project.tcg.domain.chat.exception.RoomUserAlreadyExistException;
 import com.project.tcg.domain.trade.domain.repository.RoomUserRepository;
 import com.project.tcg.domain.trade.exception.RoomNotFoundException;
 import com.project.tcg.domain.user.domain.User;
@@ -26,9 +27,18 @@ public class RoomUserFacade {
                 .deleteAll(roomUserRepository.findByUser(user));
     }
 
-    public void CheckRoomUserIsExist(Room room, User user) {
+    public Boolean roomUserIsExist(Room room, User user) {
 
-        roomUserRepository.findByRoomAndUser(room, user)
-                .orElseThrow(() -> RoomNotFoundException.EXCEPTION);
+        return roomUserRepository.findByRoomAndUser(room, user).isPresent();
+    }
+
+    public void checkRoomUserIsNotExist(Room room, User user) {
+        if(roomUserIsExist(room, user))
+            throw RoomUserAlreadyExistException.EXCEPTION;
+    }
+
+    public void checkRoomUserIsExist(Room room, User user) {
+        if(roomUserIsExist(room, user))
+            throw RoomNotFoundException.EXCEPTION;
     }
 }
