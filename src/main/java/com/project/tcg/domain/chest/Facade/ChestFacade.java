@@ -33,7 +33,7 @@ public class ChestFacade {
 
         List<CardResponse> drawnCardList = drawCardList(drawCount, drawProbability)
                 .stream()
-                .peek(card ->  user.addCard(card))
+                .peek(card ->  user.addCard(card, 1))
                 .map(CardResponse::of)
                 .collect(Collectors.toList());
 
