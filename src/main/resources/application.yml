@@ -1,9 +1,10 @@
 spring:
   sql:
     init:
-      mode: always
       schema-locations: classpath:dropProcedures.sql, classpath:createProcedures.sql
       separator: $$
+      mode: always
+
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
     url: ${URL}
@@ -20,10 +21,6 @@ spring:
       generate-ddl: true
     generate-ddl: true
     defer-datasource-initialization: true
-
-  redis:
-    port: ${REDIS-PORT}
-    host: ${REDIS-HOST}
 
   jackson:
     property-naming-strategy: SNAKE_CASE
@@ -54,6 +51,10 @@ org:
 
 socket :
   port : 8081
+
+redis:
+  port: ${REDIS-PORT}
+  host: ${REDIS-HOST}
 
 jwt:
   header: ${HEADER}
