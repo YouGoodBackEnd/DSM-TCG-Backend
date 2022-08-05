@@ -2,12 +2,12 @@ package com.project.tcg.domain.chat.service;
 
 import com.corundumstudio.socketio.SocketIOClient;
 import com.corundumstudio.socketio.SocketIOServer;
-import com.project.tcg.domain.chat.presentation.dto.request.ChatRequest;
-import com.project.tcg.domain.chat.presentation.dto.response.ChatResponse;
+import com.project.tcg.domain.chat.domain.Room;
 import com.project.tcg.domain.chat.domain.enums.EmojiType;
 import com.project.tcg.domain.chat.domain.repository.EmojiRepository;
 import com.project.tcg.domain.chat.exception.EmojiNotFoundException;
-import com.project.tcg.domain.chat.domain.Room;
+import com.project.tcg.domain.chat.presentation.dto.request.ChatRequest;
+import com.project.tcg.domain.chat.presentation.dto.response.ChatResponse;
 import com.project.tcg.domain.trade.facade.RoomFacade;
 import com.project.tcg.domain.trade.facade.RoomUserFacade;
 import com.project.tcg.domain.user.domain.User;
@@ -26,15 +26,13 @@ import java.time.format.FormatStyle;
 public class ChattingService {
 
     private final RoomFacade roomFacade;
-
-    private final UserFacade userFacade;
-
-    private final EmojiRepository emojiRepository;
-
     private final RoomUserFacade roomUserFacade;
+    private final UserFacade userFacade;
+    private final EmojiRepository emojiRepository;
+    private final SocketIOServer socketIOServer;
 
     @Transactional
-    public void execute(SocketIOClient socketIOClient, SocketIOServer socketIOServer, ChatRequest request){
+    public void execute(SocketIOClient socketIOClient, ChatRequest request){
 
         Room room = roomFacade.getRoomById(request.getRoomId());
         User user = userFacade.getUserByClient(socketIOClient);

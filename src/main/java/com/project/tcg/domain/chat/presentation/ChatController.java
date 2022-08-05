@@ -1,7 +1,6 @@
 package com.project.tcg.domain.chat.presentation;
 
 import com.corundumstudio.socketio.SocketIOClient;
-import com.corundumstudio.socketio.SocketIOServer;
 import com.corundumstudio.socketio.annotation.OnEvent;
 import com.project.tcg.domain.chat.presentation.dto.request.ChatRequest;
 import com.project.tcg.domain.chat.presentation.dto.request.CreateRoomRequest;
@@ -9,6 +8,7 @@ import com.project.tcg.domain.chat.presentation.dto.request.ParticipateRoomReque
 import com.project.tcg.domain.chat.presentation.dto.response.QueryRoomListResponse;
 import com.project.tcg.domain.chat.service.ChattingService;
 import com.project.tcg.domain.chat.service.CreateRoomService;
+import com.project.tcg.domain.chat.service.LeaveRoomService;
 import com.project.tcg.domain.chat.service.ParticipateRoomService;
 import com.project.tcg.domain.chat.service.QueryRoomListService;
 import lombok.RequiredArgsConstructor;
@@ -21,27 +21,31 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class ChatController {
 
-    private final ChattingService chattingService;
-
-    private final ParticipateRoomService participateRoomService;
-
     private final CreateRoomService createRoomService;
-
+    private final ParticipateRoomService participateRoomService;
+    private final ChattingService chattingService;
+    private final LeaveRoomService leaveRoomService;
     private final QueryRoomListService queryRoomListService;
 
-    @OnEvent("chat")
-    public void chatting(SocketIOClient socketIOClient, SocketIOServer socketIOServer, @RequestBody ChatRequest request) {
-        chattingService.execute(socketIOClient, socketIOServer, request);
+    @OnEvent("create")
+    public void createRoom(SocketIOClient socketIOClient, @RequestBody CreateRoomRequest request){
+        System.out.println("ChatController.createRoom");
+        createRoomService.execute(socketIOClient, request);
     }
 
     @OnEvent("participate")
-    public void participateRoom(SocketIOClient socketIOClient, SocketIOServer socketIOServer, @RequestBody ParticipateRoomRequest request) {
-        participateRoomService.execute(socketIOClient, socketIOServer, request);
+    public void participateRoom(SocketIOClient socketIOClient, @RequestBody ParticipateRoomRequest request) {
+        participateRoomService.execute(socketIOClient, request);
     }
 
-    @OnEvent("create")
-    public void createRoom(SocketIOClient socketIOClient, SocketIOServer socketIOServer, @RequestBody CreateRoomRequest request){
-        createRoomService.execute(socketIOClient, socketIOServer, request);
+    @OnEvent("chat")
+    public void chatting(SocketIOClient socketIOClient, @RequestBody ChatRequest request) {
+        chattingService.execute(socketIOClient, request);
+    }
+
+    @OnEvent("leave")
+    public void leaveRoom(SocketIOClient socketIOClient) {
+        leaveRoomService.execute(socketIOClient);
     }
 
     @GetMapping("/rooms")
