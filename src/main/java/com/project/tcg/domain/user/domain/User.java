@@ -60,8 +60,10 @@ public class User implements Serializable {
     @Column(length = 7)
     private Authority authority;
 
+    @NotNull
     private int coin;
 
+    @NotNull
     private int diamond;
 
     @Embedded
@@ -108,10 +110,6 @@ public class User implements Serializable {
 
     public void addDiamond(int diamond) {
         this.diamond += diamond;
-    }
-
-    public void setProfileImageUrl(String profileImageUrl) {
-        this.profileImageUrl = profileImageUrl;
     }
 
     public void giveResourcesToUser(Card card, Integer coin, User user1) {
