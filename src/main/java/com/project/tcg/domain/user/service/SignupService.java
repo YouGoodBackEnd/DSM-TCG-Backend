@@ -57,7 +57,8 @@ public class SignupService {
                 .cardCount(CardCount.init())
                 .build());
 
-        userChestRepository.save(UserChest.builder()
+        userChestRepository.save(UserChest
+                .builder()
                 .user(user)
                 .freeChestOpenDateTime(LocalDateTime.now().minusSeconds(1))
                 .specialChestOpenDateTime(LocalDateTime.now().minusSeconds(1))
