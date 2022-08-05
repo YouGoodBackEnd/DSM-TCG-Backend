@@ -33,7 +33,7 @@ public class RoomUserFacade {
     }
 
     public void checkRoomUserIsNotExist(Room room, User user) {
-        if(roomUserIsExist(room, user))
+        if(!roomUserIsExist(room, user))
             throw RoomUserAlreadyExistException.EXCEPTION;
     }
 
