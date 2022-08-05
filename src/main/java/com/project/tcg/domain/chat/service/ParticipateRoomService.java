@@ -9,8 +9,8 @@ import com.project.tcg.domain.chat.presentation.dto.response.RoomNotificationRes
 import com.project.tcg.domain.trade.domain.Offer;
 import com.project.tcg.domain.trade.domain.repository.RoomUserRepository;
 import com.project.tcg.domain.trade.exception.OverstaffedRoomException;
-import com.project.tcg.domain.trade.facade.RoomFacade;
-import com.project.tcg.domain.trade.facade.RoomUserFacade;
+import com.project.tcg.domain.chat.facade.RoomFacade;
+import com.project.tcg.domain.chat.facade.RoomUserFacade;
 import com.project.tcg.domain.trade.presentation.dto.response.AcceptResponse;
 import com.project.tcg.domain.trade.presentation.dto.response.OfferResponse;
 import com.project.tcg.domain.user.domain.User;

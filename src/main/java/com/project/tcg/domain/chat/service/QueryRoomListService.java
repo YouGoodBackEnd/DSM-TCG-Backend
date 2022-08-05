@@ -3,7 +3,7 @@ package com.project.tcg.domain.chat.service;
 import com.project.tcg.domain.chat.presentation.dto.response.QueryRoomListResponse;
 import com.project.tcg.domain.chat.presentation.dto.response.RoomResponse;
 import com.project.tcg.domain.trade.domain.repository.RoomRepository;
-import com.project.tcg.domain.trade.facade.RoomFacade;
+import com.project.tcg.domain.chat.facade.RoomFacade;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 

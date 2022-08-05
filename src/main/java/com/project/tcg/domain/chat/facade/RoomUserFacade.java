@@ -1,4 +1,4 @@
-package com.project.tcg.domain.trade.facade;
+package com.project.tcg.domain.chat.facade;
 
 import com.project.tcg.domain.chat.domain.Room;
 import com.project.tcg.domain.chat.domain.RoomUser;

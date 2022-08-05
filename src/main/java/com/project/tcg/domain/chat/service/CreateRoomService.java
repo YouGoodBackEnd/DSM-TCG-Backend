@@ -8,7 +8,7 @@ import com.project.tcg.domain.chat.presentation.dto.request.CreateRoomRequest;
 import com.project.tcg.domain.chat.presentation.dto.response.RoomNotificationResponse;
 import com.project.tcg.domain.trade.domain.repository.RoomRepository;
 import com.project.tcg.domain.trade.domain.repository.RoomUserRepository;
-import com.project.tcg.domain.trade.facade.RoomUserFacade;
+import com.project.tcg.domain.chat.facade.RoomUserFacade;
 import com.project.tcg.domain.user.domain.User;
 import com.project.tcg.domain.user.facade.UserFacade;
 import com.project.tcg.global.socket.SocketProperty;

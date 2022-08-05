@@ -1,7 +1,6 @@
-package com.project.tcg.domain.trade.facade;
+package com.project.tcg.domain.chat.facade;
 
 import com.project.tcg.domain.chat.domain.Room;
-import com.project.tcg.domain.chat.domain.RoomUser;
 import com.project.tcg.domain.trade.domain.repository.RoomRepository;
 import com.project.tcg.domain.trade.exception.RoomNotFoundException;
 import lombok.RequiredArgsConstructor;
@@ -16,10 +15,6 @@ public class RoomFacade {
     public Room getRoomById(Long roomId) {
         return roomRepository.findById(roomId)
                 .orElseThrow(() -> RoomNotFoundException.EXCEPTION);
-    }
-
-    public void roomUsersAcceptFalse(Room room) {
-        room.getRoomUsers().forEach(RoomUser::acceptFalse);
     }
 
     public boolean isNotEmptyRoom(Room room) {
