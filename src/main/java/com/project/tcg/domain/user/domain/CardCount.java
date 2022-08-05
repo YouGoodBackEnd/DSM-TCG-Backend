@@ -49,22 +49,42 @@ public class CardCount {
                 .build();
     }
 
-    public void addCount(Grade grade) {
+    public void addCount(Grade grade, int cardCount) {
         switch (grade) {
             case SS:
-                this.SSGradeCardCount += 1;
+                this.SSGradeCardCount += cardCount;
                 break;
             case S:
-                this.SGradeCardCount += 1;
+                this.SGradeCardCount += cardCount;
                 break;
             case A:
-                this.AGradeCardCount += 1;
+                this.AGradeCardCount += cardCount;
                 break;
             case B:
-                this.BGradeCardCount += 1;
+                this.BGradeCardCount += cardCount;
                 break;
             case C:
-                this.CGradeCardCount += 1;
+                this.CGradeCardCount += cardCount;
+                break;
+        }
+    }
+
+    public void removeCount(Grade grade, int cardCount) {
+        switch (grade) {
+            case SS:
+                this.SSGradeCardCount -= cardCount;
+                break;
+            case S:
+                this.SGradeCardCount -= cardCount;
+                break;
+            case A:
+                this.AGradeCardCount -= cardCount;
+                break;
+            case B:
+                this.BGradeCardCount -= cardCount;
+                break;
+            case C:
+                this.CGradeCardCount -= cardCount;
                 break;
         }
     }
