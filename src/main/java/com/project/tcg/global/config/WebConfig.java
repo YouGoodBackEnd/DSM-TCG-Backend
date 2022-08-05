@@ -1,4 +1,4 @@
-package com.project.tcg.global.socket.config;
+package com.project.tcg.global.config;
 
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
