@@ -75,7 +75,8 @@ public class ParticipateRoomService {
 
         room.getRoomUsers()
                 .forEach(roomUser -> {
-                    Offer offer = roomUser.getOffer();
+
+                    Offer offer = roomUser.getOffer() != null ? roomUser.getOffer() : new Offer();
 
                     OfferResponse response = OfferResponse
                             .builder()
