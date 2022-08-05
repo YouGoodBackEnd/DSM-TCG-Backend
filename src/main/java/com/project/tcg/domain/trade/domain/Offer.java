@@ -16,6 +16,8 @@ public class Offer {
 
     private Long cardId;
 
+    private Integer cardCount;
+
     private Integer coin;
 
 }
