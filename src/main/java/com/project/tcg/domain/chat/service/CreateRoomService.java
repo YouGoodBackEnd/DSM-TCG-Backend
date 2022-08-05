@@ -4,11 +4,11 @@ import com.corundumstudio.socketio.SocketIOClient;
 import com.corundumstudio.socketio.SocketIOServer;
 import com.project.tcg.domain.chat.domain.Room;
 import com.project.tcg.domain.chat.domain.RoomUser;
+import com.project.tcg.domain.chat.facade.RoomUserFacade;
 import com.project.tcg.domain.chat.presentation.dto.request.CreateRoomRequest;
 import com.project.tcg.domain.chat.presentation.dto.response.RoomNotificationResponse;
 import com.project.tcg.domain.trade.domain.repository.RoomRepository;
 import com.project.tcg.domain.trade.domain.repository.RoomUserRepository;
-import com.project.tcg.domain.chat.facade.RoomUserFacade;
 import com.project.tcg.domain.user.domain.User;
 import com.project.tcg.domain.user.facade.UserFacade;
 import com.project.tcg.global.socket.SocketProperty;
@@ -31,15 +31,12 @@ public class CreateRoomService {
 
         User user = userFacade.getUserByClient(socketIOClient);
 
-        roomUserFacade.removeParticipatingRooms(user);
-        socketIOClient
-                .getAllRooms()
-                .forEach(socketIOClient::leaveRoom);
-
         Room room = roomRepository.save(Room
                 .builder()
                 .name(request.getRoomName())
                 .build());
+
+        roomUserFacade.checkRoomUserIsNotExist(room, user);
 
         roomUserRepository.save(RoomUser
                 .builder()

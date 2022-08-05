@@ -6,10 +6,10 @@ import com.project.tcg.domain.chat.domain.Room;
 import com.project.tcg.domain.chat.domain.enums.EmojiType;
 import com.project.tcg.domain.chat.domain.repository.EmojiRepository;
 import com.project.tcg.domain.chat.exception.EmojiNotFoundException;
-import com.project.tcg.domain.chat.presentation.dto.request.ChatRequest;
-import com.project.tcg.domain.chat.presentation.dto.response.ChatResponse;
 import com.project.tcg.domain.chat.facade.RoomFacade;
 import com.project.tcg.domain.chat.facade.RoomUserFacade;
+import com.project.tcg.domain.chat.presentation.dto.request.ChatRequest;
+import com.project.tcg.domain.chat.presentation.dto.response.ChatResponse;
 import com.project.tcg.domain.user.domain.User;
 import com.project.tcg.domain.user.facade.UserFacade;
 import com.project.tcg.global.socket.SocketProperty;
@@ -37,7 +37,7 @@ public class ChattingService {
         Room room = roomFacade.getRoomById(request.getRoomId());
         User user = userFacade.getUserByClient(socketIOClient);
 
-        roomUserFacade.CheckRoomUserIsExist(room,user);
+        roomUserFacade.checkRoomUserIsExist(room, user);
 
         String emojiImageUrl = getEmojiImageUrl(request.getEmojiType());
 
