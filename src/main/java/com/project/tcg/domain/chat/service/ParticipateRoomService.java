@@ -4,13 +4,13 @@ import com.corundumstudio.socketio.SocketIOClient;
 import com.corundumstudio.socketio.SocketIOServer;
 import com.project.tcg.domain.chat.domain.Room;
 import com.project.tcg.domain.chat.domain.RoomUser;
+import com.project.tcg.domain.chat.facade.RoomFacade;
+import com.project.tcg.domain.chat.facade.RoomUserFacade;
 import com.project.tcg.domain.chat.presentation.dto.request.ParticipateRoomRequest;
 import com.project.tcg.domain.chat.presentation.dto.response.RoomNotificationResponse;
 import com.project.tcg.domain.trade.domain.Offer;
 import com.project.tcg.domain.trade.domain.repository.RoomUserRepository;
 import com.project.tcg.domain.trade.exception.OverstaffedRoomException;
-import com.project.tcg.domain.chat.facade.RoomFacade;
-import com.project.tcg.domain.chat.facade.RoomUserFacade;
 import com.project.tcg.domain.trade.presentation.dto.response.AcceptResponse;
 import com.project.tcg.domain.trade.presentation.dto.response.OfferResponse;
 import com.project.tcg.domain.user.domain.User;
@@ -40,13 +40,8 @@ public class ParticipateRoomService {
         Room room = roomFacade.getRoomById(request.getRoomId());
         User user = userFacade.getUserByClient(socketIOClient);
 
-        roomUserFacade.removeParticipatingRooms(user);
-        socketIOClient
-                .getAllRooms()
-                .forEach(socketIOClient::leaveRoom);
-
-        if (2 <= room.getRoomUsers().size())
-            throw OverstaffedRoomException.EXCEPTION;
+        roomUserFacade.checkRoomUserIsNotExist(room, user);
+        checkIsNotOverstaffedRoom(room);
 
         roomUserRepository.save(RoomUser.builder()
                 .room(room)
@@ -60,7 +55,9 @@ public class ParticipateRoomService {
         socketIOClient.joinRoom(room.getId().toString());
 
         notifyRoomUsersOfferState(room);
-        makeRoomUserIsNotAcceptedState(room);
+
+        roomFacade.makeRoomUserIsNotAcceptedState(room);
+        notifyRoomUsersOfferStateAcceptState(room);
 
         RoomNotificationResponse response =
                 new RoomNotificationResponse(room.getId(), user.getName() + "님이 입장하셨습니다");
@@ -69,7 +66,13 @@ public class ParticipateRoomService {
                 .sendEvent(SocketProperty.ROOM, response);
     }
 
+    private void checkIsNotOverstaffedRoom(Room room) {
+        if (2 <= room.getRoomUsers().size())
+            throw OverstaffedRoomException.EXCEPTION;
+    }
+
     private void notifyRoomUsersOfferState(Room room) {
+
         room.getRoomUsers()
                 .forEach(roomUser -> {
                     Offer offer = roomUser.getOffer();
@@ -88,10 +91,9 @@ public class ParticipateRoomService {
                 });
     }
 
-    private void makeRoomUserIsNotAcceptedState(Room room) {
+    private void notifyRoomUsersOfferStateAcceptState(Room room) {
         room.getRoomUsers()
                 .forEach(roomUser -> {
-                    roomUser.cancelAccept();
                     AcceptResponse response = new AcceptResponse(roomUser.getId(), roomUser.getIsAccepted());
                     socketIOServer.getRoomOperations(room.getId().toString())
                             .sendEvent(SocketProperty.ACCEPT, response);
