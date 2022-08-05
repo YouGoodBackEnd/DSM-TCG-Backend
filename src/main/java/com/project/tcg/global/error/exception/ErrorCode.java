@@ -23,21 +23,22 @@ public enum ErrorCode {
 
     CARD_NOT_FOUND(404, "CARD-404-1", "Card Not Found"),
 
+    ROOM_NOT_FOUND(404, "ROOM-404-1", "Room Not Found"),
+    OVERSTAFFED_ROOM(409, "ROOM-409-1", "Overstaffed Room"),
+    ROOM_USER_ALREADY_EXIST(409, "ROOM-409-2", "Already joining another room"),
+
+    EMOJI_NOT_FOUND(404, "CHAT-404-1", "Emoji Not Found"),
+
     DID_NOT_OFFERED(400, "TRADE-400-1", "Did Not Offered"),
-    ROOM_NOT_FOUND(403, "TRADE-404-1", "Room Not Found"),
-    OVERSTAFFED_ROOM(409, "TRADE-409-1", "Overstaffed Room"),
     COIN_LACK(409, "TRADE-409-2", "Coin Lack"),
     CARD_LACK(409, "TRADE-409-3", "Card Lack"),
     ALREADY_ACCEPTED(409, "TRADE-409-4", "Already Accepted"),
-
-    EMOJI_NOT_FOUND(404, "CHAT-404-1", "Emoji Not Found"),
 
     REFRESH_TOKEN_NOT_FOUND(404, "AUTH-404-1", "Refresh Token Not Found"),
 
     USER_CHEST_NOT_FOUND(404, "CHEST-404-1", "User Chest Not Found"),
     UNOPENED_CHEST_EXCEPTION(409, "CHEST-409-1", "Unopened Chest"),
 
-    SOCKET_CLIENT_NOT_FOUND(404 , "SOCKET-404-1", "Socket Client Not Found"),
     INTERNAL_SERVER_ERROR(500, "SERVER-500-1", "Internal Server Error");
 
     private final Integer status;
