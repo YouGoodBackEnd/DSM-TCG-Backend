@@ -49,7 +49,7 @@ public class Card {
 
     @NotNull
     @Enumerated(EnumType.STRING)
-    @Column(unique = true)
+    @Column(length = 30, unique = true)
     private CardCode code;
 
     @OneToMany(mappedBy = "card", cascade = CascadeType.REMOVE)
