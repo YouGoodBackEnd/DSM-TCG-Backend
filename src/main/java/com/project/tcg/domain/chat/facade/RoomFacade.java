@@ -1,6 +1,7 @@
 package com.project.tcg.domain.chat.facade;
 
 import com.project.tcg.domain.chat.domain.Room;
+import com.project.tcg.domain.chat.domain.RoomUser;
 import com.project.tcg.domain.trade.domain.repository.RoomRepository;
 import com.project.tcg.domain.trade.exception.RoomNotFoundException;
 import lombok.RequiredArgsConstructor;
@@ -28,5 +29,10 @@ public class RoomFacade {
 
     public boolean isNotOverstaffedRoom(Room room) {
         return 2 > room.getRoomUsers().size();
+    }
+
+    public void makeRoomUserIsNotAcceptedState(Room room) {
+        room.getRoomUsers()
+                .forEach(RoomUser::cancelAccept);
     }
 }
