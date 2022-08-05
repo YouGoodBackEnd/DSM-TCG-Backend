@@ -12,8 +12,8 @@ import com.project.tcg.domain.chat.domain.Room;
 import com.project.tcg.domain.chat.domain.RoomUser;
 import com.project.tcg.domain.trade.domain.repository.RoomUserRepository;
 import com.project.tcg.domain.trade.exception.DidNotOfferedException;
-import com.project.tcg.domain.trade.facade.RoomFacade;
-import com.project.tcg.domain.trade.facade.RoomUserFacade;
+import com.project.tcg.domain.chat.facade.RoomFacade;
+import com.project.tcg.domain.chat.facade.RoomUserFacade;
 import com.project.tcg.domain.user.domain.User;
 import com.project.tcg.domain.user.facade.UserFacade;
 import com.project.tcg.global.socket.SocketProperty;
@@ -26,17 +26,14 @@ import org.springframework.transaction.annotation.Transactional;
 public class AcceptService {
 
     private final RoomFacade roomFacade;
-
     private final UserFacade userFacade;
-
     private final RoomUserFacade roomUserFacade;
-
     private final CardFacade cardFacade;
-
     private final RoomUserRepository roomUserRepository;
+    private final SocketIOServer socketIOServer;
 
     @Transactional
-    public void execute(SocketIOClient socketIOClient, SocketIOServer server, AcceptRequest request) {
+    public void execute(SocketIOClient socketIOClient, AcceptRequest request) {
 
         Room room = roomFacade.getRoomById(request.getRoomId());
         User user = userFacade.getUserByClient(socketIOClient);
@@ -53,12 +50,12 @@ public class AcceptService {
 
         AcceptResponse response = new AcceptResponse(user.getId(), roomUser.getIsAccepted());
 
-        server.getRoomOperations(room.getId().toString())
+        socketIOServer.getRoomOperations(room.getId().toString())
                 .sendEvent(SocketProperty.ACCEPT, response);
 
         if (isTradeable(room)) {
             doTrade(room);
-            server.getRoomOperations(room.getId().toString())
+            socketIOServer.getRoomOperations(room.getId().toString())
                     .sendEvent(SocketProperty.TRADE, new TradeResponse("거래가 완료됐습니다"));
         }
     }

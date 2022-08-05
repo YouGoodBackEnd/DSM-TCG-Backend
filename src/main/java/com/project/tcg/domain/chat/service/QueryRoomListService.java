@@ -14,7 +14,6 @@ import java.util.stream.Collectors;
 public class QueryRoomListService {
 
     private final RoomRepository roomRepository;
-
     private final RoomFacade roomFacade;
 
     public QueryRoomListResponse execute(){

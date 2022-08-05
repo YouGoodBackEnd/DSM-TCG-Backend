@@ -9,6 +9,7 @@ import lombok.Getter;
 @AllArgsConstructor
 @JsonFormat(shape = JsonFormat.Shape.OBJECT)
 public enum ErrorCode {
+
     SAVE_IMAGE_FAILED(400, "COMMON-400-1", "Save Image Failed"),
 
     EXPIRED_TOKEN(401,"COMMON401-1", "Expired Token" ),

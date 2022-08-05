@@ -19,11 +19,8 @@ import java.time.ZonedDateTime;
 public class LoginService {
 
     private final UserRepository userRepository;
-
     private final JwtTokenProvider jwtTokenProvider;
-
     private final PasswordEncoder passwordEncoder;
-
     private final JwtProperties jwtProperties;
 
     public TokenResponse execute(LoginRequest request) {
