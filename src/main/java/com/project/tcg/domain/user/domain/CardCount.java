@@ -53,14 +53,19 @@ public class CardCount {
         switch (grade) {
             case SS:
                 this.SSGradeCardCount += 1;
+                break;
             case S:
                 this.SGradeCardCount += 1;
+                break;
             case A:
                 this.AGradeCardCount += 1;
+                break;
             case B:
                 this.BGradeCardCount += 1;
+                break;
             case C:
                 this.CGradeCardCount += 1;
+                break;
         }
     }
 }
