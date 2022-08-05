@@ -35,8 +35,6 @@ public class UserFacade {
 
     public User getUserByClient(SocketIOClient client) {
 
-        System.out.println("client.get(ClientProperty.USER_KEY) = " + client.get(ClientProperty.USER_KEY));
-
         return userRepository.findByAccountId(client.get(ClientProperty.USER_KEY))
                 .orElseThrow(() -> UserNotFoundException.EXCEPTION);
     }
