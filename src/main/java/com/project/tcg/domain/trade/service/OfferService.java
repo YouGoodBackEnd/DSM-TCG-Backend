@@ -13,13 +13,14 @@ import com.project.tcg.domain.trade.domain.repository.RoomUserRepository;
 import com.project.tcg.domain.trade.exception.AlreadyAcceptedException;
 import com.project.tcg.domain.trade.exception.CardLackException;
 import com.project.tcg.domain.trade.exception.CoinLackException;
-import com.project.tcg.domain.trade.facade.RoomFacade;
-import com.project.tcg.domain.trade.facade.RoomUserFacade;
+import com.project.tcg.domain.chat.facade.RoomFacade;
+import com.project.tcg.domain.chat.facade.RoomUserFacade;
 import com.project.tcg.domain.user.domain.User;
 import com.project.tcg.domain.user.facade.UserFacade;
 import com.project.tcg.global.socket.SocketProperty;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @RequiredArgsConstructor
 @Service
@@ -35,7 +36,10 @@ public class OfferService {
 
     private final RoomUserRepository roomUserRepository;
 
-    public void execute(SocketIOClient socketIOClient, SocketIOServer server, OfferRequest request) {
+    private final SocketIOServer socketIOServer;
+
+    @Transactional
+    public void execute(SocketIOClient socketIOClient, OfferRequest request) {
 
         Room room = roomFacade.getRoomById(request.getRoomId());
         User user = userFacade.getUserByClient(socketIOClient);
@@ -70,7 +74,7 @@ public class OfferService {
                 .coin(suggestCoin)
                 .build();
 
-        server.getRoomOperations(room.getId().toString())
+        socketIOServer.getRoomOperations(room.getId().toString())
                 .sendEvent(SocketProperty.OFFER, response);
     }
 

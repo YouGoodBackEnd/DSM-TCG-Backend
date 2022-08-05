@@ -20,13 +20,13 @@ public class TradeController {
     private final AcceptService acceptService;
 
     @OnEvent("offer")
-    public void suggest(SocketIOClient socketIOClient, SocketIOServer server, @RequestBody OfferRequest request) {
-        offerService.execute(socketIOClient, server, request);
+    public void suggest(SocketIOClient socketIOClient, @RequestBody OfferRequest request) {
+        offerService.execute(socketIOClient, request);
     }
 
     @OnEvent("accept")
-    public void accept(SocketIOClient socketIOClient, SocketIOServer server, @RequestBody AcceptRequest request) {
-        acceptService.execute(socketIOClient, server, request);
+    public void accept(SocketIOClient socketIOClient, @RequestBody AcceptRequest request) {
+        acceptService.execute(socketIOClient, request);
     }
 
 }
