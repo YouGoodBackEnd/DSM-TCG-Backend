@@ -3,6 +3,7 @@ package com.project.tcg.domain.trade.service;
 import com.corundumstudio.socketio.SocketIOClient;
 import com.corundumstudio.socketio.SocketIOServer;
 import com.project.tcg.domain.card.domain.Card;
+import com.project.tcg.domain.card.domain.repository.UserCardRepository;
 import com.project.tcg.domain.card.facade.CardFacade;
 import com.project.tcg.domain.trade.presentation.dto.request.AcceptRequest;
 import com.project.tcg.domain.trade.presentation.dto.response.AcceptResponse;
@@ -15,6 +16,7 @@ import com.project.tcg.domain.trade.exception.DidNotOfferedException;
 import com.project.tcg.domain.chat.facade.RoomFacade;
 import com.project.tcg.domain.chat.facade.RoomUserFacade;
 import com.project.tcg.domain.user.domain.User;
+import com.project.tcg.domain.user.domain.repository.UserRepository;
 import com.project.tcg.domain.user.facade.UserFacade;
 import com.project.tcg.global.socket.SocketProperty;
 import lombok.RequiredArgsConstructor;
@@ -29,7 +31,9 @@ public class AcceptService {
     private final UserFacade userFacade;
     private final RoomUserFacade roomUserFacade;
     private final CardFacade cardFacade;
+    private final UserCardRepository userCardRepository;
     private final RoomUserRepository roomUserRepository;
+    private final UserRepository userRepository;
     private final SocketIOServer socketIOServer;
 
     @Transactional
@@ -76,8 +80,9 @@ public class AcceptService {
         Offer offer2 = roomUser2.getOffer();
         Card offerCard2 = cardFacade.getCardById(offer2.getCardId());
 
-        user1.giveResourcesToUser(offerCard1, offer1.getCoin(), user2);
-        user2.giveResourcesToUser(offerCard2, offer2.getCoin(), user1);
+        user1.giveResourcesToUser(offerCard1, offer1.getCardCount(), offer1.getCoin(), user2);
+        user2.giveResourcesToUser(offerCard2, offer2.getCardCount(), offer2.getCoin(), user1);
+
     }
 
 }

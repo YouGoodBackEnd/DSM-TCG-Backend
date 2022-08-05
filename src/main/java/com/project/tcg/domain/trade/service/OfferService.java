@@ -59,6 +59,7 @@ public class OfferService {
 
         Offer offer = Offer.builder()
                 .cardId(suggestCardId)
+                .cardCount(suggestCardCount)
                 .coin(suggestCoin)
                 .build();
 
