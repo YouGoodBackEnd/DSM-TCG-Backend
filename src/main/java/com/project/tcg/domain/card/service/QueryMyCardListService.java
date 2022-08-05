@@ -26,10 +26,12 @@ public class QueryMyCardListService {
         Long userId = user.getId();
 
         return new QueryUserCardListResponse(
+                user.getCardCount(),
                 Arrays.stream(CardCode.values())
                 .map(cardCode -> userCardRepository.findByCard_CodeAndUser_Id(cardCode, userId))
                 .filter(cards -> (0 < cards.size()))
                 .map(UserCardResponse::of)
-                .collect(Collectors.toList()));
+                .collect(Collectors.toList())
+        );
     }
 }
