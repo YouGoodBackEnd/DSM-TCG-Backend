@@ -2,7 +2,7 @@ package com.project.tcg.domain.chest.service;
 
 import com.project.tcg.domain.chest.Facade.ChestFacade;
 import com.project.tcg.domain.chest.Facade.UserChestFacade;
-import com.project.tcg.domain.chest.domain.DrawProbability;
+import com.project.tcg.domain.chest.domain.enums.DrawProbability;
 import com.project.tcg.domain.chest.presentation.dto.response.DrawChestResponse;
 import com.project.tcg.domain.user.domain.User;
 import com.project.tcg.domain.user.facade.UserFacade;
@@ -25,4 +25,5 @@ public class DrawFreeChestService {
 
         return chestFacade.getDrawChestResponse(user, 3, DrawProbability.FREE_CHEST);
     }
+
 }

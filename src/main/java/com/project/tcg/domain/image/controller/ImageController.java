@@ -23,4 +23,5 @@ public class ImageController {
     public ImageUrlResponse saveImage(@RequestPart(value="images")  List<MultipartFile> images) {
         return imageUploadService.execute(images);
     }
+
 }
