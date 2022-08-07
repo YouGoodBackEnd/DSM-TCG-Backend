@@ -15,6 +15,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.MapsId;
 import javax.persistence.OneToOne;
+import javax.validation.constraints.NotNull;
 import java.time.LocalDateTime;
 
 @Getter
@@ -25,7 +26,7 @@ import java.time.LocalDateTime;
 public class UserChest {
 
     @Id
-    @Column(name = "user_id", nullable = false)
+    @Column(name = "user_id")
     private Long id;
 
     @OneToOne(fetch = FetchType.LAZY)
@@ -33,8 +34,10 @@ public class UserChest {
     @JoinColumn(name = "user_id")
     private User user;
 
+    @NotNull
     private LocalDateTime freeChestOpenDateTime;
 
+    @NotNull
     private LocalDateTime specialChestOpenDateTime;
 
     public void renewFreeChestOpenDateTime(){
