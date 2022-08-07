@@ -18,7 +18,7 @@ spring:
     show-sql: true
     properties:
       format_sql: true
-      generate-ddl: true
+      generate-ddl: false
     generate-ddl: true
     defer-datasource-initialization: true
 
@@ -37,13 +37,6 @@ cloud:
       access-key: ${S3_ACCESS_KEY}
       secret-key: ${S3_SECRET_KEY}
 
-logging:
-  level:
-    com:
-      amazonaws:
-        util:
-          EC2MetadataUtils: ERROR
-
 org:
   springframework:
     security:
@@ -60,5 +53,5 @@ jwt:
   header: ${HEADER}
   prefix : ${PREFIX}
   secret-key: ${JWT-SECRET}
-  access-exp: 999999999 # ${ACCESS-EXP}
+  access-exp: ${ACCESS-EXP}
   refresh-exp: ${REFRESH-EXP}
