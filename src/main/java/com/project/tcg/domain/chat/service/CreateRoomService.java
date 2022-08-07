@@ -7,8 +7,8 @@ import com.project.tcg.domain.chat.domain.RoomUser;
 import com.project.tcg.domain.chat.facade.RoomUserFacade;
 import com.project.tcg.domain.chat.presentation.dto.request.CreateRoomRequest;
 import com.project.tcg.domain.chat.presentation.dto.response.RoomNotificationResponse;
-import com.project.tcg.domain.trade.domain.repository.RoomRepository;
-import com.project.tcg.domain.trade.domain.repository.RoomUserRepository;
+import com.project.tcg.domain.chat.domain.repository.RoomRepository;
+import com.project.tcg.domain.chat.domain.repository.RoomUserRepository;
 import com.project.tcg.domain.user.domain.User;
 import com.project.tcg.domain.user.facade.UserFacade;
 import com.project.tcg.global.socket.SocketProperty;
@@ -38,7 +38,7 @@ public class CreateRoomService {
 
         roomUserFacade.checkRoomUserIsNotExist(room, user);
 
-        roomUserRepository.save(RoomUser
+        RoomUser roomUser = roomUserRepository.save(RoomUser
                 .builder()
                 .user(user)
                 .room(room)
@@ -47,11 +47,22 @@ public class CreateRoomService {
                 .build()
         );
 
-        RoomNotificationResponse response =
-                new RoomNotificationResponse(room.getId(), user.getName() + "님이 입장하셨습니다");
-
         socketIOClient.joinRoom(room.getId().toString());
+
+        RoomNotificationResponse response =
+                new RoomNotificationResponse(room.getId(), user.getName() + "님이 입장헀습니다");
+
         socketIOServer.getRoomOperations(room.getId().toString())
                 .sendEvent(SocketProperty.ROOM, response);
+
+        roomUserFacade.notifyRoomUserOfferState(room.getId(), roomUser, (String roomId, Object offerResponse) -> {
+            socketIOServer.getRoomOperations(roomId)
+                    .sendEvent(SocketProperty.OFFER, offerResponse);
+        });
+
+        roomUserFacade.notifyRoomUserAcceptState(room.getId(), roomUser, (String roomId, Object acceptResponse) -> {
+            socketIOServer.getRoomOperations(roomId)
+                    .sendEvent(SocketProperty.ACCEPT, acceptResponse);
+        });
     }
 }

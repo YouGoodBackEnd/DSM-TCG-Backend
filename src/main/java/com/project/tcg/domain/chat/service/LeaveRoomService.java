@@ -2,8 +2,10 @@ package com.project.tcg.domain.chat.service;
 
 import com.corundumstudio.socketio.SocketIOClient;
 import com.corundumstudio.socketio.SocketIOServer;
-import com.project.tcg.domain.chat.presentation.dto.response.RoomNotificationResponse;
+import com.project.tcg.domain.chat.domain.Room;
+import com.project.tcg.domain.chat.facade.RoomFacade;
 import com.project.tcg.domain.chat.facade.RoomUserFacade;
+import com.project.tcg.domain.chat.presentation.dto.response.RoomNotificationResponse;
 import com.project.tcg.domain.user.domain.User;
 import com.project.tcg.domain.user.facade.UserFacade;
 import com.project.tcg.global.socket.SocketProperty;
@@ -15,6 +17,7 @@ import org.springframework.transaction.annotation.Transactional;
 @Service
 public class LeaveRoomService {
 
+    private final RoomFacade roomFacade;
     private final UserFacade userFacade;
     private final RoomUserFacade roomUserFacade;
     private final SocketIOServer socketIOServer;
@@ -24,18 +27,29 @@ public class LeaveRoomService {
 
         User user = userFacade.getUserByClient(socketIOClient);
 
-        roomUserFacade.removeParticipatingRooms(user);
         socketIOClient
                 .getAllRooms()
-                .forEach(room -> {
+                .forEach(socketRoomId -> {
+                    try {
+                        Room room = roomFacade.getRoomById(Long.valueOf(socketRoomId));
+                        room.removeUser(user);
 
-                    socketIOClient.leaveRoom(room);
+                        roomUserFacade.makeAllRoomUserNotAcceptedState(room);
 
-                    RoomNotificationResponse response =
-                            new RoomNotificationResponse(Long.valueOf(room), user.getName() + "님이 나가셨습니다.");
+                        roomUserFacade.notifyAllRoomUsersAcceptState(room, (String roomId, Object acceptResponse) -> {
+                            socketIOServer.getRoomOperations(roomId)
+                                    .sendEvent(SocketProperty.ACCEPT, acceptResponse);
+                        });
 
-                    socketIOServer.getRoomOperations(room)
-                            .sendEvent(SocketProperty.ROOM, response);
+                        RoomNotificationResponse response =
+                                new RoomNotificationResponse(Long.valueOf(socketRoomId), user.getName() + "님이 나갔습니다.");
+
+                        socketIOServer.getRoomOperations(socketRoomId)
+                                .sendEvent(SocketProperty.ROOM, response);
+                    } catch (Exception ignored){
+                    } finally {
+                        socketIOClient.leaveRoom(socketRoomId);
+                    }
                 });
     }
 }
