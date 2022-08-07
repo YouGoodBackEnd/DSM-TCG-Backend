@@ -6,8 +6,6 @@ import lombok.RequiredArgsConstructor;
 @Getter
 @RequiredArgsConstructor
 public enum EmojiType {
-    EMOJI_GOOD("EMOJI_GOOD"),
-    EMOJI_BAD("EMOJI_BAD");
-
-    private final String code;
+    EMOJI_GOOD,
+    EMOJI_BAD
 }
