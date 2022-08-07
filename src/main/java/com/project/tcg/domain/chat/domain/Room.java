@@ -1,18 +1,20 @@
 package com.project.tcg.domain.chat.domain;
 
+import com.project.tcg.domain.user.domain.User;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
+import javax.validation.constraints.NotNull;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -28,36 +30,37 @@ public class Room {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @NotNull
     @Column
     private String name;
 
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "room")
-    private List<RoomUser> RoomUsers = new ArrayList<>();
+    @OneToMany(mappedBy = "room", cascade = CascadeType.PERSIST, orphanRemoval = true)
+    private List<RoomUser> roomUsers = new ArrayList<>();
 
     public boolean checkBothOffered() {
 
-        int offeredUserCount = (int) RoomUsers.stream()
+        int offeredUserCount = (int) roomUsers
+                .stream()
                 .filter(RoomUser::getIsOffered)
                 .count();
 
-        return offeredUserCount == RoomUsers.size();
+        return offeredUserCount == roomUsers.size();
     }
 
     public boolean checkBothAccepted() {
 
-        int acceptedUserCount = (int) RoomUsers.stream()
+        int acceptedUserCount = (int) roomUsers.stream()
                 .filter(RoomUser::getIsAccepted)
                 .count();
 
-        return acceptedUserCount == RoomUsers.size();
+        return acceptedUserCount == roomUsers.size();
     }
 
-    public boolean isAcceptedAnyone() {
+    public void addRoomUser(RoomUser roomUser) {
+        this.roomUsers.add(roomUser);
+    }
 
-        int acceptedUserCount = (int) RoomUsers.stream()
-                .filter(RoomUser::getIsAccepted)
-                .count();
-
-        return acceptedUserCount != 0;
+    public void removeUser(User user) {
+        this.roomUsers.removeIf(roomUser -> roomUser.getUser() == user);
     }
 }
