@@ -20,6 +20,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.MapsId;
 import javax.persistence.OneToOne;
 import javax.validation.constraints.NotNull;
+import java.util.Objects;
 
 @Getter
 @Builder
@@ -30,7 +31,7 @@ import javax.validation.constraints.NotNull;
 public class RoomUser {
 
     @Id
-    @Column(name = "user_id", nullable = false)
+    @Column(name = "user_id")
     private Long id;
 
     @OneToOne(fetch = FetchType.LAZY)
@@ -51,17 +52,18 @@ public class RoomUser {
     @JoinColumn(name = "room_id")
     private Room room;
 
-    public void acceptFalse() {
-        this.isAccepted = false;
-    }
-
-    public void setOffer(Offer offer) {
-        if (offer.getCardId() == null && offer.getCoin() == null) {
-            this.isOffered = false;
-            this.offer = null;
+    public Boolean setOffer(Offer offer) {
+        if ((this.offer == null && offer == null) || Objects.equals(this.offer, offer)) {
+            return false;
         } else {
-            this.isOffered = true;
-            this.offer = offer;
+            if (offer.getCardId() == null && offer.getCoin() == null) {
+                this.isOffered = false;
+                this.offer = null;
+            } else {
+                this.isOffered = true;
+                this.offer = offer;
+            }
+            return true;
         }
     }
 
