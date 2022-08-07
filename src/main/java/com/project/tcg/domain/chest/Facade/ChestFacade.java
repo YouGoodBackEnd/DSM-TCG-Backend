@@ -3,9 +3,8 @@ package com.project.tcg.domain.chest.Facade;
 import com.project.tcg.domain.card.domain.Card;
 import com.project.tcg.domain.card.domain.enums.Grade;
 import com.project.tcg.domain.card.domain.repository.CardRepository;
-import com.project.tcg.domain.card.domain.repository.UserCardRepository;
 import com.project.tcg.domain.card.presentation.dto.response.CardResponse;
-import com.project.tcg.domain.chest.domain.DrawProbability;
+import com.project.tcg.domain.chest.domain.enums.DrawProbability;
 import com.project.tcg.domain.chest.presentation.dto.response.DrawChestResponse;
 import com.project.tcg.domain.user.domain.User;
 import com.project.tcg.domain.user.domain.repository.UserRepository;
@@ -24,10 +23,7 @@ public class ChestFacade {
     static final Random RANDOM = new Random();
 
     private final CardRepository cardRepository;
-
     private final UserRepository userRepository;
-
-    private final UserCardRepository userCardRepository;
 
     public DrawChestResponse getDrawChestResponse(User user, int drawCount, DrawProbability drawProbability) {
 
