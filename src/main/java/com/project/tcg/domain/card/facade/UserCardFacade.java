@@ -10,6 +10,7 @@ import org.springframework.stereotype.Component;
 public class UserCardFacade {
 
     private final UserCardRepository userCardRepository;
+
     public Boolean checkUserCardExist(User user, Long cardId){
         return userCardRepository.findFirstByUserAndCard_id(user,cardId).isPresent();
     }

@@ -6,6 +6,7 @@ import lombok.RequiredArgsConstructor;
 @Getter
 @RequiredArgsConstructor
 public enum CardCode {
+
     SS_GRADE_CARD("SSGradeCard"),
     S_GRADE_CARD("SGradeCard"),
     A_GRADE_CARD("AGradeCard"),

@@ -1,6 +1,6 @@
-package com.project.tcg.domain.chat.domain;
+package com.project.tcg.domain.chatRoom.domain;
 
-import com.project.tcg.domain.chat.domain.enums.EmojiType;
+import com.project.tcg.domain.chatRoom.domain.enums.EmojiType;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -18,6 +18,7 @@ import javax.validation.constraints.NotNull;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Entity
 public class Emoji {
+
     @Id
     @Column(name = "emoji_id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)

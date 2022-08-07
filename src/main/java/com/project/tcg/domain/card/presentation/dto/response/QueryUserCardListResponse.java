@@ -11,6 +11,5 @@ import java.util.List;
 public class QueryUserCardListResponse {
 
     private CardCount cardCount;
-
-    private  List<UserCardResponse> cardList;
+    private List<UserCardResponse> cardList;
 }
