@@ -1,9 +1,9 @@
 package com.project.tcg.domain.chat.facade;
 
 import com.project.tcg.domain.chat.domain.Room;
-import com.project.tcg.domain.chat.domain.RoomUser;
-import com.project.tcg.domain.trade.domain.repository.RoomRepository;
-import com.project.tcg.domain.trade.exception.RoomNotFoundException;
+import com.project.tcg.domain.chat.domain.repository.RoomRepository;
+import com.project.tcg.domain.chat.exception.OverstaffedRoomException;
+import com.project.tcg.domain.chat.exception.RoomNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
@@ -27,12 +27,13 @@ public class RoomFacade {
         return true;
     }
 
-    public boolean isNotOverstaffedRoom(Room room) {
+    public void checkIsNotFulledRoom(Room room) {
+        if (!isNotFulledRoom(room))
+            throw OverstaffedRoomException.EXCEPTION;
+    }
+
+    public boolean isNotFulledRoom(Room room) {
         return 2 > room.getRoomUsers().size();
     }
 
-    public void makeRoomUserIsNotAcceptedState(Room room) {
-        room.getRoomUsers()
-                .forEach(RoomUser::cancelAccept);
-    }
 }
