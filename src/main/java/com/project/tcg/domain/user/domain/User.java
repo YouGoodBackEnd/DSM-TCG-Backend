@@ -23,7 +23,6 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
-import java.io.Serializable;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -32,7 +31,7 @@ import java.util.stream.Collectors;
 @AllArgsConstructor
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Entity
-public class User implements Serializable {
+public class User {
 
     @Id
     @Column(name = "user_id")
@@ -40,8 +39,8 @@ public class User implements Serializable {
     private Long id;
 
     @NotNull
-    @Column(unique = true)
     @Size(max = 30)
+    @Column(unique = true)
     private String accountId;
 
     @NotNull
@@ -89,13 +88,25 @@ public class User implements Serializable {
         this.coin -= coin;
     }
 
+    public void addDiamond(int diamond) {
+        this.diamond += diamond;
+    }
+
+    public void removeDiamond(int diamond) {
+        this.diamond -= diamond;
+    }
+
     public void addCard(Card card, int cardCount) {
+
         this.cardCount.addCount(card.getGrade(), cardCount);
+
         for (int i = 0; i < cardCount; i++) {
-            this.userCardList.add(UserCard.builder()
-                    .card(card)
-                    .user(this)
-                    .build());
+            this.userCardList.add(
+                    UserCard.builder()
+                            .card(card)
+                            .user(this)
+                            .build()
+            );
         }
     }
 
@@ -114,10 +125,6 @@ public class User implements Serializable {
         }
     }
 
-    public void addDiamond(int diamond) {
-        this.diamond += diamond;
-    }
-
     public void giveResourcesToUser(Card card, Integer cardCount, Integer coin, User user) {
 
         if (card != null) {
@@ -129,6 +136,5 @@ public class User implements Serializable {
             user.addCoin(coin);
         }
     }
-
 
 }
