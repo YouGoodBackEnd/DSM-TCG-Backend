@@ -3,7 +3,6 @@ package com.project.tcg.domain.chat.service;
 import com.corundumstudio.socketio.SocketIOClient;
 import com.corundumstudio.socketio.SocketIOServer;
 import com.project.tcg.domain.chat.domain.Room;
-import com.project.tcg.domain.chat.domain.enums.EmojiType;
 import com.project.tcg.domain.chat.domain.repository.EmojiRepository;
 import com.project.tcg.domain.chat.exception.EmojiNotFoundException;
 import com.project.tcg.domain.chat.facade.RoomFacade;
@@ -39,7 +38,7 @@ public class ChattingService {
 
         roomUserFacade.checkRoomUserIsExist(room, user);
 
-        String emojiImageUrl = getEmojiImageUrl(request.getEmojiType());
+        String emojiImageUrl = getEmojiImageUrl(request.getEmojiId());
 
         ChatResponse response = ChatResponse.builder()
                 .userId(user.getId())
@@ -54,10 +53,13 @@ public class ChattingService {
                         .sendEvent(SocketProperty.CHAT, response);
     }
 
-    private String getEmojiImageUrl(EmojiType emojiType) {
-        if(emojiType == null) return null;
-        else return emojiRepository.findByEmojiType(emojiType)
-                .orElseThrow(()-> EmojiNotFoundException.EXCEPTION)
-                .getEmojiImageUrl();
+    private String getEmojiImageUrl(Long emojiId) {
+        if(emojiId == null) {
+            return null;
+        } else {
+            return emojiRepository.findById(emojiId)
+                    .orElseThrow(()-> EmojiNotFoundException.EXCEPTION)
+                    .getEmojiImageUrl();
+        }
     }
 }
