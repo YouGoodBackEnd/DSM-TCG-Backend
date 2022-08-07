@@ -10,9 +10,9 @@ import javax.validation.constraints.NotBlank;
 @NoArgsConstructor
 public class UpdatePasswordRequest {
 
-    @NotBlank(message = "password는 Null 또는 공백 또는 띄어쓰기를 허용하지 않습니다.")
+    @NotBlank(message = "old_passwod는 Null 또는 공백 또는 띄어쓰기를 허용하지 않습니다.")
     private String oldPassword;
 
-    @NotBlank(message = "새 password는 Null 또는 공백 또는 띄어쓰기를 허용하지 않습니다.")
+    @NotBlank(message = "new_password는 Null 또는 공백 또는 띄어쓰기를 허용하지 않습니다.")
     private String newPassword;
 }
