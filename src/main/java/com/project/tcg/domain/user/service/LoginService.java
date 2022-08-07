@@ -1,5 +1,6 @@
 package com.project.tcg.domain.user.service;
 
+import com.project.tcg.domain.auth.presentation.dto.TokenResponse;
 import com.project.tcg.domain.user.domain.User;
 import com.project.tcg.domain.user.domain.repository.UserRepository;
 import com.project.tcg.domain.user.exception.PasswordMismatchException;
@@ -7,12 +8,11 @@ import com.project.tcg.domain.user.exception.UserNotFoundException;
 import com.project.tcg.domain.user.presentation.dto.request.LoginRequest;
 import com.project.tcg.global.security.jwt.JwtProperties;
 import com.project.tcg.global.security.jwt.JwtTokenProvider;
-import com.project.tcg.global.utils.token.dto.TokenResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import java.time.ZonedDateTime;
+import java.time.LocalDateTime;
 
 @Service
 @RequiredArgsConstructor
@@ -40,7 +40,7 @@ public class LoginService {
         return TokenResponse
                 .builder()
                 .accessToken(accessToken)
-                .expiredAt(ZonedDateTime.now().plusSeconds(jwtProperties.getAccessExp()))
+                .expiredAt(LocalDateTime.now().plusSeconds(jwtProperties.getAccessExp()))
                 .refreshToken(refreshToken)
                 .build();
     }

@@ -1,10 +1,10 @@
-package com.project.tcg.global.utils.token.dto;
+package com.project.tcg.domain.auth.presentation.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 
-import java.time.ZonedDateTime;
+import java.time.LocalDateTime;
 
 @Getter
 @Builder
@@ -13,7 +13,7 @@ public class TokenResponse {
 
     private final String accessToken;
 
-    private final ZonedDateTime expiredAt;
+    private final LocalDateTime expiredAt;
 
     private final String refreshToken;
 
