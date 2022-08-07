@@ -21,7 +21,7 @@ public class TokenRefreshService {
 
     public TokenResponse execute(String refreshToken) {
 
-        RefreshToken redisRefreshToken = refreshTokenRepository.findById(refreshToken)
+        RefreshToken redisRefreshToken = refreshTokenRepository.findByToken(refreshToken)
                 .orElseThrow(() -> RefreshTokenNotFoundException.EXCEPTION);
 
         String accountId = redisRefreshToken.getAccountId();
