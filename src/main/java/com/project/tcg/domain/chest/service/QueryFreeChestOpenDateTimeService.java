@@ -8,6 +8,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 @RequiredArgsConstructor
 @Service
@@ -23,10 +24,13 @@ public class QueryFreeChestOpenDateTimeService {
         LocalDateTime openDateTime = userChestFacade.getUserChestById(user)
                 .getFreeChestOpenDateTime();
 
+        String formattedDateTime = DateTimeFormatter
+                .ofPattern("yyyy-MM-dd HH:mm:ss").format(openDateTime);
+
         return QueryChestOpenDateTimeResponse
                 .builder()
-                .chestOpenDateTime(openDateTime)
-                .isOpened(openDateTime.isAfter(LocalDateTime.now()))
+                .chestOpenDateTime(formattedDateTime)
+                .isOpened(openDateTime.isBefore(LocalDateTime.now()))
                 .build();
     }
 }
