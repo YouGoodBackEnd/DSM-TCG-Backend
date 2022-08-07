@@ -5,11 +5,13 @@ import com.corundumstudio.socketio.annotation.OnEvent;
 import com.project.tcg.domain.chat.presentation.dto.request.ChatRequest;
 import com.project.tcg.domain.chat.presentation.dto.request.CreateRoomRequest;
 import com.project.tcg.domain.chat.presentation.dto.request.ParticipateRoomRequest;
+import com.project.tcg.domain.chat.presentation.dto.response.QueryEmojiListResponse;
 import com.project.tcg.domain.chat.presentation.dto.response.QueryRoomListResponse;
 import com.project.tcg.domain.chat.service.ChattingService;
 import com.project.tcg.domain.chat.service.CreateRoomService;
 import com.project.tcg.domain.chat.service.LeaveRoomService;
 import com.project.tcg.domain.chat.service.ParticipateRoomService;
+import com.project.tcg.domain.chat.service.QueryEmojiListService;
 import com.project.tcg.domain.chat.service.QueryRoomListService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -26,10 +28,10 @@ public class ChatController {
     private final ChattingService chattingService;
     private final LeaveRoomService leaveRoomService;
     private final QueryRoomListService queryRoomListService;
+    private final QueryEmojiListService queryEmojiListService;
 
     @OnEvent("create")
     public void createRoom(SocketIOClient socketIOClient, @RequestBody CreateRoomRequest request){
-
         createRoomService.execute(socketIOClient, request);
     }
 
@@ -49,7 +51,12 @@ public class ChatController {
     }
 
     @GetMapping("/rooms")
-    public QueryRoomListResponse queryRoom(){
+    public QueryRoomListResponse queryRoomList() {
         return queryRoomListService.execute();
+    }
+
+    @GetMapping("/emojis")
+    public QueryEmojiListResponse queryEmojiList() {
+        return queryEmojiListService.execute();
     }
 }
