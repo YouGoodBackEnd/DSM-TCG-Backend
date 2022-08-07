@@ -1,4 +1,4 @@
-package com.project.tcg.domain.chest.domain;
+package com.project.tcg.domain.chest.domain.enums;
 
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;

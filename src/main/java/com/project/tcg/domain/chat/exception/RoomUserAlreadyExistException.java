@@ -1,4 +1,4 @@
-package com.project.tcg.domain.chatRoom.exception;
+package com.project.tcg.domain.chat.exception;
 
 import com.project.tcg.global.error.exception.BusinessException;
 import com.project.tcg.global.error.exception.ErrorCode;

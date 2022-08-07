@@ -1,6 +1,6 @@
-package com.project.tcg.domain.chatRoom.domain;
+package com.project.tcg.domain.chat.domain;
 
-import com.project.tcg.domain.chatRoom.domain.enums.EmojiType;
+import com.project.tcg.domain.chat.domain.enums.EmojiType;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;

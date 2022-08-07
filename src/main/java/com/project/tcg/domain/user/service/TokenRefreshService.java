@@ -5,7 +5,7 @@ import com.project.tcg.domain.auth.domain.repository.RefreshTokenRepository;
 import com.project.tcg.domain.auth.exception.RefreshTokenNotFoundException;
 import com.project.tcg.global.security.jwt.JwtProperties;
 import com.project.tcg.global.security.jwt.JwtTokenProvider;
-import com.project.tcg.global.utils.token.dto.TokenResponse;
+import com.project.tcg.domain.auth.presentation.dto.TokenResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
