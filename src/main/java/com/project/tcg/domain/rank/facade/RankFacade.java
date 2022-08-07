@@ -23,15 +23,15 @@ public class RankFacade {
 
     public Rank getRank(User user) {
 
-        return rankRepository.findById(
-                RankId
-                        .builder()
-                        .userId(user.getId())
-                        .createdAt(LocalDateTime.now()
-                                .minusHours(LocalDateTime.now().getHour())
-                                .minusMinutes(LocalDateTime.now().getMinute()))
-                        .build()
-        ).orElse(null);
+        RankId rankId = RankId
+                .builder()
+                .userId(user.getId())
+                .createdAt(LocalDateTime.now()
+                        .minusHours(LocalDateTime.now().getHour())
+                        .minusMinutes(LocalDateTime.now().getMinute()))
+                .build();
+
+        return rankRepository.findById(rankId).orElse(null);
     }
 
 }
