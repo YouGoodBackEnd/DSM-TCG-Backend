@@ -1,11 +1,9 @@
 package com.project.tcg.domain.user.domain;
 
 import com.project.tcg.domain.card.domain.enums.Grade;
-import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 
 import javax.persistence.Column;
 import javax.persistence.Embeddable;
@@ -14,7 +12,6 @@ import javax.validation.constraints.NotNull;
 @Getter
 @Builder
 @AllArgsConstructor
-@NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Embeddable
 public class CardCount {
 
@@ -38,15 +35,12 @@ public class CardCount {
     @Column(name = "c_grade_card_count")
     private Integer CGradeCardCount;
 
-    public static CardCount init() {
-        return CardCount
-                .builder()
-                .SSGradeCardCount(0)
-                .SGradeCardCount(0)
-                .AGradeCardCount(0)
-                .BGradeCardCount(0)
-                .CGradeCardCount(0)
-                .build();
+    public CardCount() {
+        this.SSGradeCardCount = 0;
+        this.SGradeCardCount = 0;
+        this.AGradeCardCount = 0;
+        this.BGradeCardCount = 0;
+        this.CGradeCardCount = 0;
     }
 
     public void addCount(Grade grade, int cardCount) {
