@@ -10,6 +10,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.Arrays;
+import java.util.List;
 import java.util.stream.Collectors;
 
 @RequiredArgsConstructor
@@ -25,13 +26,13 @@ public class QueryMyCardListService {
         User user = userFacade.getCurrentUser();
         Long userId = user.getId();
 
-        return new QueryUserCardListResponse(
-                user.getCardCount(),
+        List<UserCardResponse> cardList =
                 Arrays.stream(CardCode.values())
-                .map(cardCode -> userCardRepository.findByCard_CodeAndUser_Id(cardCode, userId))
-                .filter(cards -> (0 < cards.size()))
-                .map(UserCardResponse::of)
-                .collect(Collectors.toList())
-        );
+                        .map(cardCode -> userCardRepository.findByCard_CodeAndUser_Id(cardCode, userId))
+                        .filter(cards -> (0 < cards.size()))
+                        .map(UserCardResponse::of)
+                        .collect(Collectors.toList());
+
+        return new QueryUserCardListResponse(user.getCardCount(), cardList);
     }
 }
