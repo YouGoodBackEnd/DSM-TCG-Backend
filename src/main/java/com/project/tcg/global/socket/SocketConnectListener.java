@@ -1,7 +1,6 @@
 package com.project.tcg.global.socket;
 
 import com.corundumstudio.socketio.SocketIOClient;
-import com.corundumstudio.socketio.SocketIOServer;
 import com.corundumstudio.socketio.annotation.OnConnect;
 import com.corundumstudio.socketio.annotation.OnDisconnect;
 import com.project.tcg.domain.chat.facade.RoomUserFacade;
@@ -22,8 +21,6 @@ public class SocketConnectListener {
     private final UserFacade userFacade;
 
     private final RoomUserFacade roomUserFacade;
-
-    private final SocketIOServer socketIOServer;
 
     @OnConnect
     public void onConnect(SocketIOClient socketIOClient) {
