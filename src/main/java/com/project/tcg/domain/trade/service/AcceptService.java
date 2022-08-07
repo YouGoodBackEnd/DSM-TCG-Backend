@@ -3,20 +3,16 @@ package com.project.tcg.domain.trade.service;
 import com.corundumstudio.socketio.SocketIOClient;
 import com.corundumstudio.socketio.SocketIOServer;
 import com.project.tcg.domain.card.domain.Card;
-import com.project.tcg.domain.card.domain.repository.UserCardRepository;
 import com.project.tcg.domain.card.facade.CardFacade;
-import com.project.tcg.domain.trade.presentation.dto.request.AcceptRequest;
-import com.project.tcg.domain.trade.presentation.dto.response.AcceptResponse;
-import com.project.tcg.domain.trade.presentation.dto.response.TradeResponse;
-import com.project.tcg.domain.trade.domain.Offer;
 import com.project.tcg.domain.chat.domain.Room;
 import com.project.tcg.domain.chat.domain.RoomUser;
-import com.project.tcg.domain.trade.domain.repository.RoomUserRepository;
-import com.project.tcg.domain.trade.exception.DidNotOfferedException;
 import com.project.tcg.domain.chat.facade.RoomFacade;
 import com.project.tcg.domain.chat.facade.RoomUserFacade;
+import com.project.tcg.domain.trade.domain.Offer;
+import com.project.tcg.domain.trade.exception.AcceptImpossibleException;
+import com.project.tcg.domain.trade.presentation.dto.request.AcceptRequest;
+import com.project.tcg.domain.trade.presentation.dto.response.TradeResponse;
 import com.project.tcg.domain.user.domain.User;
-import com.project.tcg.domain.user.domain.repository.UserRepository;
 import com.project.tcg.domain.user.facade.UserFacade;
 import com.project.tcg.global.socket.SocketProperty;
 import lombok.RequiredArgsConstructor;
@@ -31,9 +27,6 @@ public class AcceptService {
     private final UserFacade userFacade;
     private final RoomUserFacade roomUserFacade;
     private final CardFacade cardFacade;
-    private final UserCardRepository userCardRepository;
-    private final RoomUserRepository roomUserRepository;
-    private final UserRepository userRepository;
     private final SocketIOServer socketIOServer;
 
     @Transactional
@@ -45,22 +38,37 @@ public class AcceptService {
         RoomUser roomUser = roomUserFacade.getRoomUserByRoomAndUser(room, user);
 
         if (!room.checkBothOffered() || room.getRoomUsers().size() < 2) {
-            throw DidNotOfferedException.EXCEPTION;
+            throw AcceptImpossibleException.EXCEPTION;
         }
 
-        if (roomUser.getIsAccepted()) roomUser.cancelAccept();
-        else roomUser.doAccept();
-        roomUserRepository.save(roomUser);
+        if (roomUser.getIsAccepted()){
+            roomUser.cancelAccept();
+        } else {
+            roomUser.doAccept();
+        }
 
-        AcceptResponse response = new AcceptResponse(user.getId(), roomUser.getIsAccepted());
-
-        socketIOServer.getRoomOperations(room.getId().toString())
-                .sendEvent(SocketProperty.ACCEPT, response);
+        roomUserFacade.notifyRoomUserAcceptState(room.getId(), roomUser, (String roomId, Object acceptResponse) -> {
+            socketIOServer.getRoomOperations(roomId)
+                    .sendEvent(SocketProperty.ACCEPT, acceptResponse);
+        });
 
         if (isTradeable(room)) {
+
             doTrade(room);
             socketIOServer.getRoomOperations(room.getId().toString())
                     .sendEvent(SocketProperty.TRADE, new TradeResponse("거래가 완료됐습니다"));
+
+            roomUserFacade.makeAllRoomUserNotOfferedState(room);
+            roomUserFacade.notifyAllRoomUsersOfferState(room, (String roomId, Object offerResponse) -> {
+                socketIOServer.getRoomOperations(roomId)
+                        .sendEvent(SocketProperty.OFFER, offerResponse);
+            });
+
+            roomUserFacade.makeAllRoomUserNotAcceptedState(room);
+            roomUserFacade.notifyAllRoomUsersAcceptState(room, (String roomId, Object acceptResponse) -> {
+                socketIOServer.getRoomOperations(roomId)
+                        .sendEvent(SocketProperty.ACCEPT, acceptResponse);
+            });
         }
     }
 
@@ -82,7 +90,5 @@ public class AcceptService {
 
         user1.giveResourcesToUser(offerCard1, offer1.getCardCount(), offer1.getCoin(), user2);
         user2.giveResourcesToUser(offerCard2, offer2.getCardCount(), offer2.getCoin(), user1);
-
     }
-
 }
