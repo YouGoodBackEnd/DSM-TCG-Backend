@@ -16,25 +16,21 @@ public class UserFacade {
     private final UserRepository userRepository;
 
     public User getCurrentUser() {
-
         String accountId = SecurityContextHolder.getContext().getAuthentication().getName();
         return getUserByAccountId(accountId);
     }
 
     public User getUserByAccountId(String id) {
-
         return userRepository.findByAccountId(id)
                 .orElseThrow(() -> UserNotFoundException.EXCEPTION);
     }
 
     public User getUserById(Long userId) {
-
         return userRepository.findById(userId)
                 .orElseThrow(() -> UserNotFoundException.EXCEPTION);
     }
 
     public User getUserByClient(SocketIOClient client) {
-
         return userRepository.findByAccountId(client.get(ClientProperty.USER_KEY))
                 .orElseThrow(() -> UserNotFoundException.EXCEPTION);
     }

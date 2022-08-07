@@ -18,7 +18,8 @@ public class QueryUserInfoService {
 
         User user = userFacade.getUserById(userId);
 
-        return QueryUserInfoResponse.builder()
+        return QueryUserInfoResponse
+                .builder()
                 .userId(user.getId())
                 .name(user.getName())
                 .profileImageUrl(user.getProfileImageUrl())

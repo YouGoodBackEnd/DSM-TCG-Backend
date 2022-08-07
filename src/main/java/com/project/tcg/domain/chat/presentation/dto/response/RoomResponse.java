@@ -10,13 +10,9 @@ import lombok.Getter;
 public class RoomResponse {
 
     private Long roomId;
-
     private String roomName;
-
     private String profileImage;
-
     private String username;
-
     private int roomUserCount;
 
     public static RoomResponse of(Room room) {

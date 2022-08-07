@@ -26,6 +26,7 @@ import java.util.List;
 @AllArgsConstructor
 @Entity
 public class Card {
+
     @Id
     @Column(name = "card_id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -54,5 +55,4 @@ public class Card {
 
     @OneToMany(mappedBy = "card", cascade = CascadeType.REMOVE)
     private List<UserCard> userCards;
-
 }

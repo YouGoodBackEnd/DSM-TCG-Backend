@@ -12,7 +12,7 @@ import com.project.tcg.domain.user.service.SignupService;
 import com.project.tcg.domain.user.service.TokenRefreshService;
 import com.project.tcg.domain.user.service.UpdateUserInfoService;
 import com.project.tcg.domain.user.service.WithdrawalService;
-import com.project.tcg.global.utils.token.dto.TokenResponse;
+import com.project.tcg.domain.auth.presentation.dto.TokenResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.DeleteMapping;

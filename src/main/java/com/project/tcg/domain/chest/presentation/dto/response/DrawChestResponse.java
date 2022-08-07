@@ -13,5 +13,4 @@ public class DrawChestResponse {
     private List<CardResponse> cardList;
     private int coin;
     private int diamond;
-
 }
