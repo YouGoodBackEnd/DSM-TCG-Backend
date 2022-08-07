@@ -1,4 +1,4 @@
-package com.project.tcg.domain.trade.domain.repository;
+package com.project.tcg.domain.chat.domain.repository;
 
 import com.project.tcg.domain.chat.domain.Room;
 import com.project.tcg.domain.chat.domain.RoomUser;
@@ -11,6 +11,8 @@ import java.util.Optional;
 public interface RoomUserRepository extends CrudRepository<RoomUser, Long> {
 
     List<RoomUser> findByUser(User user);
-
     Optional<RoomUser> findByRoomAndUser(Room room, User user);
+    Integer countByRoomAndUser(Room room, User user);
+    Integer countByRoomAndIsAcceptedTrue(Room room);
+    void deleteAllByUser(User user);
 }
