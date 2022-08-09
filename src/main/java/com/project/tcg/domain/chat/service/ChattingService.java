@@ -49,7 +49,9 @@ public class ChattingService {
                 .sentAt(LocalDateTime.now().format(DateTimeFormatter.ofLocalizedTime(FormatStyle.MEDIUM)))
                 .build();
 
-        socketIOServer.getRoomOperations(room.getId().toString())
+        String socketRoomId = room.getId().toString();
+
+        socketIOServer.getRoomOperations(socketRoomId)
                         .sendEvent(SocketProperty.CHAT, response);
     }
 

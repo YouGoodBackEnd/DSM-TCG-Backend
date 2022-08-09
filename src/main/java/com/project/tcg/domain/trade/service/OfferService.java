@@ -43,8 +43,11 @@ public class OfferService {
         Offer offer = offerFacade.validateAndGetOffer(suggestCardId, suggestCardCount, suggestCoin, user);
 
         if(roomUser.setOffer(offer)){
-            roomUserFacade.notifyRoomUserOfferState(room.getId(), roomUser, (String roomId, Object offerResponse) -> {
-                socketIOServer.getRoomOperations(roomId)
+
+            String socketRoomId = room.getId().toString();
+
+            roomUserFacade.notifyRoomUserOfferState(roomUser, (offerResponse) -> {
+                socketIOServer.getRoomOperations(socketRoomId)
                         .sendEvent(SocketProperty.OFFER, offerResponse);
             });
         }
