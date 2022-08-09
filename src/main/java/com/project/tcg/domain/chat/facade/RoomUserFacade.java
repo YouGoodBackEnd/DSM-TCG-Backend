@@ -3,17 +3,17 @@ package com.project.tcg.domain.chat.facade;
 import com.project.tcg.domain.chat.domain.Room;
 import com.project.tcg.domain.chat.domain.RoomUser;
 import com.project.tcg.domain.chat.domain.repository.RoomUserRepository;
+import com.project.tcg.domain.chat.exception.RoomNotFoundException;
 import com.project.tcg.domain.chat.exception.RoomUserAlreadyExistException;
 import com.project.tcg.domain.trade.domain.Offer;
 import com.project.tcg.domain.trade.exception.OfferImpossibleException;
-import com.project.tcg.domain.chat.exception.RoomNotFoundException;
 import com.project.tcg.domain.trade.presentation.dto.response.AcceptResponse;
 import com.project.tcg.domain.trade.presentation.dto.response.OfferResponse;
 import com.project.tcg.domain.user.domain.User;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
-import java.util.function.BiConsumer;
+import java.util.function.Consumer;
 
 @RequiredArgsConstructor
 @Component
@@ -62,12 +62,12 @@ public class RoomUserFacade {
                 .forEach(RoomUser::cancelAccept);
     }
 
-    public void notifyAllRoomUsersOfferState(Room room, BiConsumer<String, Object> sendEventConsumer) {
+    public void notifyAllRoomUsersOfferState(Room room, Consumer<Object> sendEventConsumer) {
         room.getRoomUsers()
-                .forEach(roomUser -> notifyRoomUserOfferState(room.getId(), roomUser, sendEventConsumer));
+                .forEach(roomUser -> notifyRoomUserOfferState(roomUser, sendEventConsumer));
     }
 
-    public void notifyRoomUserOfferState(Long roomId, RoomUser roomUser, BiConsumer<String, Object> sendEventConsumer) {
+    public void notifyRoomUserOfferState(RoomUser roomUser, Consumer<Object> sendEventConsumer) {
 
         Offer offer = roomUser.getOffer() != null ? roomUser.getOffer() : new Offer();
 
@@ -80,15 +80,16 @@ public class RoomUserFacade {
                 .coin(offer.getCoin())
                 .build();
 
-        sendEventConsumer.accept(roomId.toString(), response);
+        sendEventConsumer.accept(response);
     }
 
-    public void notifyAllRoomUsersAcceptState(Room room, BiConsumer<String, Object> sendEventConsumer) {
+    public void notifyAllRoomUsersAcceptState(Room room, Consumer<Object> sendEventConsumer) {
         room.getRoomUsers()
-                .forEach(roomUser -> notifyRoomUserAcceptState(room.getId(), roomUser, sendEventConsumer));
+                .forEach(roomUser ->
+                        notifyRoomUserAcceptState(roomUser, sendEventConsumer));
     }
 
-    public void notifyRoomUserAcceptState(Long roomId, RoomUser roomUser, BiConsumer<String, Object> sendEventConsumer){
+    public void notifyRoomUserAcceptState(RoomUser roomUser, Consumer<Object> sendEventConsumer){
 
         AcceptResponse response = AcceptResponse
                 .builder()
@@ -96,6 +97,6 @@ public class RoomUserFacade {
                 .isAccepted(roomUser.getIsAccepted())
                 .build();
 
-        sendEventConsumer.accept(roomId.toString(), response);
+        sendEventConsumer.accept(response);
     }
 }
