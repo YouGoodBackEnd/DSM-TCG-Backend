@@ -47,26 +47,31 @@ public class AcceptService {
             roomUser.doAccept();
         }
 
-        roomUserFacade.notifyRoomUserAcceptState(room.getId(), roomUser, (String roomId, Object acceptResponse) -> {
-            socketIOServer.getRoomOperations(roomId)
+        String socketRoomId = room.getId().toString();
+
+        roomUserFacade.notifyRoomUserAcceptState(roomUser, (acceptResponse) -> {
+            socketIOServer.getRoomOperations(socketRoomId)
                     .sendEvent(SocketProperty.ACCEPT, acceptResponse);
         });
 
         if (isTradeable(room)) {
 
             doTrade(room);
-            socketIOServer.getRoomOperations(room.getId().toString())
+
+            socketIOServer.getRoomOperations(socketRoomId)
                     .sendEvent(SocketProperty.TRADE, new TradeResponse("거래가 완료됐습니다"));
 
             roomUserFacade.makeAllRoomUserNotOfferedState(room);
-            roomUserFacade.notifyAllRoomUsersOfferState(room, (String roomId, Object offerResponse) -> {
-                socketIOServer.getRoomOperations(roomId)
+
+            roomUserFacade.notifyAllRoomUsersOfferState(room, (offerResponse) -> {
+                socketIOServer.getRoomOperations(socketRoomId)
                         .sendEvent(SocketProperty.OFFER, offerResponse);
             });
 
             roomUserFacade.makeAllRoomUserNotAcceptedState(room);
-            roomUserFacade.notifyAllRoomUsersAcceptState(room, (String roomId, Object acceptResponse) -> {
-                socketIOServer.getRoomOperations(roomId)
+
+            roomUserFacade.notifyAllRoomUsersAcceptState(room, (acceptResponse) -> {
+                socketIOServer.getRoomOperations(socketRoomId)
                         .sendEvent(SocketProperty.ACCEPT, acceptResponse);
             });
         }

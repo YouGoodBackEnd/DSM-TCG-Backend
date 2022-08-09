@@ -48,21 +48,22 @@ public class ParticipateRoomService {
         );
         roomRepository.flush();
 
-        socketIOClient.joinRoom(room.getId().toString());
+        String socketRoomId = room.getId().toString();
+        socketIOClient.joinRoom(socketRoomId);
 
         RoomNotificationResponse roomNotificationResponse =
-                new RoomNotificationResponse(room.getId(), user.getName() + "님이 입장하셨습니다");
+                new RoomNotificationResponse(socketRoomId, user.getName() + "님이 입장하셨습니다");
 
-        socketIOServer.getRoomOperations(room.getId().toString())
+        socketIOServer.getRoomOperations(socketRoomId)
                 .sendEvent(SocketProperty.ROOM, roomNotificationResponse);
 
-        roomUserFacade.notifyAllRoomUsersOfferState(room, (String roomId, Object offerResponse) -> {
-            socketIOServer.getRoomOperations(roomId)
+        roomUserFacade.notifyAllRoomUsersOfferState(room, (Object offerResponse) -> {
+            socketIOServer.getRoomOperations(socketRoomId)
                     .sendEvent(SocketProperty.OFFER, offerResponse);
         });
 
-        roomUserFacade.notifyAllRoomUsersAcceptState(room, (String roomId, Object acceptResponse) -> {
-            socketIOServer.getRoomOperations(roomId)
+        roomUserFacade.notifyAllRoomUsersAcceptState(room, ( Object acceptResponse) -> {
+            socketIOServer.getRoomOperations(socketRoomId)
                     .sendEvent(SocketProperty.ACCEPT, acceptResponse);
         });
     }

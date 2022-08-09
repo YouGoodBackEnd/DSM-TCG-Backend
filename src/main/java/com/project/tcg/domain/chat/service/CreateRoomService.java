@@ -47,21 +47,23 @@ public class CreateRoomService {
                 .build()
         );
 
-        socketIOClient.joinRoom(room.getId().toString());
+        String socketRoomId = room.getId().toString();
+
+        socketIOClient.joinRoom(socketRoomId);
 
         RoomNotificationResponse response =
-                new RoomNotificationResponse(room.getId(), user.getName() + "님이 입장헀습니다");
+                new RoomNotificationResponse(socketRoomId, user.getName() + "님이 입장헀습니다");
 
-        socketIOServer.getRoomOperations(room.getId().toString())
+        socketIOServer.getRoomOperations(socketRoomId)
                 .sendEvent(SocketProperty.ROOM, response);
 
-        roomUserFacade.notifyRoomUserOfferState(room.getId(), roomUser, (String roomId, Object offerResponse) -> {
-            socketIOServer.getRoomOperations(roomId)
+        roomUserFacade.notifyRoomUserOfferState(roomUser, (offerResponse) -> {
+            socketIOServer.getRoomOperations(socketRoomId)
                     .sendEvent(SocketProperty.OFFER, offerResponse);
         });
 
-        roomUserFacade.notifyRoomUserAcceptState(room.getId(), roomUser, (String roomId, Object acceptResponse) -> {
-            socketIOServer.getRoomOperations(roomId)
+        roomUserFacade.notifyRoomUserAcceptState(roomUser, (acceptResponse) -> {
+            socketIOServer.getRoomOperations(socketRoomId)
                     .sendEvent(SocketProperty.ACCEPT, acceptResponse);
         });
     }

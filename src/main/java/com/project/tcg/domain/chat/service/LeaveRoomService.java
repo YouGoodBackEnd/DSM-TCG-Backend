@@ -36,13 +36,13 @@ public class LeaveRoomService {
 
                         roomUserFacade.makeAllRoomUserNotAcceptedState(room);
 
-                        roomUserFacade.notifyAllRoomUsersAcceptState(room, (String roomId, Object acceptResponse) -> {
-                            socketIOServer.getRoomOperations(roomId)
+                        roomUserFacade.notifyAllRoomUsersAcceptState(room, (Object acceptResponse) -> {
+                            socketIOServer.getRoomOperations(room.getId().toString())
                                     .sendEvent(SocketProperty.ACCEPT, acceptResponse);
                         });
 
                         RoomNotificationResponse response =
-                                new RoomNotificationResponse(Long.valueOf(socketRoomId), user.getName() + "님이 나갔습니다.");
+                                new RoomNotificationResponse(socketRoomId, user.getName() + "님이 나갔습니다.");
 
                         socketIOServer.getRoomOperations(socketRoomId)
                                 .sendEvent(SocketProperty.ROOM, response);
