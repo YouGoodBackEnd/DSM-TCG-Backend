@@ -9,7 +9,7 @@ import lombok.Getter;
 public class RoomNotificationResponse {
 
     @JsonProperty("room_id")
-    private Long roomId;
+    private String roomId;
 
     @JsonProperty("notification")
     private String notification;
