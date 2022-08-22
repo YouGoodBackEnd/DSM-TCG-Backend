@@ -46,7 +46,6 @@ public class ParticipateRoomService {
                 .offer(null)
                 .build()
         );
-        roomRepository.flush();
 
         String socketRoomId = room.getId().toString();
         socketIOClient.joinRoom(socketRoomId);
