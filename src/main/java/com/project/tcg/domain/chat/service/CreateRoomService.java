@@ -12,6 +12,8 @@ import com.project.tcg.domain.chat.domain.repository.RoomUserRepository;
 import com.project.tcg.domain.user.domain.User;
 import com.project.tcg.domain.user.facade.UserFacade;
 import com.project.tcg.global.socket.SocketProperty;
+import com.project.tcg.global.socket.sercurity.ClientProperty;
+import com.project.tcg.global.socket.util.SocketUtil;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -29,14 +31,12 @@ public class CreateRoomService {
     @Transactional
     public void execute(SocketIOClient socketIOClient, CreateRoomRequest request) {
 
-        User user = userFacade.getUserByClient(socketIOClient);
+        User user = userFacade.getUserNotJoined(SocketUtil.getAccountId(socketIOClient));
 
         Room room = roomRepository.save(Room
                 .builder()
                 .name(request.getRoomName())
                 .build());
-
-        roomUserFacade.checkRoomUserIsNotExist(room, user);
 
         RoomUser roomUser = roomUserRepository.save(RoomUser
                 .builder()
@@ -48,21 +48,19 @@ public class CreateRoomService {
         );
 
         String socketRoomId = room.getId().toString();
-
         socketIOClient.joinRoom(socketRoomId);
 
         RoomNotificationResponse response =
                 new RoomNotificationResponse(socketRoomId, user.getName() + "님이 입장헀습니다");
-
         socketIOServer.getRoomOperations(socketRoomId)
                 .sendEvent(SocketProperty.ROOM, response);
 
-        roomUserFacade.notifyRoomUserOfferState(roomUser, (offerResponse) -> {
+        roomUserFacade.notifyOffer(roomUser, (offerResponse) -> {
             socketIOServer.getRoomOperations(socketRoomId)
                     .sendEvent(SocketProperty.OFFER, offerResponse);
         });
 
-        roomUserFacade.notifyRoomUserAcceptState(roomUser, (acceptResponse) -> {
+        roomUserFacade.notifyAccept(roomUser, (acceptResponse) -> {
             socketIOServer.getRoomOperations(socketRoomId)
                     .sendEvent(SocketProperty.ACCEPT, acceptResponse);
         });
