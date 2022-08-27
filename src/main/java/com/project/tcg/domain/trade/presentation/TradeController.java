@@ -1,9 +1,7 @@
 package com.project.tcg.domain.trade.presentation;
 
 import com.corundumstudio.socketio.SocketIOClient;
-import com.corundumstudio.socketio.SocketIOServer;
 import com.corundumstudio.socketio.annotation.OnEvent;
-import com.project.tcg.domain.trade.presentation.dto.request.AcceptRequest;
 import com.project.tcg.domain.trade.presentation.dto.request.OfferRequest;
 import com.project.tcg.domain.trade.service.AcceptService;
 import com.project.tcg.domain.trade.service.OfferService;
@@ -25,8 +23,8 @@ public class TradeController {
     }
 
     @OnEvent("accept")
-    public void accept(SocketIOClient socketIOClient, @RequestBody AcceptRequest request) {
-        acceptService.execute(socketIOClient, request);
+    public void accept(SocketIOClient socketIOClient) {
+        acceptService.execute(socketIOClient);
     }
 
 }
