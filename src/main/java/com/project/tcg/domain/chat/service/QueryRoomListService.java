@@ -6,6 +6,7 @@ import com.project.tcg.domain.chat.presentation.dto.response.QueryRoomListRespon
 import com.project.tcg.domain.chat.presentation.dto.response.RoomResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -17,6 +18,7 @@ public class QueryRoomListService {
     private final RoomRepository roomRepository;
     private final RoomFacade roomFacade;
 
+    @Transactional(readOnly = true)
     public QueryRoomListResponse execute() {
 
         List<RoomResponse> roomList =

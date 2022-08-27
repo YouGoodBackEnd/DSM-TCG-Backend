@@ -5,6 +5,7 @@ import com.project.tcg.domain.chat.presentation.dto.response.EmojiResponse;
 import com.project.tcg.domain.chat.presentation.dto.response.QueryEmojiListResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -15,6 +16,7 @@ public class QueryEmojiListService {
 
     private final EmojiRepository emojiRepository;
 
+    @Transactional(readOnly = true)
     public QueryEmojiListResponse execute() {
 
         List<EmojiResponse> emojiList =

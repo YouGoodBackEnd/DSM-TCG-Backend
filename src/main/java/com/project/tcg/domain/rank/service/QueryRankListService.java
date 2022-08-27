@@ -5,6 +5,7 @@ import com.project.tcg.domain.rank.presentation.dto.response.QueryRankListRespon
 import com.project.tcg.domain.rank.presentation.dto.response.RankResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -16,6 +17,7 @@ public class QueryRankListService {
 
     private final RankRepository rankRepository;
 
+    @Transactional(readOnly = true)
     public QueryRankListResponse execute(LocalDateTime date) {
 
         List<RankResponse> lankList = rankRepository.findTop100ByCreatedAtOrderByRanking(date)

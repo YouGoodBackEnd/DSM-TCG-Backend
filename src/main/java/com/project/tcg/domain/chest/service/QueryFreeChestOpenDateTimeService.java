@@ -6,6 +6,7 @@ import com.project.tcg.domain.user.domain.User;
 import com.project.tcg.domain.user.facade.UserFacade;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -17,6 +18,7 @@ public class QueryFreeChestOpenDateTimeService {
     private final UserFacade userFacade;
     private final UserChestFacade userChestFacade;
 
+    @Transactional(readOnly = true)
     public QueryChestOpenDateTimeResponse execute() {
 
         User user = userFacade.getCurrentUser();

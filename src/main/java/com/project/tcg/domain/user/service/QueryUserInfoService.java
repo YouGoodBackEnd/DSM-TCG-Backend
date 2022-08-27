@@ -6,6 +6,7 @@ import com.project.tcg.domain.user.facade.UserFacade;
 import com.project.tcg.domain.user.presentation.dto.response.QueryUserInfoResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @RequiredArgsConstructor
 @Service
@@ -14,6 +15,7 @@ public class QueryUserInfoService {
     private final UserFacade userFacade;
     private final RankFacade rankFacade;
 
+    @Transactional(readOnly = true)
     public QueryUserInfoResponse execute(Long userId) {
 
         User user = userFacade.getUserById(userId);
