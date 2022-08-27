@@ -23,8 +23,8 @@ public enum ErrorCode {
 
     EMOJI_NOT_FOUND(404, "CHAT-404-1", "Emoji Not Found"),
     ROOM_NOT_FOUND(404, "ROOM-404-1", "Room Not Found"),
-    OVERSTAFFED_ROOM(409, "ROOM-409-1", "Overstaffed Room"),
-    ROOM_USER_ALREADY_EXIST(409, "ROOM-409-2", "Already joining another room"),
+    FULLED_ROOM(409, "ROOM-409-1", "Overstaffed Room"),
+    UNABLE_PARTICIPATE(409, "ROOM-409-2", "Already joining another room"),
 
     BAD_OFFER(400, "TRADE-400-1", "Bad Offer"),
     CARD_NOT_FOUND(404, "TRADE-404-1", "Card Not Found"),
