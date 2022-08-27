@@ -8,6 +8,7 @@ import com.project.tcg.domain.user.domain.User;
 import com.project.tcg.domain.user.facade.UserFacade;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @RequiredArgsConstructor
 @Service
@@ -17,6 +18,7 @@ public class DrawSpecialChestService {
     private final UserChestFacade userChestFacade;
     private final UserFacade userFacade;
 
+    @Transactional
     public DrawChestResponse execute() {
 
         User user = userFacade.getCurrentUser();

@@ -8,6 +8,7 @@ import com.project.tcg.global.security.jwt.JwtTokenProvider;
 import com.project.tcg.domain.auth.presentation.dto.TokenResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @RequiredArgsConstructor
@@ -19,6 +20,7 @@ public class TokenRefreshService {
 
     private final JwtProperties jwtProperties;
 
+    @Transactional
     public TokenResponse execute(String refreshToken) {
 
         RefreshToken redisRefreshToken = refreshTokenRepository.findByToken(refreshToken)

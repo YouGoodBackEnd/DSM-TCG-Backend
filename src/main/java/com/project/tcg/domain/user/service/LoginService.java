@@ -11,6 +11,7 @@ import com.project.tcg.global.security.jwt.JwtTokenProvider;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
 
@@ -23,6 +24,7 @@ public class LoginService {
     private final PasswordEncoder passwordEncoder;
     private final JwtProperties jwtProperties;
 
+    @Transactional
     public TokenResponse execute(LoginRequest request) {
 
         String accountId = request.getAccountId();
