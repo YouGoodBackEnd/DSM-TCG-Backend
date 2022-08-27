@@ -1,6 +1,6 @@
 package com.project.tcg.domain.chat.domain;
 
-import com.project.tcg.domain.user.domain.User;
+import com.project.tcg.domain.chat.exception.FulledRoomException;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -37,30 +37,43 @@ public class Room {
     @OneToMany(mappedBy = "room", cascade = CascadeType.PERSIST, orphanRemoval = true)
     private List<RoomUser> roomUsers = new ArrayList<>();
 
-    public boolean checkBothOffered() {
-
-        int offeredUserCount = (int) roomUsers
-                .stream()
-                .filter(RoomUser::getIsOffered)
-                .count();
-
-        return offeredUserCount == roomUsers.size();
-    }
-
-    public boolean checkBothAccepted() {
-
-        int acceptedUserCount = (int) roomUsers.stream()
-                .filter(RoomUser::getIsAccepted)
-                .count();
-
-        return acceptedUserCount == roomUsers.size();
-    }
-
     public void addRoomUser(RoomUser roomUser) {
         this.roomUsers.add(roomUser);
     }
 
-    public void removeUser(User user) {
-        this.roomUsers.removeIf(roomUser -> roomUser.getUser() == user);
+    public void removeRoomUser(RoomUser roomUser) {
+        this.roomUsers.remove(roomUser);
     }
+
+    public boolean isAllUserOffered() {
+
+        int offeredUserCount = (int) roomUsers.stream()
+                .filter(RoomUser::getIsOffered).count();
+
+        return offeredUserCount == roomUsers.size();
+    }
+
+    public boolean isAllUserAccepted() {
+
+        int acceptedUserCount = (int) roomUsers.stream()
+                .filter(RoomUser::getIsAccepted).count();
+
+        return acceptedUserCount == roomUsers.size();
+    }
+
+    public boolean isUserAccepted() {
+
+        int acceptedUserCount = (int) roomUsers.stream()
+                .filter(RoomUser::getIsAccepted).count();
+
+        return acceptedUserCount > 0;
+    }
+
+    public void checkIsNotFulled() {
+        if(this.roomUsers.size() >= 2) {
+            throw FulledRoomException.EXCEPTION;
+        }
+    }
+
+
 }
