@@ -1,10 +1,10 @@
 package com.project.tcg.domain.user.facade;
 
-import com.corundumstudio.socketio.SocketIOClient;
+import com.project.tcg.domain.chat.exception.RoomNotFoundException;
+import com.project.tcg.domain.chat.exception.UnableJoinException;
 import com.project.tcg.domain.user.domain.User;
 import com.project.tcg.domain.user.domain.repository.UserRepository;
 import com.project.tcg.domain.user.exception.UserNotFoundException;
-import com.project.tcg.global.socket.sercurity.ClientProperty;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
@@ -20,8 +20,8 @@ public class UserFacade {
         return getUserByAccountId(accountId);
     }
 
-    public User getUserByAccountId(String id) {
-        return userRepository.findByAccountId(id)
+    public User getUserByAccountId(String accountId) {
+        return userRepository.findByAccountId(accountId)
                 .orElseThrow(() -> UserNotFoundException.EXCEPTION);
     }
 
@@ -30,8 +30,13 @@ public class UserFacade {
                 .orElseThrow(() -> UserNotFoundException.EXCEPTION);
     }
 
-    public User getUserByClient(SocketIOClient client) {
-        return userRepository.findByAccountId(client.get(ClientProperty.USER_KEY))
-                .orElseThrow(() -> UserNotFoundException.EXCEPTION);
+    public User getUserNotJoined(String accountId) {
+        return userRepository.findUserNotJoined(accountId)
+                .orElseThrow(() -> UnableJoinException.EXCEPTION);
+    }
+
+    public User getUserAndFetchRoom(String accountId) {
+        return userRepository.findUserAndFetchRoom(accountId)
+                .orElseThrow(() -> RoomNotFoundException.EXCEPTION);
     }
 }
