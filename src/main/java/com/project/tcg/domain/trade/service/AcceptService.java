@@ -10,11 +10,11 @@ import com.project.tcg.domain.chat.facade.RoomFacade;
 import com.project.tcg.domain.chat.facade.RoomUserFacade;
 import com.project.tcg.domain.trade.domain.Offer;
 import com.project.tcg.domain.trade.exception.AcceptImpossibleException;
-import com.project.tcg.domain.trade.presentation.dto.request.AcceptRequest;
 import com.project.tcg.domain.trade.presentation.dto.response.TradeResponse;
 import com.project.tcg.domain.user.domain.User;
 import com.project.tcg.domain.user.facade.UserFacade;
 import com.project.tcg.global.socket.SocketProperty;
+import com.project.tcg.global.socket.util.SocketUtil;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -30,14 +30,13 @@ public class AcceptService {
     private final SocketIOServer socketIOServer;
 
     @Transactional
-    public void execute(SocketIOClient socketIOClient, AcceptRequest request) {
+    public void execute(SocketIOClient socketIOClient) {
 
-        Room room = roomFacade.getRoomById(request.getRoomId());
-        User user = userFacade.getUserByClient(socketIOClient);
+        User user = userFacade.getUserAndFetchRoom(SocketUtil.getAccountId(socketIOClient));
+        RoomUser roomUser = user.getRoomUser();
+        Room room = roomUser.getRoom();
 
-        RoomUser roomUser = roomUserFacade.getRoomUserByRoomAndUser(room, user);
-
-        if (!room.checkBothOffered() || room.getRoomUsers().size() < 2) {
+        if (!room.isAllUserOffered() || room.getRoomUsers().size() < 2) {
             throw AcceptImpossibleException.EXCEPTION;
         }
 
@@ -49,7 +48,7 @@ public class AcceptService {
 
         String socketRoomId = room.getId().toString();
 
-        roomUserFacade.notifyRoomUserAcceptState(roomUser, (acceptResponse) -> {
+        roomUserFacade.notifyAccept(roomUser, (acceptResponse) -> {
             socketIOServer.getRoomOperations(socketRoomId)
                     .sendEvent(SocketProperty.ACCEPT, acceptResponse);
         });
@@ -61,16 +60,16 @@ public class AcceptService {
             socketIOServer.getRoomOperations(socketRoomId)
                     .sendEvent(SocketProperty.TRADE, new TradeResponse("거래가 완료됐습니다"));
 
-            roomUserFacade.makeAllRoomUserNotOfferedState(room);
+            roomUserFacade.cancelAllOffer(room);
 
-            roomUserFacade.notifyAllRoomUsersOfferState(room, (offerResponse) -> {
+            roomUserFacade.notifyAllOffer(room, (offerResponse) -> {
                 socketIOServer.getRoomOperations(socketRoomId)
                         .sendEvent(SocketProperty.OFFER, offerResponse);
             });
 
-            roomUserFacade.makeAllRoomUserNotAcceptedState(room);
+            roomUserFacade.cancelAllAccept(room);
 
-            roomUserFacade.notifyAllRoomUsersAcceptState(room, (acceptResponse) -> {
+            roomUserFacade.notifyAllAccept(room, (acceptResponse) -> {
                 socketIOServer.getRoomOperations(socketRoomId)
                         .sendEvent(SocketProperty.ACCEPT, acceptResponse);
             });
@@ -78,7 +77,7 @@ public class AcceptService {
     }
 
     private boolean isTradeable(Room room) {
-        return room.checkBothAccepted();
+        return room.isAllUserAccepted();
     }
 
     private void doTrade(Room room) {
