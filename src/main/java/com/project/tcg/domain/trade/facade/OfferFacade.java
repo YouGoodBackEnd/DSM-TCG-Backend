@@ -1,6 +1,5 @@
 package com.project.tcg.domain.trade.facade;
 
-import com.project.tcg.domain.trade.exception.CardNotFoundException;
 import com.project.tcg.domain.card.facade.UserCardFacade;
 import com.project.tcg.domain.trade.domain.Offer;
 import com.project.tcg.domain.trade.exception.BadOfferException;
@@ -41,9 +40,7 @@ public class OfferFacade {
             if (cardCount == null) {
                 throw BadOfferException.EXCEPTION;
             }
-            if (!userCardFacade.checkUserCardExist(user, cardId)) {
-                throw CardNotFoundException.EXCEPTION;
-            } else if (userCardFacade.getUserCardCount(cardId, user) < cardCount) {
+            else if (userCardFacade.getUserCardCount(cardId, user) < cardCount) {
                 throw CardLackException.EXCEPTION;
             }
         } else {
