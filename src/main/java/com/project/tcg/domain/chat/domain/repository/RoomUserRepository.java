@@ -7,10 +7,7 @@ import org.springframework.data.repository.CrudRepository;
 
 import java.util.Optional;
 
-public interface RoomUserRepository extends CrudRepository<RoomUser, Long> {
+public interface RoomUserRepository extends CrudRepository<RoomUser, Long>, CustomRoomUserRepository {
 
     Optional<RoomUser> findByRoomAndUser(Room room, User user);
-    Integer countByRoomAndUser(Room room, User user);
-    Integer countByRoomAndIsAcceptedTrue(Room room);
-    void deleteAllByUser(User user);
 }
