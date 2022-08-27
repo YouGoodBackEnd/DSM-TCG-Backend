@@ -4,7 +4,7 @@ import com.corundumstudio.socketio.SocketIOClient;
 import com.corundumstudio.socketio.SocketIOServer;
 import com.project.tcg.domain.chat.domain.Room;
 import com.project.tcg.domain.chat.domain.RoomUser;
-import com.project.tcg.domain.chat.domain.repository.RoomRepository;
+import com.project.tcg.domain.chat.exception.UnableJoinException;
 import com.project.tcg.domain.chat.facade.RoomFacade;
 import com.project.tcg.domain.chat.facade.RoomUserFacade;
 import com.project.tcg.domain.chat.presentation.dto.request.ParticipateRoomRequest;
@@ -12,33 +12,31 @@ import com.project.tcg.domain.chat.presentation.dto.response.RoomNotificationRes
 import com.project.tcg.domain.user.domain.User;
 import com.project.tcg.domain.user.facade.UserFacade;
 import com.project.tcg.global.socket.SocketProperty;
+import com.project.tcg.global.socket.sercurity.ClientProperty;
+import com.project.tcg.global.socket.util.SocketUtil;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 @RequiredArgsConstructor
 @Service
-public class ParticipateRoomService {
+public class JoinRoomService {
 
     private final RoomFacade roomFacade;
     private final RoomUserFacade roomUserFacade;
     private final UserFacade userFacade;
     private final SocketIOServer socketIOServer;
 
-    private final RoomRepository roomRepository;
-
     @Transactional
     public void execute(SocketIOClient socketIOClient, ParticipateRoomRequest request) {
 
+        User user = userFacade.getUserNotJoined(SocketUtil.getAccountId(socketIOClient));
         Room room = roomFacade.getRoomById(request.getRoomId());
-        User user = userFacade.getUserByClient(socketIOClient);
 
-        roomUserFacade.checkRoomUserIsNotExist(room, user);
-        roomFacade.checkIsNotFulledRoom(room);
+        room.checkIsNotFulled();
 
-        roomUserFacade.makeAllRoomUserNotAcceptedState(room);
-
-        room.addRoomUser(RoomUser.builder()
+        room.addRoomUser(
+                RoomUser.builder()
                 .room(room)
                 .user(user)
                 .isAccepted(false)
@@ -52,18 +50,18 @@ public class ParticipateRoomService {
 
         RoomNotificationResponse roomNotificationResponse =
                 new RoomNotificationResponse(socketRoomId, user.getName() + "님이 입장하셨습니다");
-
         socketIOServer.getRoomOperations(socketRoomId)
                 .sendEvent(SocketProperty.ROOM, roomNotificationResponse);
 
-        roomUserFacade.notifyAllRoomUsersOfferState(room, (Object offerResponse) -> {
+        roomUserFacade.notifyAllOffer(room, (Object offerResponse) -> {
             socketIOServer.getRoomOperations(socketRoomId)
                     .sendEvent(SocketProperty.OFFER, offerResponse);
         });
 
-        roomUserFacade.notifyAllRoomUsersAcceptState(room, ( Object acceptResponse) -> {
+        roomUserFacade.notifyAllAccept(room, ( Object acceptResponse) -> {
             socketIOServer.getRoomOperations(socketRoomId)
                     .sendEvent(SocketProperty.ACCEPT, acceptResponse);
         });
     }
+
 }
