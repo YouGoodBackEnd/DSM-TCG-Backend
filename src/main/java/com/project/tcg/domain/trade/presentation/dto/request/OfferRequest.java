@@ -8,9 +8,6 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class OfferRequest {
 
-    @JsonProperty("room_id")
-    private Long roomId;
-
     @JsonProperty("card_id")
     private Long cardId;
 

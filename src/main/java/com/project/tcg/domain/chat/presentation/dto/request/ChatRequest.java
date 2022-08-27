@@ -8,9 +8,6 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class ChatRequest {
 
-    @JsonProperty("room_id")
-    private Long roomId;
-
     @JsonProperty("emoji_id")
     private Long emojiId;
 
