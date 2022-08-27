@@ -2,6 +2,7 @@ package com.project.tcg.domain.user.domain;
 
 import com.project.tcg.domain.card.domain.Card;
 import com.project.tcg.domain.card.domain.UserCard;
+import com.project.tcg.domain.chat.domain.RoomUser;
 import com.project.tcg.domain.user.presentation.dto.request.UpdateUserInfoRequest;
 import com.project.tcg.infrastructure.image.DefaultImage;
 import lombok.AccessLevel;
@@ -17,10 +18,16 @@ import javax.persistence.Embedded;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.Index;
+import javax.persistence.JoinColumn;
+import javax.persistence.MapsId;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
+import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.util.List;
@@ -30,6 +37,7 @@ import java.util.stream.Collectors;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
+@Table(indexes = @Index(columnList = "accountId"))
 @Entity
 public class User {
 
@@ -70,6 +78,9 @@ public class User {
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<UserCard> userCardList;
+
+    @OneToOne(mappedBy = "user", fetch = FetchType.LAZY)
+    private RoomUser roomUser;
 
     public void setPassword(String password) {
         this.password = password;
@@ -137,4 +148,7 @@ public class User {
         }
     }
 
+    public boolean isInRoom() {
+        return this.roomUser != null;
+    }
 }
