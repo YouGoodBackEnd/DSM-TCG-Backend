@@ -8,6 +8,7 @@ import com.project.tcg.domain.user.domain.User;
 import com.project.tcg.domain.user.facade.UserFacade;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Arrays;
 import java.util.List;
@@ -21,6 +22,7 @@ public class QueryUserCardListService {
 
     private final UserFacade userFacade;
 
+    @Transactional(readOnly = true)
     public QueryUserCardListResponse execute(Long userId) {
 
         User user = userFacade.getUserById(userId);
