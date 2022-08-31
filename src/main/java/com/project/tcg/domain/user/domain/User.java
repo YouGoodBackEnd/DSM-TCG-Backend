@@ -23,8 +23,6 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Index;
-import javax.persistence.JoinColumn;
-import javax.persistence.MapsId;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
@@ -101,10 +99,6 @@ public class User {
 
     public void addDiamond(int diamond) {
         this.diamond += diamond;
-    }
-
-    public void removeDiamond(int diamond) {
-        this.diamond -= diamond;
     }
 
     public void addCard(Card card, int cardCount) {
