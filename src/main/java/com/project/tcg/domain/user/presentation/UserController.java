@@ -1,5 +1,6 @@
 package com.project.tcg.domain.user.presentation;
 
+import com.project.tcg.domain.auth.presentation.dto.TokenResponse;
 import com.project.tcg.domain.user.presentation.dto.request.LoginRequest;
 import com.project.tcg.domain.user.presentation.dto.request.SignupRequest;
 import com.project.tcg.domain.user.presentation.dto.request.UpdateUserInfoRequest;
@@ -12,7 +13,6 @@ import com.project.tcg.domain.user.service.SignupService;
 import com.project.tcg.domain.user.service.TokenRefreshService;
 import com.project.tcg.domain.user.service.UpdateUserInfoService;
 import com.project.tcg.domain.user.service.WithdrawalService;
-import com.project.tcg.domain.auth.presentation.dto.TokenResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -76,7 +76,7 @@ public class UserController {
     }
 
     @GetMapping("/{user-id}")
-    public QueryUserInfoResponse  queryUserInfo(@PathVariable("user-id") Long userId) {
+    public QueryUserInfoResponse queryUserInfo(@PathVariable("user-id") Long userId) {
         return queryUserInfoService.execute(userId);
     }
 
