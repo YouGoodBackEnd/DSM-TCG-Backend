@@ -6,7 +6,6 @@ import com.project.tcg.domain.card.domain.Card;
 import com.project.tcg.domain.card.facade.CardFacade;
 import com.project.tcg.domain.chat.domain.Room;
 import com.project.tcg.domain.chat.domain.RoomUser;
-import com.project.tcg.domain.chat.facade.RoomFacade;
 import com.project.tcg.domain.chat.facade.RoomUserFacade;
 import com.project.tcg.domain.trade.domain.Offer;
 import com.project.tcg.domain.trade.exception.AcceptImpossibleException;
@@ -23,7 +22,6 @@ import org.springframework.transaction.annotation.Transactional;
 @Service
 public class AcceptService {
 
-    private final RoomFacade roomFacade;
     private final UserFacade userFacade;
     private final RoomUserFacade roomUserFacade;
     private final CardFacade cardFacade;
