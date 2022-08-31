@@ -36,8 +36,8 @@ public class LoginService {
         if(!passwordEncoder.matches(password, user.getPassword()))
             throw PasswordMismatchException.EXCEPTION;
 
-        String accessToken = jwtTokenProvider.createAccessToken(request.getAccountId());
-        String refreshToken = jwtTokenProvider.createRefreshToken(request.getAccountId());
+        String accessToken = jwtTokenProvider.createAccessToken(accountId);
+        String refreshToken = jwtTokenProvider.createRefreshToken(accountId);
 
         return TokenResponse
                 .builder()

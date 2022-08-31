@@ -41,7 +41,6 @@ public class SignupService {
         String password = request.getPassword();
 
         if (userRepository.findByAccountId(accountId).isPresent()){
-            System.out.println(userRepository.findByAccountId(accountId).get().getAccountId());
             throw UserAlreadyExistException.EXCEPTION;
         }
 
@@ -64,8 +63,8 @@ public class SignupService {
                 .specialChestOpenDateTime(LocalDateTime.now().minusSeconds(1))
                 .build());
 
-        String accessToken = jwtTokenProvider.createAccessToken(request.getAccountId());
-        String refreshToken = jwtTokenProvider.createRefreshToken(request.getAccountId());
+        String accessToken = jwtTokenProvider.createAccessToken(accountId);
+        String refreshToken = jwtTokenProvider.createRefreshToken(accountId);
 
         return TokenResponse
                 .builder()
