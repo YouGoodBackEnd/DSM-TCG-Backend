@@ -12,8 +12,9 @@ public enum ErrorCode {
 
     SAVE_IMAGE_FAILED(400, "COMMON-400-1", "Save Image Failed"),
 
-    EXPIRED_TOKEN(401,"COMMON401-1", "Expired Token" ),
-    INVALID_TOKEN(401,"COMMON401-2","Invalid Token"),
+    EXPIRED_TOKEN(401,"AUTH-401-1", "Expired Token" ),
+    INVALID_TOKEN(401,"AUTH-401-2","Invalid Token"),
+    REFRESH_TOKEN_NOT_FOUND(404, "AUTH-404-1", "Refresh Token Not Found"),
 
     IMAGE_VALUE_NOT_FOUND(400, "COMMON-404-1", "Image Value Not Found"),
 
@@ -32,8 +33,6 @@ public enum ErrorCode {
     CARD_LACK(409, "TRADE-409-2", "Card Lack"),
     OFFER_IMPOSSIBLE(409, "TRADE-409-3", "Offer Impossible"),
     ACCEPT_IMPOSSIBLE(409, "TRADE-409-4", "Accept Impossible"),
-
-    REFRESH_TOKEN_NOT_FOUND(404, "AUTH-404-1", "Refresh Token Not Found"),
 
     USER_CHEST_NOT_FOUND(404, "CHEST-404-1", "User Chest Not Found"),
     UNOPENED_CHEST_EXCEPTION(409, "CHEST-409-1", "Unopened Chest"),
