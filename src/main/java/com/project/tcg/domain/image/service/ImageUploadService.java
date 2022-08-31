@@ -16,9 +16,10 @@ public class ImageUploadService {
     private final S3Facade s3Facade;
 
     public ImageUrlResponse execute(List<MultipartFile> images) {
-        System.out.println("ImageUploadService.execute");
-        System.out.println(images.size());
-        List<String> imageUrl = images.stream()
+
+        List<String> imageUrl =
+                images
+                .stream()
                 .map(s3Facade::uploadImage)
                 .collect(Collectors.toList());
 
