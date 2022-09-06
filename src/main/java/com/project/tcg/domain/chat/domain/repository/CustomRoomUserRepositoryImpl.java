@@ -13,7 +13,7 @@ public class CustomRoomUserRepositoryImpl implements CustomRoomUserRepository {
     private final JPAQueryFactory queryFactory;
 
     @Override
-    public void cancelAllOffer(Room room) {
+    public void cancelAllOfferIn(Room room) {
         queryFactory
                 .update(roomUser)
                 .set(roomUser.isOffered, false)
@@ -35,7 +35,6 @@ public class CustomRoomUserRepositoryImpl implements CustomRoomUserRepository {
 
     @Override
     public void deleteAllByAccountId(String accountId) {
-        System.out.println("CustomRoomUserRepositoryImpl.deleteAllByAccountId");
 
         Long userId = queryFactory
                 .select(user.id).from(user)

@@ -18,7 +18,7 @@ public class RoomUserFacade {
     private final RoomUserRepository roomUserRepository;
 
     public void cancelAllOffer(Room room) {
-        roomUserRepository.cancelAllOffer(room);
+        roomUserRepository.cancelAllOfferIn(room);
     }
 
     public void cancelAllAccept(Room room) {
