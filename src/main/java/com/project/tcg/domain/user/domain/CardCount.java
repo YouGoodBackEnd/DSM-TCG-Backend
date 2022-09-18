@@ -16,10 +16,6 @@ import javax.validation.constraints.NotNull;
 public class CardCount {
 
     @NotNull
-    @Column(name = "ss_grade_card_count")
-    private Integer SSGradeCardCount;
-
-    @NotNull
     @Column(name = "s_grade_card_count")
     private Integer SGradeCardCount;
 
@@ -35,19 +31,20 @@ public class CardCount {
     @Column(name = "c_grade_card_count")
     private Integer CGradeCardCount;
 
+    @NotNull
+    @Column(name = "d_grade_card_count")
+    private Integer DGradeCardCount;
+
     public CardCount() {
-        this.SSGradeCardCount = 0;
         this.SGradeCardCount = 0;
         this.AGradeCardCount = 0;
         this.BGradeCardCount = 0;
         this.CGradeCardCount = 0;
+        this.DGradeCardCount = 0;
     }
 
     public void addCount(Grade grade, int cardCount) {
         switch (grade) {
-            case SS:
-                this.SSGradeCardCount += cardCount;
-                break;
             case S:
                 this.SGradeCardCount += cardCount;
                 break;
@@ -60,14 +57,14 @@ public class CardCount {
             case C:
                 this.CGradeCardCount += cardCount;
                 break;
+            case D:
+                this.DGradeCardCount += cardCount;
+                break;
         }
     }
 
     public void removeCount(Grade grade, int cardCount) {
         switch (grade) {
-            case SS:
-                this.SSGradeCardCount -= cardCount;
-                break;
             case S:
                 this.SGradeCardCount -= cardCount;
                 break;
@@ -79,6 +76,9 @@ public class CardCount {
                 break;
             case C:
                 this.CGradeCardCount -= cardCount;
+                break;
+            case D:
+                this.DGradeCardCount -= cardCount;
                 break;
         }
     }

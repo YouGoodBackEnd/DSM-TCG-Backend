@@ -62,16 +62,16 @@ public class ChestFacade {
 
         double result = RANDOM.nextDouble();
 
-        if (result < drawProbability.getSSGradeTotalProbability()) {
-            return getRandomCardByGrade(Grade.SS);
-        } else if (result < drawProbability.getSGradeTotalProbability()) {
+        if (result < drawProbability.getSGradeTotalProbability()) {
             return getRandomCardByGrade(Grade.S);
         } else if (result < drawProbability.getAGradeTotalProbability()) {
             return getRandomCardByGrade(Grade.A);
         } else if (result < drawProbability.getBGradeTotalProbability()) {
             return getRandomCardByGrade(Grade.B);
-        } else {
+        } else if (result < drawProbability.getCGradeTotalProbability()) {
             return getRandomCardByGrade(Grade.C);
+        } else {
+            return getRandomCardByGrade(Grade.D);
         }
     }
 
