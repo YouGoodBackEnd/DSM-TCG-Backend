@@ -3,6 +3,7 @@ package com.project.tcg.domain.user.domain;
 import com.project.tcg.domain.card.domain.Card;
 import com.project.tcg.domain.card.domain.UserCard;
 import com.project.tcg.domain.chat.domain.RoomUser;
+import com.project.tcg.domain.trade.exception.CardLackException;
 import com.project.tcg.domain.user.presentation.dto.request.UpdateUserInfoRequest;
 import com.project.tcg.infrastructure.image.DefaultImage;
 import lombok.AccessLevel;
@@ -29,7 +30,6 @@ import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Getter
 @Builder
@@ -105,29 +105,31 @@ public class User {
 
         this.cardCount.addCount(card.getGrade(), cardCount);
 
-        for (int i = 0; i < cardCount; i++) {
-            this.userCardList.add(
-                    UserCard.builder()
-                            .card(card)
-                            .user(this)
-                            .build()
-            );
-        }
+        UserCard userCard = this.userCardList
+                .stream()
+                .filter(o -> o.getCard() == card)
+                .findFirst()
+                .orElseGet(() -> {
+                    UserCard uc = UserCard.builder().user(this).card(card).build();
+                    userCardList.add(uc);
+                    return uc;
+                });
+
+        userCard.addUserCard(cardCount);
     }
 
     public void removeCard(Card card, int cardCount) {
 
         this.cardCount.removeCount(card.getGrade(), cardCount);
 
-        List<UserCard> userCardListToDelete = this.userCardList
+        UserCard userCard = this.userCardList
                 .stream()
                 .filter(o -> o.getCard() == card)
-                .limit(cardCount)
-                .collect(Collectors.toList());
+                .filter(o -> o.getCount() > cardCount)
+                .findFirst()
+                .orElseThrow(()-> CardLackException.EXCEPTION);
 
-        for (UserCard userCard : userCardListToDelete) {
-            this.userCardList.remove(userCard);
-        }
+        userCard.deleteUserCard(cardCount);
     }
 
     public void giveResourcesToUser(Card card, Integer cardCount, Integer coin, User user) {

@@ -25,6 +25,7 @@ public class QueryUserInfoService {
                 .userId(user.getId())
                 .name(user.getName())
                 .profileImageUrl(user.getProfileImageUrl())
+                .coin(user.getCoin())
                 .cardCount(user.getCardCount())
                 .rank(rankFacade.getUserRanking(user))
                 .build();
