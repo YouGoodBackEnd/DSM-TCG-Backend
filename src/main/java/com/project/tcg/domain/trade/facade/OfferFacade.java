@@ -39,8 +39,7 @@ public class OfferFacade {
         if (cardId != null) {
             if (cardCount == null) {
                 throw BadOfferException.EXCEPTION;
-            }
-            else if (userCardFacade.getUserCardCount(cardId, user) < cardCount) {
+            } else if (userCardFacade.getUserCardCount(cardId, user) < cardCount) {
                 throw CardLackException.EXCEPTION;
             }
         } else {
