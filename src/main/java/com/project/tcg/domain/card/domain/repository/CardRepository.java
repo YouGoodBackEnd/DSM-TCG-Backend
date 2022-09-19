@@ -10,6 +10,5 @@ import java.util.Optional;
 public interface CardRepository extends CrudRepository<Card, Long> {
 
     List<Card> findByGrade(Grade grade);
-
     Optional<Card> findById(Long id);
 }
