@@ -14,6 +14,7 @@ import javax.persistence.Id;
 import javax.persistence.IdClass;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.validation.constraints.NotNull;
 
 @Getter
 @Builder
@@ -33,6 +34,7 @@ public class UserCard {
     @JoinColumn(name = "user_id")
     private User user;
 
+    @NotNull
     @Column
     private Integer count;
 
@@ -40,7 +42,7 @@ public class UserCard {
         count += addCount;
     }
 
-    public void deleteUserCard(int deleteCount) {
+    public void removeUserCard(int deleteCount) {
         count -= deleteCount;
     }
 }
