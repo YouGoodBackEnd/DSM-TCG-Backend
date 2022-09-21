@@ -14,11 +14,10 @@ BEGIN
                                         user.b_grade_card_count DESC,
                                         user.c_grade_card_count DESC,
                                         user.d_grade_card_count DESC) AS ranking,
-          user.d_grade_card_count,
           user.s_grade_card_count,
           user.a_grade_card_count,
           user.b_grade_card_count,
-          user.c_grade_card_count
-
+          user.c_grade_card_count,
+          user.d_grade_card_count
     FROM user;
 END$$
