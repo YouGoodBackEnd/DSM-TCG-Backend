@@ -110,7 +110,12 @@ public class User {
                 .filter(o -> o.getCard() == card)
                 .findFirst()
                 .orElseGet(() -> {
-                    UserCard uc = UserCard.builder().user(this).card(card).build();
+                    UserCard uc = UserCard
+                            .builder()
+                            .user(this)
+                            .card(card)
+                            .count(0)
+                            .build();
                     userCardList.add(uc);
                     return uc;
                 });
@@ -129,7 +134,7 @@ public class User {
                 .findFirst()
                 .orElseThrow(()-> CardLackException.EXCEPTION);
 
-        userCard.deleteUserCard(cardCount);
+        userCard.removeUserCard(cardCount);
     }
 
     public void giveResourcesToUser(Card card, Integer cardCount, Integer coin, User user) {
