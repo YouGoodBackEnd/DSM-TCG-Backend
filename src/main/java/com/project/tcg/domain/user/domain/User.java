@@ -4,6 +4,7 @@ import com.project.tcg.domain.card.domain.Card;
 import com.project.tcg.domain.card.domain.UserCard;
 import com.project.tcg.domain.chat.domain.RoomUser;
 import com.project.tcg.domain.trade.exception.CardLackException;
+import com.project.tcg.domain.trade.exception.CoinLackException;
 import com.project.tcg.domain.user.presentation.dto.request.UpdateUserInfoRequest;
 import com.project.tcg.infrastructure.image.DefaultImage;
 import lombok.AccessLevel;
@@ -94,6 +95,7 @@ public class User {
     }
 
     public void removeCoin(int coin) {
+        if (this.coin < coin) throw CoinLackException.EXCEPTION;
         this.coin -= coin;
     }
 
