@@ -10,9 +10,7 @@ import lombok.Getter;
 @Builder
 public class UserCardResponse {
 
-    private Long cardId;
-    private String name;
-    private String cardImageUrl;
+    private CardResponse card;
     private Grade grade;
     private int count;
 
@@ -22,9 +20,7 @@ public class UserCardResponse {
 
         return UserCardResponse
                 .builder()
-                .cardId(card.getId())
-                .name(card.getName())
-                .cardImageUrl(card.getCardImageUrl())
+                .card(CardResponse.of(card))
                 .grade(card.getGrade())
                 .count(userCard.getCount())
                 .build();
