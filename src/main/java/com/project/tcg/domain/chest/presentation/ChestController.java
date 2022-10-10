@@ -1,5 +1,6 @@
 package com.project.tcg.domain.chest.presentation;
 
+import com.project.tcg.domain.chest.presentation.dto.request.ChestPurchaseRequest;
 import com.project.tcg.domain.chest.presentation.dto.response.DrawChestResponse;
 import com.project.tcg.domain.chest.presentation.dto.response.QueryChestOpenDateTimeResponse;
 import com.project.tcg.domain.chest.service.DrawFreeChestService;
@@ -12,8 +13,11 @@ import com.project.tcg.domain.chest.service.QuerySpecialChestOpenDateTimeService
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
+import javax.validation.Valid;
 
 @RequiredArgsConstructor
 @RequestMapping("/chests")
@@ -49,18 +53,18 @@ public class ChestController {
     }
 
     @PostMapping("/silver")
-    public DrawChestResponse drawSilverChest(){
-        return drawSilverChestService.execute();
+    public DrawChestResponse drawSilverChest(@RequestBody @Valid ChestPurchaseRequest request){
+        return drawSilverChestService.execute(request);
     }
 
     @PostMapping("/gold")
-    public DrawChestResponse drawGoldChest(){
-        return drawGoldChestService.execute();
+    public DrawChestResponse drawGoldChest(@RequestBody @Valid ChestPurchaseRequest request){
+        return drawGoldChestService.execute(request);
     }
 
     @PostMapping("/legend")
-    public DrawChestResponse drawLegendChest(){
-        return drawLegendChestService.execute();
+    public DrawChestResponse drawLegendChest(@RequestBody @Valid ChestPurchaseRequest request){
+        return drawLegendChestService.execute(request);
     }
 
 }
