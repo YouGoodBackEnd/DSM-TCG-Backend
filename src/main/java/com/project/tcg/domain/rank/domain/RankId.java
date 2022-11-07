@@ -8,7 +8,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import java.io.Serializable;
-import java.util.Date;
+import java.time.LocalDate;
 
 @Getter
 @Builder
@@ -18,5 +18,5 @@ import java.util.Date;
 public class RankId implements Serializable {
 
     private Long userId;
-    private Date createdAt;
+    private LocalDate createdAt;
 }

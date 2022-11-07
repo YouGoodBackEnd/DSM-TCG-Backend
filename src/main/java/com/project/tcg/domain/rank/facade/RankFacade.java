@@ -26,9 +26,7 @@ public class RankFacade {
         RankId rankId = RankId
                 .builder()
                 .userId(user.getId())
-                .createdAt(LocalDateTime.now()
-                        .minusHours(LocalDateTime.now().getHour())
-                        .minusMinutes(LocalDateTime.now().getMinute()))
+                .createdAt(LocalDateTime.now().toLocalDate())
                 .build();
 
         return rankRepository.findById(rankId).orElse(null);
