@@ -14,7 +14,7 @@ import javax.persistence.IdClass;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
-import java.time.LocalDateTime;
+import java.sql.Date;
 
 @Getter
 @Builder
@@ -29,7 +29,7 @@ public class Rank {
     private Long userId;
 
     @Id
-    private LocalDateTime createdAt;
+    private Date createdAt;
 
     @NotNull
     @Size(max = 30)

@@ -17,8 +17,8 @@ public class RankController {
 
     private final QueryRankListService queryRankListService;
 
-    @GetMapping("/{date}")
-    public QueryRankListResponse queryUserRankList(@PathVariable String date){
-        return queryRankListService.execute(LocalDateTime.parse(date));
+    @GetMapping("")
+    public QueryRankListResponse queryUserRankList(){
+        return queryRankListService.execute();
     }
 }

@@ -18,9 +18,9 @@ public class QueryRankListService {
     private final RankRepository rankRepository;
 
     @Transactional(readOnly = true)
-    public QueryRankListResponse execute(LocalDateTime date) {
+    public QueryRankListResponse execute() {
 
-        List<RankResponse> lankList = rankRepository.findTop100ByCreatedAtOrderByRanking(date)
+        List<RankResponse> lankList = rankRepository.findTop100ByCreatedAtOrderByRanking(LocalDateTime.now().toLocalDate())
                 .stream()
                 .map(RankResponse::of)
                 .collect(Collectors.toList());

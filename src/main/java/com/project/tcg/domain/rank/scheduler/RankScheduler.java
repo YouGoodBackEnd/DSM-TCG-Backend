@@ -11,7 +11,7 @@ public class RankScheduler {
 
     private final RankRepository rankRepository;
 
-    @Scheduled(cron = "0 0 0/1 * * *", zone = "Asia/Seoul")
+    @Scheduled(cron = "0 0 0 0/1 * *", zone = "Asia/Seoul")
     public void saveRank() {
         rankRepository.saveRank();
     }
