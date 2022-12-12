@@ -12,4 +12,7 @@ public interface UserCardRepository extends CrudRepository<UserCard, Long> {
     Optional<UserCard> findFirstByUserAndCard_id(User user, Long cardId);
     List<UserCard> findByCard_IdAndUser(Long cardId, User user);
     List<UserCard> findByUser(User user);
+
+    void deleteByUser(User user);
+
 }

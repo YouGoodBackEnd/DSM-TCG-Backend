@@ -7,11 +7,11 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public enum DrawProbability {
 
-    FREE_CHEST    (0.02, 0.08, 0.10, 0.30, 0.50, 100, 300, 1, 3),
-    SPECIAL_CHEST (0.05, 0.10, 0.20, 0.15, 0.50, 500, 1000, 2, 7),
-    SILVER_CHEST  (0.08, 0.12, 0.15, 0.15, 0.50, 500, 1000, 2, 7),
-    GOLD_CHEST    (0.15, 0.10, 0.20, 0.25, 0.30, 750, 2000, 7, 15),
-    LEGEND_CHEST  (0.30, 0.25, 0.20, 0.15, 0.10, 1000, 3000, 10, 20);
+    FREE_CHEST    (0.01, 0.02, 0.10, 0.20, 0.67, 100, 300, 1, 3),
+    SPECIAL_CHEST (0.02, 0.08, 0.15, 0.30, 0.45, 500, 1000, 2, 7),
+    SILVER_CHEST  (0.03, 0.17, 0.30, 0.40, 0.10, 500, 1000, 2, 7),
+    GOLD_CHEST    (0.05, 0.15, 0.50, 0.25, 0.05, 750, 2000, 7, 15),
+    LEGEND_CHEST  (0.70, 0.20, 0.10, 0.00, 0.00, 1000, 3000, 10, 20);
 
     private final Double SGradeProbability;
     private final Double AGradeProbability;
