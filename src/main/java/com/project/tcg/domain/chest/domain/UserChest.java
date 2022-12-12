@@ -41,10 +41,10 @@ public class UserChest {
     private LocalDateTime specialChestOpenDateTime;
 
     public void renewFreeChestOpenDateTime(){
-        this.freeChestOpenDateTime = LocalDateTime.now().plusSeconds(ChestType.FREE_CHEST.getRenewalTime());
+        this.freeChestOpenDateTime = LocalDateTime.now().plusMinute(ChestType.FREE_CHEST.getRenewalTime());
     }
 
     public void renewSpecialChestOpenDateTime(){
-        this.specialChestOpenDateTime = LocalDateTime.now().plusSeconds(ChestType.SPECIAL_CHEST.getRenewalTime());
+        this.specialChestOpenDateTime = LocalDateTime.now().plusMinute(ChestType.SPECIAL_CHEST.getRenewalTime());
     }
 }
